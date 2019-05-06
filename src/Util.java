@@ -15,6 +15,19 @@ public class Util{
         return  v[3] & 0xff | (v[2] & 0xff) << 8 | (v[1] & 0xff) << 16 | (v[0] & 0xff) << 24;
     }
 
+    public static float byte2float(byte[] v) {
+        int l = v[3] & 0xff | (v[2] & 0xff) << 8 | (v[1] & 0xff) << 16 | (v[0] & 0xff) << 24;
+        return Float.intBitsToFloat(l);
+    }
+
+    public static double byte2Double(byte[] v){
+        long l = 0;
+        for (int i = 0; i < 8; i++) {
+            l |= ((long) (v[i] & 0xff)) << (8 * i);
+        }
+        return Double.longBitsToDouble(l);
+    }
+
     //Data Type
     public static int CHAR = 0;
     public static int INT = 1;
