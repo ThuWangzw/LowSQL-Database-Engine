@@ -51,7 +51,7 @@ public class DataStorage{
         DataStorage ds = new DataStorage("firstTry",type);
 
         //insert data into one block
-        DataBlock blk = new DataBlock(0);
+        /*DataBlock blk = new DataBlock(0);
         Field fd1 = new Field("LeiYiran",Util.VARCHAR);
         Field fd2 = new Field(100,Util.INT);
         Field[] fds = new Field[]{fd1,fd2};
@@ -59,7 +59,7 @@ public class DataStorage{
         if(blk.insertOneRecord(rc1)){
             ds.WriteDataBlock(blk);
             System.out.println("write success!");
-        }
+        }*/
 
         //read from file
         DataBlock blk2 = ds.ReadDataBlock(0);

@@ -38,8 +38,8 @@ public class DataBlock {
     public Boolean insertOneRecord(Record record){
         //return true if the record is successfully inserted
         int size = record.getSize();
-        if (size > end_of_free_space - 8 * record_number - 16) return false;
-        System.arraycopy(record.toBytes(),0,data,end_of_free_space - size,size);
+        if (size > end_of_free_space - 8 * record_number - 15) return false;
+        System.arraycopy(record.toBytes(),0,data,end_of_free_space - size + 1,size);
         System.arraycopy(Util.int2byte(end_of_free_space),0,data,8 + 8 * record_number,4);
         System.arraycopy(Util.int2byte(size),0,data,12 + 8 * record_number,4);
         end_of_free_space -= size;

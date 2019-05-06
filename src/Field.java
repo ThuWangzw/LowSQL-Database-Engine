@@ -15,7 +15,7 @@ public class Field {
         if (type < Util.VARCHAR){
             size = Util.DataTypeSize[type];
         }
-        toValue(type,data);
+        value = toValue(type,data);
     }
 
 
