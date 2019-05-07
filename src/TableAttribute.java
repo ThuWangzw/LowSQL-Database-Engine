@@ -1,0 +1,48 @@
+public class TableAttribute {
+    private String table_name;
+    private String name;
+    private int type;
+    private int length_limit;
+    private Boolean is_primary_key;
+
+    /* metadata
+
+    | Attribute name -- 28|unused -- 1|PK --1|limit --1|type -- 1  |
+
+     */
+
+    //load from metadata file
+    public TableAttribute(String t_name,byte[] metadata){
+        table_name = t_name;
+        int i;
+        for (i = 0; i < Util.AttributeNameMaxLength; i++){
+            if (metadata[i] == 0)
+                break;
+        }
+        byte[] attr_name = new byte[i];
+        System.arraycopy(metadata,0,attr_name,0,i);
+        name = new String(attr_name);
+        byte[] bits4 = new byte[4];
+        System.arraycopy(metadata,Util.AttributeNameMaxLength,bits4,0,4);
+        int temp = Util.byte2int(bits4);
+        type = temp & 0xff;
+        length_limit = ( temp >> 8) & 0xff;
+        is_primary_key = ((temp >> 16) & 0xff) == 1;
+    }
+
+    public int getType(){return type;}
+
+    public byte[] toMetaByte(){
+        if ( name.length() > Util.AttributeNameMaxLength) return null;
+        byte[] result = new byte[Util.AttributeNameMaxLength + 4];
+        byte[] name_byte = (name + "\0").getBytes();
+        System.arraycopy(name_byte,0,result,0,Util.AttributeNameMaxLength);
+        int temp = 0;
+        if(is_primary_key){
+            temp = (1 << 16);
+        }
+        temp &= ((length_limit << 8) & 0xff00) & (type & 0xff);
+        System.arraycopy(Util.int2byte(temp),0,result,Util.AttributeNameMaxLength,4);
+        return result;
+    }
+}

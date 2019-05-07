@@ -1,18 +1,23 @@
 public class Record {
     private Field[] fields;
     private int size;
+    private TableSchema schema;
 
     //read a record from file
-    public Record(byte[] data,int[] type){
+    public Record(byte[] data,TableSchema sa){
+        schema = sa;
         size = data.length;
         //split bytes and further analyse to get the fields
-        int len = type.length;
+        int len = schema.getAttributeNumber();
+        TableAttribute[] attrs = schema.getAttrubutes();
         int curpos = 0;
         int cursize;
         fields = new Field[len];
+        int the_type;
         for (int i = 0; i < len; i++){
-            if (type[i] < Util.VARCHAR){
-                cursize = Util.DataTypeSize[type[i]];
+            the_type = attrs[i].getType();
+            if ( the_type < Util.VARCHAR){
+                cursize = Util.DataTypeSize[the_type];
             }
             else{
                 int j;
@@ -24,13 +29,14 @@ public class Record {
             }
             byte[] temp = new byte[cursize];
             System.arraycopy(data,curpos,temp,0,cursize);
-            fields[i] = new Field(type[i],temp);
+            fields[i] = new Field(attrs[i],temp);
             curpos += cursize;
         }
     }
 
     //add a new record
-    public Record(Field[] fd) {
+    public Record(Field[] fd,TableSchema sa) {
+        schema = sa;
         // One record in the database
         fields = fd;
         size = 0;

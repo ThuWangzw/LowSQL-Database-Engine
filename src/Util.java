@@ -2,7 +2,12 @@ import java.lang.instrument.Instrumentation;
 
 public class Util{
     public static String DataStorageDir = "data/";
+    public static String MetaDataFile = "data/metadata.bin";
     public static int DiskBlockSize = 4096;
+
+    public static int DatabaseNameMaxLength = 28;  //byte
+    public static int TableNameMaxLength = 28;
+    public static int AttributeNameMaxLength = 28;
 
     public static byte[] int2byte(int v){
         // convert int to byte array
@@ -28,13 +33,22 @@ public class Util{
         return Double.longBitsToDouble(l);
     }
 
+    public static long byte2Long(byte[] v){
+        long l = 0;
+        for (int i = 0; i < 8; i++) {
+            l |= ((long) (v[i] & 0xff)) << (8 * i);
+        }
+        return l;
+    }
+
     //Data Type
     public static int CHAR = 0;
     public static int INT = 1;
     public static int FLOAT = 2;
     public static int DOUBLE = 3;
-    public static int VARCHAR = 4;
-    public static int STRING = 5;
-    public static int[] DataTypeSize = new int[]{1,4,4,8};
+    public static int LONG = 4;
+    public static int VARCHAR = 5;
+    public static int STRING = 6;
+    public static int[] DataTypeSize = new int[]{1,4,4,8,8};
 }
 

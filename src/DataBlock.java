@@ -6,10 +6,12 @@ public class DataBlock {
     private int record_number = -1;
     private int end_of_free_space = -1;
     private int page_id = -1;       //page id is the unique id of every data block
+    TableSchema schema;
 
 
     //initialize by creating new data block
-    public DataBlock(int p_id){
+    public DataBlock(int p_id,TableSchema sa){
+        schema = sa;
         data = new byte[Util.DiskBlockSize];
         record_number = 0;
         end_of_free_space = Util.DiskBlockSize - 1;
@@ -19,7 +21,8 @@ public class DataBlock {
     }
 
     // initialize by data from file
-    public DataBlock(byte[] read_data,int p_id){
+    public DataBlock(byte[] read_data,int p_id,TableSchema sa){
+        schema = sa;
         data = read_data;
         page_id = p_id;
         //analyse data
@@ -49,19 +52,19 @@ public class DataBlock {
         return true;
     }
 
-    public Record extractOneRecord(int record_id, int[] type){
-        if (record_id >= record_number) return new Record(null,null);
+    public Record extractOneRecord(int record_id){
+        if (record_id >= record_number) return null;
         int[] rd = extractOneRecordHeader(record_id);
         int record_size = rd[1],record_location = rd[0];
         byte[] record_bytes = new byte[record_size];
         System.arraycopy(data,record_location - record_size + 1,record_bytes,0,record_size);
-        return new Record(record_bytes,type);
+        return new Record(record_bytes,schema);
     }
 
-    public Record[] extractAllRecords(int[] type){
+    public Record[] extractAllRecords(){
         Record[] records = new Record[record_number];
         for(int i = 0; i < record_number; i++){
-            records[i] = extractOneRecord(i,type);
+            records[i] = extractOneRecord(i);
         }
         return records;
     }
