@@ -51,14 +51,66 @@ public class DataBlock {
 
     public Record extractOneRecord(int record_id, int[] type){
         if (record_id >= record_number) return new Record(null,null);
+        int[] rd = extractOneRecordHeader(record_id);
+        int record_size = rd[1],record_location = rd[0];
+        byte[] record_bytes = new byte[record_size];
+        System.arraycopy(data,record_location - record_size + 1,record_bytes,0,record_size);
+        return new Record(record_bytes,type);
+    }
+
+    public Record[] extractAllRecords(int[] type){
+        Record[] records = new Record[record_number];
+        for(int i = 0; i < record_number; i++){
+            records[i] = extractOneRecord(i,type);
+        }
+        return records;
+    }
+
+    public int[] extractOneRecordHeader(int record_id){
+        //record_location; record_size
         byte[] temp = new byte[4];
         System.arraycopy(data,8 + record_id * 8,temp,0,4);
         int record_location = Util.byte2int(temp);
         System.arraycopy(data,12 + record_id * 8,temp,0,4);
         int record_size = Util.byte2int(temp);
-        byte[] record_bytes = new byte[record_size];
-        System.arraycopy(data,record_location - record_size + 1,record_bytes,0,record_size);
-        return new Record(record_bytes,type);
+        return new int[]{record_location,record_size};
+    }
+
+    public Boolean deleteOneRecord(int record_id){
+        //return true if the record is successfully deleted
+        if (record_id >= record_number) return false;
+
+        //for all situations
+        int[] rd = extractOneRecordHeader(record_id);
+        int record_location = rd[0],record_size = rd[1];
+        if (record_id == record_number - 1){
+            //the record is the leftest one of all records
+            end_of_free_space = record_location;
+        }else{
+            //there are records on the left of the record
+            //for header parts
+            System.arraycopy(data,16 + record_id * 8,data,8 + record_id * 8,8 * (record_number - record_id -1));
+            byte[] record_loc = new byte[4];
+            for (int i = record_id;i < record_number - 1; i++){
+                System.arraycopy(data,8 + i * 8,record_loc,0,4);
+                System.arraycopy(Util.int2byte(Util.byte2int(record_loc) + record_size),0,data,8 + i * 8,4);
+            }
+            //for record parts
+            int len = record_location - record_size - end_of_free_space;
+            byte[] temp = new byte[len];
+            System.arraycopy(data,end_of_free_space + 1, temp,0,len);
+            System.arraycopy(temp,0,data,end_of_free_space + 1 + record_size,len);
+            end_of_free_space += record_size;
+        }
+        //update record_number and end_of_free_space
+        record_number -= 1;
+        System.arraycopy(Util.int2byte(record_number),0,data,0,4);
+        System.arraycopy(Util.int2byte(end_of_free_space),0,data,4,4);
+        return true;
+    }
+
+    public Boolean updateOneRecord(int record_id,Record record){
+        return deleteOneRecord(record_id) && insertOneRecord(record);
     }
 
     public static void main(String[] args){

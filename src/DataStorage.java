@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.io.RandomAccessFile;
-import java.util.concurrent.ForkJoinPool;
 
 
 public class DataStorage{
@@ -13,6 +12,10 @@ public class DataStorage{
     public DataStorage(String db_name, int[] type){
         DB_name = db_name;
         field_type = type;
+        OpenDataFile();
+    }
+
+    public void OpenDataFile(){
         try{
             raf = new RandomAccessFile(Util.DataStorageDir + DB_name + ".txt","rw");
             block_number = raf.length() / Util.DiskBlockSize;
@@ -25,7 +28,9 @@ public class DataStorage{
         try{
             raf.seek(block.getPageId() * Util.DiskBlockSize);
             raf.write(block.getData(),0,Util.DiskBlockSize);
-
+            //close raf and reopen it
+            raf.close();
+            OpenDataFile();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -51,22 +56,38 @@ public class DataStorage{
         DataStorage ds = new DataStorage("firstTry",type);
 
         //insert data into one block
-        /*DataBlock blk = new DataBlock(0);
+        DataBlock blk = new DataBlock(0);
         Field fd1 = new Field("LeiYiran",Util.VARCHAR);
         Field fd2 = new Field(100,Util.INT);
+        Field fd3 = new Field("Hello",Util.VARCHAR);
+        Field fd4 = new Field(64,Util.INT);
+        Field fd5 = new Field("Yes",Util.VARCHAR);
+        Field fd6 = new Field(10,Util.INT);
         Field[] fds = new Field[]{fd1,fd2};
+        Field[] fds2  = new Field[]{fd3,fd4};
+        Field[] fds3  = new Field[]{fd5,fd6};
         Record rc1 = new Record(fds);
-        if(blk.insertOneRecord(rc1)){
+        Record rc2 = new Record(fds2);
+        Record rc3 = new Record(fds3);
+
+
+        if(blk.insertOneRecord(rc1) && blk.insertOneRecord(rc2)){
+            blk.updateOneRecord(0,rc3);
             ds.WriteDataBlock(blk);
             System.out.println("write success!");
-        }*/
+        }
+
+        DataBlock bk2 = new DataBlock(1);
+        if(bk2.insertOneRecord(rc1)){
+            ds.WriteDataBlock(bk2);
+            System.out.println("write success!");
+        }
 
         //read from file
-        DataBlock blk2 = ds.ReadDataBlock(0);
-        Record rd = blk2.extractOneRecord(0,ds.field_type);
-        rd.getValue();
-        System.out.println("Read success!");
 
+        DataBlock blk2 = ds.ReadDataBlock(0);
+        Record[] rds = blk2.extractAllRecords(ds.field_type);
+        System.out.println("Read success!");
 
     }
 
