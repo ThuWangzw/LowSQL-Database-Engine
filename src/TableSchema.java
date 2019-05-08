@@ -34,6 +34,15 @@ public class TableSchema {
 
     public TableAttribute[] getAttrubutes(){return attributes;}
 
+    public TableAttribute getOneAttribute(String attr_name){
+        for (int i = 0; i < attribute_number; i++){
+            if(attr_name.equals(attributes[i].getAttributeName())){
+                return attributes[i];
+            }
+        }
+        return null;
+    }
+
     public byte[] toMetaByte(){
         int len = Util.AttributeNameMaxLength + 4;
         byte[] result = new byte[attribute_number * len];

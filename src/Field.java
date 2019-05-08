@@ -81,6 +81,15 @@ public class Field {
         }
     }
 
+    public Boolean isValid(){
+        if(attribute.getType() >= Util.VARCHAR){
+            if (size > attribute.getLengthLimit()){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public Object getValue(){
         return value;
     }

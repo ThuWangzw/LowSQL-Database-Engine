@@ -38,9 +38,14 @@ public class DataBlock {
 
     public byte[] getData(){return data;}
 
+    public TableSchema getSchema(){return schema;}
+
     public Boolean insertOneRecord(Record record){
         //return true if the record is successfully inserted
         int size = record.getSize();
+        //the record has to be valid
+        if(!record.isValid()) return false;
+        //can not insert to free space
         if (size > end_of_free_space - 8 * record_number - 15) return false;
         System.arraycopy(record.toBytes(),0,data,end_of_free_space - size + 1,size);
         System.arraycopy(Util.int2byte(end_of_free_space),0,data,8 + 8 * record_number,4);
