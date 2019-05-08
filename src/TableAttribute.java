@@ -30,6 +30,15 @@ public class TableAttribute {
         is_primary_key = ((temp >> 16) & 0xff) == 1;
     }
 
+    //create  a new Attribute
+    public TableAttribute(String t_name,String attr_name,int the_type,int the_limit, Boolean is_PK){
+        table_name = t_name;
+        name = attr_name;
+        type = the_type;
+        length_limit = the_limit;
+        is_primary_key = is_PK;
+    }
+
     public int getType(){return type;}
 
     public byte[] toMetaByte(){

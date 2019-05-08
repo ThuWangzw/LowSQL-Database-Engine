@@ -10,6 +10,7 @@ public class TableSchema {
 
      */
 
+    //load from file
     public TableSchema(String t_name, int attr_number, byte[] metadata){
         table_name = t_name;
         attribute_number = attr_number;
@@ -20,6 +21,13 @@ public class TableSchema {
             System.arraycopy(metadata,i * len,temp,0,len);
             attributes[i] = new TableAttribute(table_name,temp);
         }
+    }
+
+    //create a new schema
+    public TableSchema(String t_name,TableAttribute[] attrs){
+        table_name = t_name;
+        attributes = attrs;
+        attribute_number = attributes.length;
     }
 
     public int getAttributeNumber(){return attribute_number;}

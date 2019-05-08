@@ -2,7 +2,7 @@ import java.lang.instrument.Instrumentation;
 
 public class Util{
     public static String DataStorageDir = "data/";
-    public static String MetaDataFile = "data/metadata.bin";
+    public static String MetaDataFile = "system/metadata.bin";
     public static int DiskBlockSize = 4096;
 
     public static int DatabaseNameMaxLength = 28;  //byte

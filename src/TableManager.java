@@ -15,6 +15,7 @@ public class TableManager {
      table size is the number of bytes of all the table schema(including table size itself)
      */
 
+    //load table from file
     public TableManager(String d_name,byte[] metadata){
         //table metadata
         byte[] bits4 = new byte[4];
@@ -38,6 +39,15 @@ public class TableManager {
         storage = new DataStorage(d_name,table_name,schema);
     }
 
+    //create a new table instance
+    public TableManager(String d_name,String t_name,TableSchema sa){
+        DB_name = d_name;
+        table_name = t_name;
+        schema = sa;
+        //storage
+        storage = new DataStorage(d_name,t_name,sa);
+    }
+
     public byte[] toMetaByte(){
         int meta_bytes = schema.getAttributeNumber() * (Util.AttributeNameMaxLength + 4 ) + 8 + Util.TableNameMaxLength;
         byte[] result = new byte[meta_bytes];
@@ -47,5 +57,7 @@ public class TableManager {
         System.arraycopy(Util.int2byte(schema.getAttributeNumber()),0,result,4 + Util.TableNameMaxLength,4);
         return result;
     }
+
+    public String getTableName(){return table_name;}
 
 }

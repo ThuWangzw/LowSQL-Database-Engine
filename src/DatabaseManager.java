@@ -7,7 +7,7 @@ public class DatabaseManager {
     //every database <-> one instance
     private String DB_name;
     private int table_number;
-    private TableManager[] tables;
+    private ArrayList<TableManager> tables;
 
 /* Structure of Meta Data
 
@@ -24,7 +24,7 @@ public class DatabaseManager {
      for PK; 1 = is primary key; 0 = is not primary key;
      for limit; for varchar and string, it stands for the max length
  */
-
+    //load from file
     public DatabaseManager(byte[] metadata){
         byte[] bits4 = new byte[4];
         //Database Name
@@ -37,42 +37,77 @@ public class DatabaseManager {
         System.arraycopy(metadata,4,db_name,0,i-4);
         DB_name = new String(db_name);
         //Table
+        tables = new ArrayList<>();
         //table number
         System.arraycopy(metadata,4 + Util.DatabaseNameMaxLength,bits4,0,4);
         table_number = Util.byte2int(bits4);
-
         if (table_number > 0) {
             //tables
-            tables = new TableManager[table_number];
             int curpos = Util.DatabaseNameMaxLength + 8, table_size = 0;
             for (i = 0; i < table_number; i++) {
                 System.arraycopy(metadata, curpos, bits4, 0, 4);
                 table_size = Util.byte2int(bits4);
                 byte[] t_meta = new byte[table_size];
                 System.arraycopy(metadata, curpos, t_meta, 0, table_size);
-                tables[i] = new TableManager(DB_name, t_meta);
+                tables.add(new TableManager(DB_name, t_meta));
                 curpos += table_size;
             }
-        }else {
-            tables = null;
         }
     }
 
-    public void toMetaByte(){
+    //create a new database instance
+    public DatabaseManager(String db_name){
+        DB_name = db_name;
+        tables = new ArrayList<>();
+        table_number = 0;
+    }
 
+    public byte[] toMetaByte(){
+        ArrayList<byte[]> all_table_meta_bytes = new ArrayList<>();
+        for (int i = 0; i < table_number; i++){
+            all_table_meta_bytes.add(tables.get(i).toMetaByte());
+        }
+        int tot_length = Util.DatabaseNameMaxLength + 8;
+        for(byte[] cur : all_table_meta_bytes){
+            tot_length += cur.length;
+        }
+        byte[] tot_bytes = new byte[tot_length];
+        System.arraycopy(Util.int2byte(tot_length),0,tot_bytes,0,4);
+        System.arraycopy((DB_name + "\0").getBytes(),0,tot_bytes,4,Util.DatabaseNameMaxLength);
+        System.arraycopy(Util.int2byte(table_number),0,tot_bytes,4 + Util.DatabaseNameMaxLength,4);
+        int curpos = Util.DatabaseNameMaxLength + 8;
+        for(byte[] cur : all_table_meta_bytes){
+            System.arraycopy(cur,0,tot_bytes,curpos,cur.length);
+            curpos += cur.length;
+        }
+        return tot_bytes;
     }
 
 
-    public void createTable ( ){
-
-
+    public void addTable (TableManager t){
+        //check if there are any tables that have the same name
+        String t_name = t.getTableName();
+        for (TableManager cur:tables){
+            if(cur.getTableName() == t_name){
+                return;
+            }
+        }
+        tables.add(t);
+        table_number += 1;
     }
 
-    public void dropTable ( ){
-
+    public void deleteTable (String table_name){
+        for(TableManager cur:tables){
+            if(cur.getTableName() == table_name){
+                tables.remove(cur);
+            }
+        }
     }
+
+    public String getDatabaseName(){return DB_name;}
 
     public static void main(String[] args){
         System.out.println("-- DatabaseManager --");
+
     }
 }
