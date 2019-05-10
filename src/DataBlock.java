@@ -7,10 +7,12 @@ public class DataBlock {
     private int end_of_free_space = -1;
     private int page_id = -1;       //page id is the unique id of every data block
     TableSchema schema;
+    private Boolean is_revised;     // to show whether there is a difference between the file and the memory
 
 
     //initialize by creating new data block
     public DataBlock(int p_id,TableSchema sa){
+        is_revised = false;
         schema = sa;
         data = new byte[Util.DiskBlockSize];
         record_number = 0;
@@ -22,6 +24,7 @@ public class DataBlock {
 
     // initialize by data from file
     public DataBlock(byte[] read_data,int p_id,TableSchema sa){
+        is_revised = false;
         schema = sa;
         data = read_data;
         page_id = p_id;
@@ -54,6 +57,7 @@ public class DataBlock {
         record_number += 1;
         System.arraycopy(Util.int2byte(record_number),0,data,0,4);
         System.arraycopy(Util.int2byte(end_of_free_space),0,data,4,4);
+        is_revised = true;
         return true;
     }
 
@@ -114,6 +118,7 @@ public class DataBlock {
         record_number -= 1;
         System.arraycopy(Util.int2byte(record_number),0,data,0,4);
         System.arraycopy(Util.int2byte(end_of_free_space),0,data,4,4);
+        is_revised = true;
         return true;
     }
 
