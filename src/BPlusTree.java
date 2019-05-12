@@ -11,9 +11,9 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         }
         System.out.println("test done");
     }
+
     private Node root;
     private int M = 3;
-
     ArrayList<Integer> findstack = new ArrayList<>();
 
     public void insert(K key, V value){
@@ -26,13 +26,20 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         leaf.split();
     }
 
-
+    public void delete(K key, V value){
+        findstack.clear();
+        LeafNode node = root.find_delete(key, value);
+    }
 
     private abstract class Node {
         ArrayList<K> keys = new ArrayList<>();
         Node parent = null;
+        Node left_bro = null;
+        Node right_bro = null;
 
         abstract public LeafNode find_insert(K key, V val);
+
+        abstract public LeafNode find_delete(K key, V val);
 
         abstract public void split();
     }
@@ -61,6 +68,14 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         }
 
         @Override
+        public LeafNode find_delete(K key, V val){
+            int idx = findkey(key);
+            Node node = vals.get(idx);
+            findstack.add(idx);
+            return node.find_delete(key, val);
+        }
+
+        @Override
         public void split() {
             if(keys.size() < M) return;
             int right_begin = M/2+1;
@@ -72,6 +87,12 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
             InternalNode right = new InternalNode();
             right.keys = new ArrayList<K>(keys.subList(right_begin, right_end-1));
             right.vals = new ArrayList<Node>(vals.subList(right_begin, right_end));
+
+            left.left_bro = this.left_bro;
+            left.right_bro = right;
+
+            right.left_bro = left;
+            right.right_bro = this.right_bro;
 
             if(parent == null){
                 InternalNode newparent = new InternalNode();
@@ -152,6 +173,12 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
             right.keys = new ArrayList<K>(keys.subList(right_begin, right_end));
             right.vals = new ArrayList<V>(vals.subList(right_begin, right_end));
 
+            left.left_bro = this.left_bro;
+            left.right_bro = right;
+
+            right.left_bro = left;
+            right.right_bro = this.right_bro;
+
             if(parent == null){
                 InternalNode newparent = new InternalNode();
                 newparent.keys.add(right.keys.get(0));
@@ -167,6 +194,17 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
                 tparent.vals.add(idx+1, right);
                 left.parent = right.parent = tparent;
                 parent.split();
+            }
+        }
+
+        @Override
+        public LeafNode find_delete(K key, V val){
+            int idx = findkey(key, false);
+            if(idx==-1) return null;
+            else{
+                keys.remove(idx);
+                vals.remove(idx);
+                return this;
             }
         }
     }
