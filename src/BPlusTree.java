@@ -6,9 +6,14 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
 //        test
         System.out.println("test");
         BPlusTree<Integer, Integer> tree = new BPlusTree<>();
-        for(int i=1; i<=20; i++){
+        for(int i=20; i>=1; i--){
             tree.insert(i, i);
         }
+
+        for(int i=1; i<=20; i++){
+            tree.delete(i, i);
+        }
+//        tree.delete(12, 12);
         System.out.println("test done");
     }
 
@@ -29,6 +34,11 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
     public void delete(K key, V value){
         findstack.clear();
         LeafNode node = root.find_delete(key, value);
+        if(node == null){
+            System.out.println("ERROR: can\'t find key.");
+        }else {
+            node.merge();
+        }
     }
 
     private abstract class Node {
@@ -42,6 +52,8 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         abstract public LeafNode find_delete(K key, V val);
 
         abstract public void split();
+
+        abstract public void merge();
     }
 
     private class InternalNode extends Node{
@@ -90,9 +102,15 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
 
             left.left_bro = this.left_bro;
             left.right_bro = right;
+            if(left.left_bro != null){
+                left.left_bro.right_bro = left;
+            }
 
             right.left_bro = left;
             right.right_bro = this.right_bro;
+            if(right.right_bro != null){
+                right.right_bro.left_bro = right;
+            }
 
             if(parent == null){
                 InternalNode newparent = new InternalNode();
@@ -121,6 +139,82 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
                     child.parent = right;
                 }
                 parent.split();
+            }
+        }
+
+        @Override
+        public void merge() {
+            if((keys.size() >= Math.ceil((double) M/2)-1)) return;
+            if((this == root)&&(root.keys.size() == 0)){
+                root = ((InternalNode) root).vals.get(0);
+                return;
+            }
+            if((left_bro != null) && (left_bro.parent == parent) && (left_bro.keys.size()>Math.ceil((double) M/2)-1)){
+                int left_len = left_bro.keys.size();
+                K borrow_key = left_bro.keys.remove(left_len-1);
+                Node borrow_node = ((InternalNode) left_bro).vals.remove(left_len);
+
+                int idx = findstack.remove(findstack.size()-1);
+                K par_key = parent.keys.set(idx-1, borrow_key);
+
+                this.keys.add(0, par_key);
+                this.vals.add(0, borrow_node);
+                borrow_node.parent = this;
+            }
+            else if((right_bro != null) && (right_bro.parent == parent) && (right_bro.keys.size()>Math.ceil((double) M/2)-1)){
+                K borrow_key = right_bro.keys.remove(0);
+                Node borrow_node = ((InternalNode) right_bro).vals.remove(0);
+
+                int idx = findstack.remove(findstack.size()-1);
+                K par_key = parent.keys.set(idx, borrow_key);
+
+                this.keys.add(par_key);
+                this.vals.add(borrow_node);
+                borrow_node.parent = this;
+            }else {
+                if((left_bro != null) && (left_bro.parent == parent)){
+                    int idx = findstack.remove(findstack.size()-1);
+
+                    for(Node node : vals){
+                        node.parent = left_bro;
+                    }
+                    K par_key = parent.keys.remove(idx-1);
+                    ((InternalNode) parent).vals.remove(idx);
+
+                    left_bro.keys.add(par_key);
+                    left_bro.keys.addAll(keys);
+
+                    ((InternalNode) left_bro).vals.addAll(vals);
+
+                    left_bro.right_bro = right_bro;
+                    if(left_bro.right_bro != null){
+                        left_bro.right_bro.left_bro = left_bro;
+                    }
+                    parent.merge();
+                }
+                else if ((right_bro != null) && (right_bro.parent == parent)){
+                    int idx = findstack.remove(findstack.size()-1);
+
+                    for(Node node : ((InternalNode) right_bro).vals){
+                        node.parent = this;
+                    }
+                    K par_key = parent.keys.remove(idx);
+                    ((InternalNode) parent).vals.remove(idx+1);
+
+                    keys.add(par_key);
+                    keys.addAll(right_bro.keys);
+                    vals.addAll(((InternalNode) right_bro).vals);
+
+
+                    right_bro = right_bro.right_bro;
+                    if(right_bro != null){
+                        right_bro.left_bro = this;
+                    }
+                    parent.merge();
+                }
+                else {
+                    System.out.println("ERROR: internal node bug!!");
+                }
             }
         }
     }
@@ -175,9 +269,15 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
 
             left.left_bro = this.left_bro;
             left.right_bro = right;
+            if(left.left_bro != null){
+                left.left_bro.right_bro = left;
+            }
 
             right.left_bro = left;
             right.right_bro = this.right_bro;
+            if(right.right_bro != null){
+                right.right_bro.left_bro = right;
+            }
 
             if(parent == null){
                 InternalNode newparent = new InternalNode();
@@ -205,6 +305,60 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
                 keys.remove(idx);
                 vals.remove(idx);
                 return this;
+            }
+        }
+
+        @Override
+        public void merge() {
+            if((keys.size() >= Math.ceil((double) M/2)-1) || (this == root)){
+                return;
+            }
+            if((left_bro != null) && (left_bro.parent == parent) && (left_bro.keys.size()>Math.ceil((double) M/2)-1)){
+                int left_len = left_bro.keys.size();
+                K borrow_key = left_bro.keys.remove(left_len-1);
+                V borrow_v = ((LeafNode) left_bro).vals.remove(left_len-1);
+
+                keys.add(0, borrow_key);
+                vals.add(0, borrow_v);
+
+                int idx = findstack.remove(findstack.size()-1);
+                parent.keys.set(idx-1, borrow_key);
+            }
+            else if((right_bro != null) && (right_bro.parent == parent) && (right_bro.keys.size()>Math.ceil((double) M/2)-1)){
+                K borrow_key = right_bro.keys.remove(0);
+                V borrow_v = ((LeafNode) right_bro).vals.remove(0);
+
+                keys.add(borrow_key);
+                vals.add(borrow_v);
+
+                int idx = findstack.remove(findstack.size()-1);
+                parent.keys.set(idx, right_bro.keys.get(0));
+            }else {
+                if((left_bro != null) && (left_bro.parent == parent)){
+                    int idx = findstack.remove(findstack.size()-1);
+                    parent.keys.remove(idx-1);
+                    ((InternalNode) parent).vals.remove(idx);
+                    left_bro.keys.addAll(this.keys);
+                    ((LeafNode) left_bro).vals.addAll(this.vals);
+                    left_bro.right_bro = this.right_bro;
+                    if(this.right_bro != null){
+                        left_bro.right_bro.left_bro = left_bro;
+                    }
+                    parent.merge();
+                }else if((right_bro != null) && (right_bro.parent == parent)){
+                    int idx = findstack.remove(findstack.size()-1);
+                    parent.keys.remove(idx);
+                    ((InternalNode) parent).vals.remove(idx+1);
+                    keys.addAll(right_bro.keys);
+                    vals.addAll(((LeafNode) right_bro).vals);
+                    right_bro = right_bro.right_bro;
+                    if(right_bro != null){
+                        right_bro.left_bro = this;
+                    }
+                    parent.merge();
+                }else {
+                    System.out.println("ERROR: leafnode bug!!");
+                }
             }
         }
     }
