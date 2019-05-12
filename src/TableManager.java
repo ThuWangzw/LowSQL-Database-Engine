@@ -53,11 +53,15 @@ public class TableManager {
         byte[] result = new byte[meta_bytes];
         System.arraycopy(Util.int2byte(meta_bytes),0,result,0,4);
         byte[] name_byte = (table_name + "\0").getBytes();
-        System.arraycopy(name_byte,0,result,4,Util.TableNameMaxLength);
+        int copy_len = (name_byte.length < Util.TableNameMaxLength) ? name_byte.length : Util.TableNameMaxLength;
+        System.arraycopy(name_byte,0,result,4,copy_len);
         System.arraycopy(Util.int2byte(schema.getAttributeNumber()),0,result,4 + Util.TableNameMaxLength,4);
+        System.arraycopy(schema.toMetaByte(),0,result,8 + Util.TableNameMaxLength,schema.getAttributeNumber() * (Util.AttributeNameMaxLength + 4 ));
         return result;
     }
 
     public String getTableName(){return table_name;}
+
+    public DataStorage getDataStorage(){return storage;}
 
 }

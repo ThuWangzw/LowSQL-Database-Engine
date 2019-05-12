@@ -1,6 +1,6 @@
 public class Record {
     private Field[] fields;
-    private int size;
+    private int size;  //bytes of the whole record
     private TableSchema schema;
 
     //read a record from file
@@ -65,5 +65,14 @@ public class Record {
            obj[i] = fields[i].getValue();
         }
         return obj;
+    }
+
+    public Boolean isValid(){
+        int len = fields.length;
+        Boolean valid = true;
+        for(int i = 0; i < len; i++){
+            valid = valid && fields[i].isValid();
+        }
+        return valid;
     }
 }

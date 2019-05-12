@@ -73,7 +73,9 @@ public class DatabaseManager {
         }
         byte[] tot_bytes = new byte[tot_length];
         System.arraycopy(Util.int2byte(tot_length),0,tot_bytes,0,4);
-        System.arraycopy((DB_name + "\0").getBytes(),0,tot_bytes,4,Util.DatabaseNameMaxLength);
+        byte[] name_byte = (DB_name + "\0").getBytes();
+        int copy_len = (name_byte.length < Util.DatabaseNameMaxLength) ? name_byte.length : Util.DatabaseNameMaxLength;
+        System.arraycopy(name_byte,0,tot_bytes,4,copy_len);
         System.arraycopy(Util.int2byte(table_number),0,tot_bytes,4 + Util.DatabaseNameMaxLength,4);
         int curpos = Util.DatabaseNameMaxLength + 8;
         for(byte[] cur : all_table_meta_bytes){
@@ -88,7 +90,7 @@ public class DatabaseManager {
         //check if there are any tables that have the same name
         String t_name = t.getTableName();
         for (TableManager cur:tables){
-            if(cur.getTableName() == t_name){
+            if(t_name.equals(cur.getTableName())){
                 return;
             }
         }
@@ -98,13 +100,24 @@ public class DatabaseManager {
 
     public void deleteTable (String table_name){
         for(TableManager cur:tables){
-            if(cur.getTableName() == table_name){
+            if(table_name.equals(cur.getTableName())){
                 tables.remove(cur);
             }
         }
     }
 
     public String getDatabaseName(){return DB_name;}
+
+    public ArrayList<TableManager> getTables(){return tables;}
+
+    public TableManager getOneTable(String table_name){
+        for (TableManager cur:tables) {
+            if (table_name.equals(cur.getTableName())) {
+                return cur;
+            }
+        }
+        return null;
+    }
 
     public static void main(String[] args){
         System.out.println("-- DatabaseManager --");
