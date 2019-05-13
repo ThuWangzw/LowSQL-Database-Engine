@@ -10,7 +10,31 @@ public class DataUpdateInfo {
     private Object search_key;
     private Type type;
 
-    public DataUpdateInfo(Type tp,int o_p_id, int o_r_id, int n_p_id, int n_r_id,Record rd,int search_key_field_id){
+    public int getNew_page_id() {
+        return new_page_id;
+    }
+
+    public int getNew_record_id() {
+        return new_record_id;
+    }
+
+    public int getOld_page_id() {
+        return old_page_id;
+    }
+
+    public int getOld_record_id() {
+        return old_record_id;
+    }
+
+    public Object getSearch_key() {
+        return search_key;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public DataUpdateInfo(Type tp, int o_p_id, int o_r_id, int n_p_id, int n_r_id, Record rd, int search_key_field_id){
         //search_key_field_id is the id of the fields of the record that is set to be the search key
         type = tp;
         old_page_id = o_p_id;

@@ -1,27 +1,27 @@
 import java.util.ArrayList;
-import java.util.List;
 
-public class BPlusTree<K extends Comparable<? super K>, V> {
+public class BPlusTree<K extends Comparable<? super K>> {
     public static void main(String[] args){
 //        test
         System.out.println("test");
-        BPlusTree<Integer, Integer> tree = new BPlusTree<>();
-        for(int i=20; i>=1; i--){
-            tree.insert(i, i);
-        }
-
+        BPlusTree<Integer> tree = new BPlusTree<>();
         for(int i=1; i<=20; i++){
-            tree.delete(i, i);
+            Savedata data = new Savedata(i, i);
+            tree._insert(i, data);
         }
-//        tree.delete(12, 12);
+        for(int i=1; i<=5; i++){
+            Savedata data = new Savedata(-i, -i);
+            tree._insert(i, data);
+        }
+        Savedata res = tree._find(10, new Savedata(-10, 10));
         System.out.println("test done");
     }
 
     private Node root;
     private int M = 3;
-    ArrayList<Integer> findstack = new ArrayList<>();
+    private ArrayList<Integer> findstack = new ArrayList<>();
 
-    public void insert(K key, V value){
+    private void _insert(K key, Savedata value){
 //        find the node and insert
         if(root == null){
             root = new LeafNode();
@@ -31,7 +31,7 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         leaf.split();
     }
 
-    public void delete(K key, V value){
+    private void _delete(K key, Savedata value){
         findstack.clear();
         LeafNode node = root.find_delete(key, value);
         if(node == null){
@@ -41,15 +41,42 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         }
     }
 
+    private Savedata _find(K key, Savedata value){
+        return root.find(key, value);
+    }
+
+    public void run(ArrayList<DataUpdateInfo> commands){
+        for (DataUpdateInfo command : commands){
+            if(command.getType() == DataUpdateInfo.Type.INSERT){
+                Savedata insert_data = new Savedata(command.getNew_page_id(), command.getNew_record_id());
+                _insert((K)command.getSearch_key(), insert_data);
+            }
+            else if (command.getType() == DataUpdateInfo.Type.DELETE){
+                Savedata delete_data = new Savedata(command.getOld_page_id(), command.getOld_record_id());
+                _delete((K)command.getSearch_key(), delete_data);
+            }
+            else if (command.getType() == DataUpdateInfo.Type.UPDATE){
+                Savedata find_data = new Savedata(command.getOld_page_id(), command.getOld_record_id());
+                Savedata find_res = _find((K)command.getSearch_key(), find_data);
+                if(find_res != null){
+                    find_res.setPage_id(command.getNew_page_id());
+                    find_res.setRecord_id(command.getNew_record_id());
+                }
+            }
+        }
+    }
+
     private abstract class Node {
         ArrayList<K> keys = new ArrayList<>();
         Node parent = null;
         Node left_bro = null;
         Node right_bro = null;
 
-        abstract public LeafNode find_insert(K key, V val);
+        abstract public LeafNode find_insert(K key, Savedata val);
 
-        abstract public LeafNode find_delete(K key, V val);
+        abstract public LeafNode find_delete(K key, Savedata val);
+
+        abstract public Savedata find(K key, Savedata val);
 
         abstract public void split();
 
@@ -72,7 +99,7 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         }
 
         @Override
-        public LeafNode find_insert(K key, V val){
+        public LeafNode find_insert(K key, Savedata val){
             int idx = findkey(key);
             Node node = vals.get(idx);
             findstack.add(idx);
@@ -80,7 +107,7 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         }
 
         @Override
-        public LeafNode find_delete(K key, V val){
+        public LeafNode find_delete(K key, Savedata val){
             int idx = findkey(key);
             Node node = vals.get(idx);
             findstack.add(idx);
@@ -147,6 +174,7 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
             if((keys.size() >= Math.ceil((double) M/2)-1)) return;
             if((this == root)&&(root.keys.size() == 0)){
                 root = ((InternalNode) root).vals.get(0);
+                root.parent = null;
                 return;
             }
             if((left_bro != null) && (left_bro.parent == parent) && (left_bro.keys.size()>Math.ceil((double) M/2)-1)){
@@ -217,10 +245,17 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
                 }
             }
         }
+
+        @Override
+        public Savedata find(K key, Savedata val) {
+            int idx = findkey(key);
+            Node node = vals.get(idx);
+            return node.find(key, val);
+        }
     }
 
     private class LeafNode extends Node{
-        ArrayList<V> vals = new ArrayList<>();
+        ArrayList<Savedata> vals = new ArrayList<>();
 
         int findkey(K key, Boolean is_insert){
             if (is_insert){
@@ -229,7 +264,11 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
                     return 0;
                 }
                 for(int i=0; i<keys.size(); i++){
-                    if(key.compareTo(keys.get(i)) < 0){
+                    int cmp_res = key.compareTo(keys.get(i));
+                    if (cmp_res == 0){
+                        return -(i+1);
+                    }
+                    else if(cmp_res < 0){
                         keys.add(i, key);
                         return i;
                     }
@@ -248,9 +287,17 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         }
 
         @Override
-        public LeafNode find_insert(K key, V val){
+        public LeafNode find_insert(K key, Savedata val){
             int num = findkey(key, true);
-            vals.add(num, val);
+            if(num >= 0){
+                vals.add(num, val);
+            }
+            else {
+                num = -num-1;
+                Savedata insert_val = vals.get(num);
+                val.setNext(insert_val);
+                vals.set(num, val);
+            }
             return this;
         }
 
@@ -261,11 +308,11 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
             int right_end = M+1;
             LeafNode left = new LeafNode();
             left.keys = new ArrayList<K>(keys.subList(0, right_begin));
-            left.vals = new ArrayList<V>(vals.subList(0, right_begin));
+            left.vals = new ArrayList<Savedata>(vals.subList(0, right_begin));
 
             LeafNode right = new LeafNode();
             right.keys = new ArrayList<K>(keys.subList(right_begin, right_end));
-            right.vals = new ArrayList<V>(vals.subList(right_begin, right_end));
+            right.vals = new ArrayList<Savedata>(vals.subList(right_begin, right_end));
 
             left.left_bro = this.left_bro;
             left.right_bro = right;
@@ -298,12 +345,20 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
         }
 
         @Override
-        public LeafNode find_delete(K key, V val){
+        public LeafNode find_delete(K key, Savedata val){
             int idx = findkey(key, false);
             if(idx==-1) return null;
             else{
-                keys.remove(idx);
-                vals.remove(idx);
+//                keys.remove(idx);
+//                vals.remove(idx);
+                Savedata delete_val = vals.get(idx);
+                Savedata new_val = delete_val.delete(val);
+                if(new_val == null){
+                    keys.remove(idx);
+                    vals.remove(idx);
+                }else {
+                    vals.set(idx, new_val);
+                }
                 return this;
             }
         }
@@ -316,7 +371,7 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
             if((left_bro != null) && (left_bro.parent == parent) && (left_bro.keys.size()>Math.ceil((double) M/2)-1)){
                 int left_len = left_bro.keys.size();
                 K borrow_key = left_bro.keys.remove(left_len-1);
-                V borrow_v = ((LeafNode) left_bro).vals.remove(left_len-1);
+                Savedata borrow_v = ((LeafNode) left_bro).vals.remove(left_len-1);
 
                 keys.add(0, borrow_key);
                 vals.add(0, borrow_v);
@@ -326,7 +381,7 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
             }
             else if((right_bro != null) && (right_bro.parent == parent) && (right_bro.keys.size()>Math.ceil((double) M/2)-1)){
                 K borrow_key = right_bro.keys.remove(0);
-                V borrow_v = ((LeafNode) right_bro).vals.remove(0);
+                Savedata borrow_v = ((LeafNode) right_bro).vals.remove(0);
 
                 keys.add(borrow_key);
                 vals.add(borrow_v);
@@ -361,13 +416,24 @@ public class BPlusTree<K extends Comparable<? super K>, V> {
                 }
             }
         }
+
+        @Override
+        public Savedata find(K key, Savedata val) {
+            int idx = findkey(key, false);
+            if(idx == -1){
+                return null;
+            }else {
+                return vals.get(idx).find(val);
+            }
+        }
     }
 
 }
 
 class Savedata{
-    public int page_id;
-    public int record_id;
+    private int page_id;
+    private int record_id;
+    private Savedata next = null;
 
     public Savedata(int page_id, int record_id){
         this.page_id = page_id;
@@ -380,6 +446,69 @@ class Savedata{
 
     public int getRecord_id(){
         return record_id;
+    }
+
+    public Savedata getNext() {
+        return next;
+    }
+
+    public void setPage_id(int page_id) {
+        this.page_id = page_id;
+    }
+
+    public void setRecord_id(int record_id) {
+        this.record_id = record_id;
+    }
+
+    public void setNext(Savedata next) {
+        this.next = next;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+        if(!(o instanceof Savedata)){
+            return false;
+        }
+        Savedata a = (Savedata)o;
+        if((a.page_id == page_id) && (a.record_id == record_id)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Savedata delete(Savedata val){
+        if(equals(val)){
+            return next;
+        }
+        else {
+            Savedata last = this;
+            Savedata now = next;
+            while (now != null){
+                if(now.equals(val)){
+                    last.next = now.next;
+                    break;
+                }
+                now = now.next;
+                last = last.next;
+            }
+            return this;
+        }
+    }
+
+    public Savedata find(Savedata val){
+        Savedata p = this;
+        while (p != null){
+            if(p.equals(val)){
+                break;
+            }
+            p=p.next;
+        }
+        return p;
     }
 }
 
