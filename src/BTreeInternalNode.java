@@ -166,6 +166,7 @@ public class BTreeInternalNode extends BTreeNode {
             System.arraycopy(new_key,0,index_data,19 + index * (2 + key_number) + 2,key_length);
         }
         System.arraycopy(Util.short2byte((short)pointer_id),0,index_data,19 + index*(2 + key_number),2);
+        keys.set(index,new_key);
     }
 
 
