@@ -41,8 +41,11 @@ public class TableAttribute {
 
     public int getType(){return type;}
     public String getAttributeName(){return attribute_name;}
-    public int getLengthLimit(){return length_limit;}
-
+    public int getLengthLimit(){
+        if(type > Util.VARCHAR)
+            return Util.DataTypeSize[type];
+        return length_limit;
+    }
 
     public byte[] toMetaByte(){
         if ( attribute_name.length() > Util.AttributeNameMaxLength) return null;

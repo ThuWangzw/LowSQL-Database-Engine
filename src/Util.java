@@ -16,9 +16,24 @@ public class Util{
         };
     }
 
+    public static byte[] short2byte(short v){
+        return new byte[]{
+                (byte) ((v >> 8) & 0xff),(byte) (v & 0xff)
+        };
+    }
+
+    public static short byte2short(byte[] v){
+        return (short) (v[1] & 0xff | (v[0] & 0xff) << 8);
+    }
+
+    public static byte[] byte2bytes(byte b){
+        return new byte[]{b};
+    }
+
     public static int byte2int(byte[] v){
         return  v[3] & 0xff | (v[2] & 0xff) << 8 | (v[1] & 0xff) << 16 | (v[0] & 0xff) << 24;
     }
+
 
     public static float byte2float(byte[] v) {
         int l = v[3] & 0xff | (v[2] & 0xff) << 8 | (v[1] & 0xff) << 16 | (v[0] & 0xff) << 24;
@@ -50,5 +65,15 @@ public class Util{
     public static int VARCHAR = 5;
     public static int STRING = 6;
     public static int[] DataTypeSize = new int[]{1,4,4,8,8};
+
+
+    //compare
+    public static int L = 0;
+    public static int LE = 1;
+    public static int G = 2;
+    public static int GE = 3;
+    public static int E = 4;
+    public static int NE = 5;
+
 }
 
