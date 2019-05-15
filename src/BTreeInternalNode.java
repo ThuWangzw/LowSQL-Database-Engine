@@ -18,8 +18,167 @@ public class BTreeInternalNode extends BTreeNode {
     }
 
 
+    public void borrowFromRightBrother(int index){
+        BTreeInternalNode right_bro = (BTreeInternalNode) buffer.getNode(right_bro_id);
+        //borrow from right bro node
+        short pt = right_bro.getPointer(0);
+        byte[] right_min_key = new byte[key_length];
+        System.arraycopy(right_bro.index_data,21,right_min_key,0,key_length);
+        right_bro.deleteKeyPointer(0);
+        byte[] old_key = getBiggestKey();
+        deleteKeyPointer(index);
+        //parent node
+        BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id);
+        parent_node.updateKeyPointer(old_key,right_min_key,getHeadNode().node_id);
+        insertOneKeyPointer(right_min_key,pt);
+    }
 
-    public void insertOneKeyPointer(byte[] new_key ,int pointer_id){
+
+    public void borrowFromLeftBrother(int index){
+        BTreeInternalNode left_bro = (BTreeInternalNode) buffer.getNode(left_bro_id);
+        BTreeInternalNode left_bro_end = (BTreeInternalNode)left_bro.getTailNode();
+        //borrow from left bro node
+        short pt = left_bro_end.getPointer(left_bro_end.key_number - 1);
+        byte[] left_biggest_key = left_bro_end.getBiggestKey();
+        left_bro_end.deleteKeyPointer(left_bro_end.key_number - 1);
+        deleteKeyPointer(index);
+        //parent node
+        BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(left_bro.parent_id);
+        parent_node.updateKeyPointer(left_biggest_key,left_bro.getBiggestKey(),left_bro.node_id);
+        insertOneKeyPointer(left_biggest_key,pt);
+    }
+
+    public void mergeWithRightNode(int index){
+        byte[] origin_left_key = getBiggestKey();
+        deleteKeyPointer(index);
+        //already delete the key
+        BTreeInternalNode right_bro = (BTreeInternalNode) buffer.getNode(right_bro_id);
+        //right bro
+        for (int i = 0; i < right_bro.key_length; i++){
+            insertOneKeyPointer(keys.get(i),right_bro.getPointer(i));
+        }
+        if (right_bro.next_id != 0){
+            BTreeInternalNode p = right_bro;
+            do{
+                p = (BTreeInternalNode)buffer.getNode(p.next_id);
+                for (int i = 0; i < p.key_length; i++){
+                    insertOneKeyPointer(keys.get(i),p.getPointer(i));
+                }
+            }while (p.next_id != 0);
+        }
+        if (right_bro.parent_id != parent_id){
+            int origin_parent = parent_id;
+            updateParent(right_bro.parent_id);
+            BTreeInternalNode parent_node = (BTreeInternalNode) buffer.getNode(right_bro.parent_id);
+            parent_node.updateKeyPointer(right_bro.getBiggestKey(),null,getHeadNode().node_id);
+            parent_node = (BTreeInternalNode) buffer.getNode(origin_parent);
+
+            parent_node.deleteOneKey(origin_left_key);
+        }else{
+            BTreeInternalNode parent_node = (BTreeInternalNode) buffer.getNode(parent_id);
+            parent_node.updateKeyPointer(right_bro.getBiggestKey(),null,getHeadNode().node_id);
+
+            parent_node.deleteOneKey(origin_left_key);
+        }
+        right_bro.deleteNodeList();
+    }
+
+    public void mergeWithLeftNode(int index){
+        deleteKeyPointer(index);
+        BTreeInternalNode left_bro = (BTreeInternalNode) buffer.getNode(left_bro_id);
+        byte[] origin_left_key = left_bro.getBiggestKey();
+        for (int i = 0; i < left_bro.key_length; i++){
+            insertOneKeyPointer(keys.get(i),left_bro.getPointer(i));
+        }
+        if (left_bro.next_id != 0){
+            BTreeInternalNode p = left_bro;
+            do{
+                p = (BTreeInternalNode)buffer.getNode(p.next_id);
+                for (int i = 0; i < p.key_length; i++){
+                    insertOneKeyPointer(keys.get(i),p.getPointer(i));
+                }
+            }while (p.next_id != 0);
+        }
+        BTreeInternalNode parent_node = (BTreeInternalNode) buffer.getNode(parent_id);
+        parent_node.deleteOneKey(origin_left_key);
+
+        left_bro.deleteNodeList();
+    }
+
+
+    public void deleteOneKey(byte[] key) {
+        int total_key_number = prior_key_number + next_key_number + key_number;
+
+        //locate
+        if(next_id != 0){
+            BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id);
+            if(compare2key(next_node.keys.get(0),key) != Util.G) {
+                next_node.deleteOneKey(key);
+                return;
+            }
+        }
+        if(prior_id != 0) {
+            BTreeInternalNode prior_node = (BTreeInternalNode) buffer.getNode(prior_id);
+            if (compare2key(prior_node.keys.get(prior_node.key_number - 1), key) != Util.L) {
+                prior_node.deleteOneKey(key);
+                return;
+            }
+        }
+
+        //in current block
+        int index = BinarySearch(key, 0, key_number - 1);
+        if (index == key_number || compare2key(key, keys.get(index)) != Util.E) {
+            return;
+        }
+
+        int threshold = (int) Math.ceil(M / 2);
+        if (parent_id != 0 && total_key_number == threshold) {
+            if (right_bro_id != 0) {
+                //not the rightest node of the layer
+                BTreeInternalNode right_bro = (BTreeInternalNode) buffer.getNode(right_bro_id);
+                if (right_bro.key_number + right_bro.next_key_number > threshold) {
+                    borrowFromRightBrother(index);
+                } else {
+                    //merge with the right one
+                    deleteKeyPointer(index);
+                    mergeWithRightNode(index);
+                }
+            } else {
+                //the rightest node of the layer
+                BTreeInternalNode left_bro = (BTreeInternalNode) buffer.getNode(left_bro_id);
+                if (left_bro.key_number + left_bro.next_key_number > threshold) {
+                    borrowFromLeftBrother(index);
+                }else{
+                    //merge with the left one
+                    mergeWithLeftNode(index);
+                }
+            }
+        }else{
+            //delete directly
+            BTreeInternalNode parent_node;
+            if (parent_id != 0) {
+                byte[] biggest_key = getBiggestKey();
+                deleteKeyPointer(index);
+                if (compare2key(key,biggest_key) == Util.E) {
+                    parent_node = (BTreeInternalNode) buffer.getNode(parent_id);
+                    parent_node.updateKeyPointer(biggest_key, getBiggestKey(), getHeadNode().node_id);
+                }
+            }
+            else {
+                //root node
+                deleteKeyPointer(index);
+                if(key_number == 1){
+                    //update root node
+                    BTreeNode n_r = buffer.getNode(getPointer(0));
+                    n_r.updateParent(0);
+                    buffer.newRootNode(n_r.node_id);
+                    deleteNodeList();
+                }
+            }
+        }
+    }
+
+        public void insertOneKeyPointer(byte[] new_key, int pointer_id){
         //new key can't be the same with the origin one
         int total_number = prior_key_number + key_number + next_key_number;
 
@@ -169,6 +328,17 @@ public class BTreeInternalNode extends BTreeNode {
         keys.set(index,new_key);
     }
 
+
+    public void updateBiggestKey(byte[] new_key){
+        if( compare2key(new_key,keys.get(key_number - 1)) == Util.G){
+            System.arraycopy(new_key,0,index_data,19 + (key_number - 1) * (2 + key_number) + 2,key_length);
+            keys.set(key_number - 1,new_key);
+        }
+    }
+
+    public void updatePointerOfBiggestKey(int pointer_id){
+        System.arraycopy(Util.short2byte((short)pointer_id),0,index_data,19 + (key_number - 1) *(2 + key_number),2);
+    }
 
     public void deleteKeyPointer(int index){
         keys.remove(index);

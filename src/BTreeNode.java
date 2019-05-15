@@ -341,6 +341,14 @@ abstract public class BTreeNode {
         return temp;
     }
 
+    public BTreeNode getTailNode(){
+        BTreeNode temp = this;
+        if (next_id != 0){
+            temp = buffer.getNode(next_id);
+        }
+        return temp;
+    }
+
     public byte[] getBiggestKey(){
         BTreeNode p = this;
         if(next_id != 0){
@@ -379,6 +387,55 @@ abstract public class BTreeNode {
     }
 
     abstract public void IndexDataFromByte();
+
+
+    public void deleteNode(){
+        if (prior_id != 0 && next_id != 0){
+            BTreeNode prior_node = buffer.getNode(prior_id),next_node = buffer.getNode(next_id);
+            prior_node.next_id = next_node.node_id;
+            next_node.prior_id = prior_node.node_id;
+            prior_node.updateNextKeyNumber(next_key_number);
+            prior_node.updateNumberToLeft();
+            next_node.updatePriorKeyNumber(prior_key_number);
+            next_node.updateNumberToRight();
+        }else if (prior_id != 0 && next_id == 0){
+            BTreeNode prior_node = buffer.getNode(prior_id);
+            prior_node.next_id = 0;
+            prior_node.updateNextKeyNumber(0);
+            prior_node.updateNumberToLeft();
+        }else if(prior_id == 0 && next_id !=0){
+            BTreeNode next_node = buffer.getNode(next_id);
+            next_node.prior_id = 0;
+            next_node.updatePriorKeyNumber(0);
+            next_node.updateNumberToRight();
+        }
+        buffer.deleteNode(this);
+    }
+
+    public void deleteNodeList(){
+        if (left_bro_id != 0 && right_bro_id != 0){
+            BTreeNode left_node = buffer.getNode(left_bro_id),right_node = buffer.getNode(right_bro_id);
+            left_node.updateRightBro(right_node.node_id);
+            right_node.updateLeftBro(left_node.node_id);
+        }else if(left_bro_id != 0 && right_bro_id == 0){
+            BTreeNode left_node = buffer.getNode(left_bro_id);
+            left_node.updateRightBro(0);
+        }else if (left_bro_id == 0 && right_bro_id != 0){
+            BTreeNode right_node = buffer.getNode(right_bro_id);
+            right_node.updateLeftBro(0);
+        }
+        BTreeNode temp = this;
+        while(temp.next_id != 0){
+            temp = buffer.getNode(temp.next_id);
+            buffer.deleteNode(temp);
+        }
+        temp = this;
+        while(temp.prior_id != 0){
+            temp = buffer.getNode(temp.prior_id);
+            buffer.deleteNode(temp);
+        }
+        buffer.deleteNode(this);
+    }
 
 
     public static void main(String[] args) {

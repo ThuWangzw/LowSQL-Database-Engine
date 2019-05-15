@@ -13,6 +13,10 @@ public class IndexBuffer {
 
     }
 
+    public void newRootNode(int new_root_id){
+
+    }
+
     public int getFreeId(){
         return 0;
     }
