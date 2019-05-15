@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class TableManager {
     private String DB_name;
     private String table_name;
@@ -64,4 +66,18 @@ public class TableManager {
 
     public DataStorage getDataStorage(){return storage;}
 
+
+
+    public TableSchema createIndexSchema(ArrayList<String> names){
+        TableAttribute[] attrs = new TableAttribute[names.size()];
+        int i = 0;
+        for (String cur : names){
+            TableAttribute attr = schema.getOneAttribute(cur);
+            if(attr != null){
+                attrs[i] = attr;
+                i += 1;
+            }
+        }
+        return new TableSchema(table_name,attrs);
+    }
 }

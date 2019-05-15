@@ -47,6 +47,10 @@ public class Record {
 
     public int getSize(){return size;}
 
+    public TableSchema getSchema(){return schema;}
+
+    public Field[] getFields(){return fields;}
+
     public byte[] toBytes(){
         byte[] data = new byte[size];
         int current_pos = 0;

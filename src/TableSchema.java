@@ -51,4 +51,24 @@ public class TableSchema {
         }
         return result;
     }
+
+    public Boolean equal(TableSchema sa){
+        if( sa.getAttributeNumber() != attribute_number)
+            return false;
+
+        TableAttribute[] attrs = sa.getAttrubutes();
+        for (int i = 0; i < attribute_number; i++){
+            if (!attrs[i].getAttributeName().equals(attributes[i].getAttributeName()))
+                return false;
+        }
+        return true;
+    }
+
+    public String concatNames(){
+        String temp = new String();
+        for(TableAttribute cur:attributes){
+            temp += cur.getAttributeName();
+        }
+        return temp;
+    }
 }

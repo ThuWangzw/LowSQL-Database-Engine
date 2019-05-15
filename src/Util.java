@@ -2,6 +2,7 @@ import java.lang.instrument.Instrumentation;
 
 public class Util{
     public static String DataStorageDir = "data/";
+    public static String IndexStorageDir = "index";
     public static String MetaDataFile = "system/metadata.bin";
     public static int DiskBlockSize = 4096;
 
@@ -75,5 +76,7 @@ public class Util{
     public static int E = 4;
     public static int NE = 5;
 
+    //B tree
+    public static int BTree_M = 3;
 }
 

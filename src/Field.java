@@ -91,4 +91,6 @@ public class Field {
     public Object getValue(){
         return value;
     }
+
+    public TableAttribute getAttribute(){return  attribute;}
 }

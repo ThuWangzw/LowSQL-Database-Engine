@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 public class Server {
     private ArrayList<DatabaseManager> databases;
     private DatabaseManager current_database;
+    IndexBuffer index_buffer;
+
 
     public Server(){
         //load all database
@@ -31,6 +33,9 @@ public class Server {
                 addDatabase(new DatabaseManager("test"));
                 WriteMetaData();
             }
+            setCurrentDatabase("test");
+            //init index buffer
+            index_buffer = new IndexBuffer(current_database);
 
         }catch(Exception e){
             e.printStackTrace();
@@ -102,6 +107,8 @@ public class Server {
         TableSchema schema = new TableSchema("height",attrs);
         TableManager tb1 = new TableManager("test","height",schema);*/
 
+
+
         Server server = new Server();
         //server.addDatabase(new DatabaseManager("db2"));
         //server.WriteMetaData();
@@ -112,7 +119,7 @@ public class Server {
 
         Field fd1 = new Field("LeiYiran",a1);
         Field fd2 = new Field(95,a2);
-        Field fd3 = new Field("WangZhaowei",a1);
+        Field fd3 = new Field("World",a1);
         Field fd4 = new Field(99,a2);
 
         Field[] fds = new Field[]{fd1,fd2};
@@ -123,6 +130,15 @@ public class Server {
 
         blk.insertOneRecord(rcd);
         blk.insertOneRecord(rcd2);
+
+        //TableAttribute[] attrs = new TableAttribute[]{a1};
+        //TableSchema index_sa = new TableSchema("score",attrs);
+
+        //server.index_buffer.createIndex("test","score",index_sa,Util.BTree_M);
+
+        BTree bt = server.index_buffer.btrees.get(0);
+        bt.insert(bt.record2key(rcd2),5,5);
+        server.index_buffer.saveAll();
 
         server.getOneDatabase("test").getOneTable("score").getDataStorage().WriteDataBlock(blk);
         System.out.println("-- Server --");
