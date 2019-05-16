@@ -139,7 +139,7 @@ public class BTreeInternalNode extends BTreeNode {
             return;
         }
 
-        int threshold = (int) Math.ceil(M / 2);
+        int threshold = (int) Math.ceil((double) M / 2);
         if (parent_id != 0 && total_key_number == threshold) {
             if (right_bro_id != 0) {
                 //not the rightest node of the layer
@@ -196,7 +196,7 @@ public class BTreeInternalNode extends BTreeNode {
             if(total_number == M){
                 //split
                 byte[] old_biggest = getBiggestKey();
-                int mid = (int) Math.ceil(M/2) - 1;
+                int mid = (int) Math.ceil((double)M/2) - 1;
                 BTreeInternalNode split_node;
                 //add split node to parent node
                 if(M % 2 == 1){
@@ -208,15 +208,13 @@ public class BTreeInternalNode extends BTreeNode {
                     split_node = splitAt(mid);
                 }
                 if(compare2key(keys.get(mid),new_key) == Util.G){
-                    insertOneKeyPointer(new_key,pointer_id);
                     if(parent_id != 0){
                         BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id,DB_name,table_name,index_attrs);
                         parent_node.insertOneKeyPointer(getBiggestKey(),node_id);
                         parent_node.updateKeyPointer(split_node.getBiggestKey(),null,split_node.node_id);
                     }
-
+                    insertOneKeyPointer(new_key,pointer_id);
                 }else{
-                    split_node.insertOneKeyPointer(new_key,pointer_id);
                     if(parent_id != 0){
                         BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id,DB_name,table_name,index_attrs);
                         parent_node.insertOneKeyPointer(getBiggestKey(),node_id);
@@ -224,7 +222,7 @@ public class BTreeInternalNode extends BTreeNode {
                     }else{
                         createRootNode(this,split_node);
                     }
-
+                    split_node.insertOneKeyPointer(new_key,pointer_id);
                 }
             }else{
                 int insert_index = BinarySearch(new_key,0,key_number - 1);
@@ -251,7 +249,7 @@ public class BTreeInternalNode extends BTreeNode {
         }else{
             //node in many blocks
             if (total_number == M){
-                int mid = (int) Math.ceil(M/2) - 1;
+                int mid = (int) Math.ceil((double)M/2) - 1;
                 BTreeInternalNode split_node;
                 if (mid >= key_number + prior_key_number){
                     //this node do not split
@@ -300,20 +298,21 @@ public class BTreeInternalNode extends BTreeNode {
                         split_node = splitAt(mid - prior_key_number);
                     }
                     if(compare2key(keys.get(mid - prior_key_number),new_key) == Util.G){
-                        insertOneKeyPointer(new_key,pointer_id);
                         if(parent_id != 0){
                             BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id,DB_name,table_name,index_attrs);
                             parent_node.insertOneKeyPointer(getBiggestKey(),getHeadNode().node_id);
                             parent_node.updateKeyPointer(split_node.getBiggestKey(),null,split_node.node_id);
                         }
+                        insertOneKeyPointer(new_key,pointer_id);
 
                     }else{
-                        split_node.insertOneKeyPointer(new_key,pointer_id);
                         if(parent_id != 0){
                             BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id,DB_name,table_name,index_attrs);
                             parent_node.insertOneKeyPointer(getBiggestKey(),getHeadNode().node_id);
                             parent_node.updateKeyPointer(old_biggest,split_node.getBiggestKey(),split_node.node_id);
                         }
+                        split_node.insertOneKeyPointer(new_key,pointer_id);
+
                     }
                 }
             }else{
@@ -358,11 +357,14 @@ public class BTreeInternalNode extends BTreeNode {
     public void updateKeyPointer(byte[] old_key,byte[] new_key,int pointer_id){
         //keep the order
         int index = BinarySearch(old_key,0,key_number - 1);
+        if(index == key_number || compare2key(keys.get(index),old_key) != Util.E)
+            return;
         if(new_key != null){
-            System.arraycopy(new_key,0,index_data,19 + index * (2 + key_number) + 2,key_length);
+            System.arraycopy(new_key,0,index_data,19 + index * (2 + key_length) + 2,key_length);
         }
-        System.arraycopy(Util.short2byte((short)pointer_id),0,index_data,19 + index*(2 + key_number),2);
+        System.arraycopy(Util.short2byte((short)pointer_id),0,index_data,19 + index*(2 + key_length),2);
         keys.set(index,new_key);
+        is_changed = true;
     }
 
 
@@ -384,6 +386,7 @@ public class BTreeInternalNode extends BTreeNode {
         updateKeyNumber(key_number - 1);
         if(key_number == 0)
             buffer.deleteNode(this);
+        is_changed = true;
     }
 
     public short getPointer(int index){
@@ -467,9 +470,11 @@ public class BTreeInternalNode extends BTreeNode {
             updateNumberToLeft();
 
             //neighbor
-            BTreeInternalNode origin_right_node = (BTreeInternalNode) buffer.getNode(right_bro_id,DB_name,table_name,index_attrs);
-            origin_right_node.updateLeftBro(new_node.node_id);
             //right bro node
+            if(right_bro_id != 0){
+                BTreeInternalNode origin_right_node = (BTreeInternalNode) buffer.getNode(right_bro_id,DB_name,table_name,index_attrs);
+                origin_right_node.updateLeftBro(new_node.node_id);
+            }
             updateRightBro(new_node.node_id);
             //left bro
             new_node.updateLeftBro(getHeadNode().node_id);
@@ -481,6 +486,7 @@ public class BTreeInternalNode extends BTreeNode {
             }
             //freespace
             free_space += (key_number - index - 1) * (2 + key_length);
+            buffer.addNewNode(new_node);
             return new_node;
         }else{
             return null;

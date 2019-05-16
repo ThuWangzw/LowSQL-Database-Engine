@@ -117,9 +117,9 @@ public class Server {
         TableAttribute a1 = blk.getSchema().getOneAttribute("name");
         TableAttribute a2 = blk.getSchema().getOneAttribute("mark");
 
-        Field fd1 = new Field("LeiYiran",a1);
+        Field fd1 = new Field("Hello",a1);
         Field fd2 = new Field(95,a2);
-        Field fd3 = new Field("World",a1);
+        Field fd3 = new Field("Youth",a1);
         Field fd4 = new Field(99,a2);
 
         Field[] fds = new Field[]{fd1,fd2};

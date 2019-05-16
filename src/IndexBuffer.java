@@ -147,7 +147,7 @@ public class IndexBuffer {
             return loadIndexBlockFromFile(DB_name,table_name,temp,node_id,bt.M);
         TableSchema temp2 = new TableSchema(index_buffer[node_id].table_name,index_buffer[node_id].index_attrs);
         if (!index_buffer[node_id].DB_name.equals(DB_name)
-                || !index_buffer[node_id].table_name.equals(DB_name)
+                || !index_buffer[node_id].table_name.equals(table_name)
                 || !temp2.concatNames().equals(temp.concatNames())){
             writeIndexBlock(node_id);
             index_buffer[node_id] = null;

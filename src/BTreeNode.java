@@ -201,7 +201,7 @@ abstract public class BTreeNode {
 
     public int BinarySearch(byte[] search_key,int left, int right){
         if (left > right) return (int) Math.ceil(((double)right + (double)left)/2 );
-        int mid =  (int) Math.floor((left + right) / 2);
+        int mid =  (int) Math.floor(((double)left + (double)right) / 2);
         int result = compare2key(keys.get(mid),search_key);
         if (result == Util.E){
             return mid;
