@@ -43,7 +43,7 @@ public class Server {
     }
 
 
-     public void WriteMetaData(){
+    public void WriteMetaData(){
         try {
             FileOutputStream fp = new FileOutputStream(Util.MetaDataFile, false);
             int len = databases.size();

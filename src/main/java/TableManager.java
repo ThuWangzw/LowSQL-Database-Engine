@@ -66,7 +66,9 @@ public class TableManager {
 
     public DataStorage getDataStorage(){return storage;}
 
-
+    public TableSchema getSchema() {
+        return schema;
+    }
 
     public TableSchema createIndexSchema(ArrayList<String> names){
         TableAttribute[] attrs = new TableAttribute[names.size()];
