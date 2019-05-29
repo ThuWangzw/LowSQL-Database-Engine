@@ -78,6 +78,7 @@ public class Visitor extends LowSQLBaseVisitor {
         TableSchema schema = new TableSchema(tablename, attributes1);
         TableManager tableManager = new TableManager(current_database.getDatabaseName(), tablename, schema);
         current_database.addTable(tableManager);
+//        add index
         return new String("Create table success.");
     }
 
