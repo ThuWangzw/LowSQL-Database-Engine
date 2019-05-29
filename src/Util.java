@@ -77,6 +77,6 @@ public class Util{
     public static int NE = 5;
 
     //B tree
-    public static int BTree_M = 3;
+    public static int BTree_M = 500;
 }
 

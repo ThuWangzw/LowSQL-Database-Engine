@@ -6,6 +6,7 @@ public class Server {
     private ArrayList<DatabaseManager> databases;
     private DatabaseManager current_database;
     IndexBuffer index_buffer;
+    DataBuffer data_buffer;
 
 
     public Server(){
@@ -36,6 +37,8 @@ public class Server {
             setCurrentDatabase("test");
             //init index buffer
             index_buffer = new IndexBuffer(current_database);
+            //init data buffer
+            data_buffer = new DataBuffer(current_database);
 
         }catch(Exception e){
             e.printStackTrace();
@@ -119,28 +122,77 @@ public class Server {
 
         Field fd1 = new Field("Hello",a1);
         Field fd2 = new Field(95,a2);
-        Field fd3 = new Field("Youth",a1);
-        Field fd4 = new Field(99,a2);
+
 
         Field[] fds = new Field[]{fd1,fd2};
-        Field[] fds2 = new Field[]{fd3,fd4};
 
         Record rcd = new Record(fds,blk.getSchema());
-        Record rcd2 = new Record(fds2,blk.getSchema());
 
-        blk.insertOneRecord(rcd);
-        blk.insertOneRecord(rcd2);
 
-        //TableAttribute[] attrs = new TableAttribute[]{a1};
-        //TableSchema index_sa = new TableSchema("score",attrs);
+        TableAttribute[] attrs = new TableAttribute[]{a1};
+        TableSchema index_sa = new TableSchema("score",attrs);
 
-        //server.index_buffer.createIndex("test","score",index_sa,Util.BTree_M);
+        server.index_buffer.createIndex("test","score",index_sa,Util.BTree_M);
 
         BTree bt = server.index_buffer.btrees.get(0);
-        bt.insert(bt.record2key(rcd2),5,5);
+        for (int i = 1; i < 19; i++){
+            String temp = new String(new char[i]).replace("\0", "B");
+
+            Field fd3 = new Field(temp,a1);
+            Field fd4 = new Field(99,a2);
+            Field[] fds2 = new Field[]{fd3,fd4};
+            Record rcd2 = new Record(fds2,blk.getSchema());
+            bt.insert(bt.record2key(rcd2),i,i+1);
+        }
+//        for (int i = 1; i < 19; i++){
+//            String temp = new String(new char[i]).replace("\0", "D");
+//
+//            Field fd3 = new Field(temp,a1);
+//            Field fd4 = new Field(99,a2);
+//            Field[] fds2 = new Field[]{fd3,fd4};
+//            Record rcd2 = new Record(fds2,blk.getSchema());
+//            bt.insert(bt.record2key(rcd2),i*2,i*2+1);
+//        }
+//        for (int i = 1; i < 19; i++){
+//            String temp = new String(new char[i]).replace("\0", "Z");
+//
+//            Field fd3 = new Field(temp,a1);
+//            Field fd4 = new Field(99,a2);
+//            Field[] fds2 = new Field[]{fd3,fd4};
+//            Record rcd2 = new Record(fds2,blk.getSchema());
+//            bt.insert(bt.record2key(rcd2),i*3,i*3+1);
+//        }
+
+        Field fd3 = new Field("BBA",a1);
+        Field fd4 = new Field(99,a2);
+        Field[] fds2 = new Field[]{fd3,fd4};
+        Record rcd2 = new Record(fds2,blk.getSchema());
+
+        bt.insert(rcd2,100,101);
+
+        for (int i = 3; i < 15; i++){
+            String temp = new String(new char[i]).replace("\0", "B");
+
+            fd3 = new Field(temp,a1);
+            fd4 = new Field(99,a2);
+            fds2 = new Field[]{fd3,fd4};
+            rcd2 = new Record(fds2,blk.getSchema());
+            bt.delete(rcd2);
+        }
+
+
         server.index_buffer.saveAll();
 
-        server.getOneDatabase("test").getOneTable("score").getDataStorage().WriteDataBlock(blk);
+//        Field fd3 = new Field("DDDDDDDDD",a1);
+//        Field fd4 = new Field(99,a2);
+//        Field[] fds2 = new Field[]{fd3,fd4};
+//        Record rcd2 = new Record(fds2,blk.getSchema());
+//        BTreeLeafNode t = bt.query(rcd2);
+//        DataPointer[] pt;
+//        for (int i = 0; i < t.key_number; i++){
+//            pt = t.getPointer(i);
+//        }
+
         System.out.println("-- Server --");
     }
 

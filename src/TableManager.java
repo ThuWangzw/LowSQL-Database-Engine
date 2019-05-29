@@ -4,9 +4,6 @@ public class TableManager {
     private String DB_name;
     private String table_name;
     private TableSchema schema;
-    //storage
-    private DataStorage storage;
-    //index will go here
 
     /* metadata
 
@@ -37,8 +34,6 @@ public class TableManager {
         byte[] sc = new byte[len];
         System.arraycopy(metadata,8 + Util.TableNameMaxLength,sc,0,len);
         schema = new TableSchema(table_name,attr_number,sc);
-        //storage
-        storage = new DataStorage(d_name,table_name,schema);
     }
 
     //create a new table instance
@@ -46,8 +41,6 @@ public class TableManager {
         DB_name = d_name;
         table_name = t_name;
         schema = sa;
-        //storage
-        storage = new DataStorage(d_name,t_name,sa);
     }
 
     public byte[] toMetaByte(){
@@ -63,9 +56,8 @@ public class TableManager {
     }
 
     public String getTableName(){return table_name;}
-
-    public DataStorage getDataStorage(){return storage;}
-
+    public String getDBName(){return DB_name;}
+    public TableSchema getSchema(){return schema;}
 
 
     public TableSchema createIndexSchema(ArrayList<String> names){

@@ -108,6 +108,13 @@ abstract public class BTreeNode {
         }else if (type == 0){
             int index = BinarySearch(key,0,key_number - 1);
             if (index == key_number){
+                if(next_id != 0){
+                    BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                    if(compare2key(key,next_node.keys.get(0)) != Util.L){
+                        next_node.insert(key,page_id,record_id);
+                        return;
+                    }
+                }
                 index -= 1;
             }
             BTreeInternalNode temp = (BTreeInternalNode) this;
@@ -122,11 +129,95 @@ abstract public class BTreeNode {
         }else{
             int index = BinarySearch(key,0,key_number - 1);
             if (index == key_number){
+                if(next_id != 0){
+                    BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                    if(compare2key(key,next_node.keys.get(0)) != Util.L){
+                        next_node.delete(key);
+                        return;
+                    }
+                }
                 return;
             }
             BTreeInternalNode temp = (BTreeInternalNode) this;
             buffer.getNode(temp.getPointer(index),DB_name,table_name,index_attrs).delete(key);
         }
+    }
+
+
+    public void delete(byte[] key, DataPointer pt){
+        if (type == 1){
+            BTreeLeafNode temp = (BTreeLeafNode) this;
+            temp.deleteOnePointer(key,pt);
+        }else{
+            int index = BinarySearch(key,0,key_number - 1);
+            if (index == key_number){
+                if(next_id != 0){
+                    BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                    if(compare2key(key,next_node.keys.get(0)) != Util.L){
+                        next_node.delete(key,pt);
+                        return;
+                    }
+                }
+                return;
+            }
+            BTreeInternalNode temp = (BTreeInternalNode) this;
+            buffer.getNode(temp.getPointer(index),DB_name,table_name,index_attrs).delete(key,pt);
+        }
+    }
+
+
+    public BTreeLeafNode queryRecordNode(byte[] key){
+        //return leaf node that stores the key --
+        //return null means the key is not stored in the index tree
+        int index;
+        index = BinarySearch(key,0,key_number - 1);
+        if(index == key_number){
+            if(next_id != 0){
+                BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                if(compare2key(key,next_node.keys.get(0)) != Util.L){
+                    return next_node.queryRecordNode(key);
+                }
+            }
+            return null;
+        }
+
+        if(type == 1){
+            if(compare2key(key,keys.get(index)) == Util.E)
+                return (BTreeLeafNode) this;
+            return null;
+        }else if (type == 0){
+            BTreeInternalNode temp = (BTreeInternalNode) this;
+            return buffer.getNode(temp.getPointer(index),DB_name,table_name,index_attrs).queryRecordNode(key);
+        }else
+            return null;
+    }
+
+    public DataPointer[] queryRecordPointer(byte[] key){
+        //return pointer list node that stores the key
+        //return null means the key is not stored in the index tree
+        int index;
+        index = BinarySearch(key,0,key_number - 1);
+        if(index == key_number){
+            if(next_id != 0){
+                BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                if(compare2key(key,next_node.keys.get(0)) != Util.L){
+                    return next_node.queryRecordPointer(key);
+                }
+            }
+            return null;
+        }
+
+        if(type == 1){
+            if(compare2key(key,keys.get(index)) == Util.E){
+                BTreeLeafNode temp = (BTreeLeafNode) this;
+                return temp.getPointer(index);
+            }
+            return null;
+        }else if (type == 0){
+            BTreeInternalNode temp = (BTreeInternalNode) this;
+            return buffer.getNode(temp.getPointer(index),DB_name,table_name,index_attrs).queryRecordPointer(key);
+        }else
+            return null;
     }
 
 
@@ -495,6 +586,28 @@ abstract public class BTreeNode {
         type = -1;
         buffer.deleteNode(this);
     }
+
+    public byte[] record2key(Record record){
+        Field[] fds = record.getFields();
+        int key_length = 0;
+        for (TableAttribute cur : index_attrs){
+            key_length += cur.getLengthLimit();
+        }
+        byte[] key = new byte[key_length],temp;
+        int cur_len = 0;
+        for (TableAttribute cur : index_attrs) {
+            for (Field f : fds){
+                if(cur.getAttributeName().equals(f.getAttribute().getAttributeName())){
+                    temp = f.toBytes();
+                    System.arraycopy(temp,0,key,cur_len,temp.length);
+                    break;
+                }
+            }
+            cur_len += cur.getLengthLimit();
+        }
+        return key;
+    }
+
 
 
     public static void main(String[] args) {

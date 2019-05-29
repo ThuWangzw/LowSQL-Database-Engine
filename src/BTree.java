@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,31 +155,46 @@ public class BTree {
         root_node.insert(key,page_id,record_id);
     }
 
+    public void insert(Record rcd,int page_id,int record_id){
+        root_node.insert(record2key(rcd),page_id,record_id);
+    }
+
+    public BTreeLeafNode queryNode(Record rcd){
+        return root_node.queryRecordNode(record2key(rcd));
+    }
+
+    public BTreeLeafNode queryNode(byte[] key){
+        return root_node.queryRecordNode(key);
+    }
+
+    public DataPointer[] queryPointer(Record rcd){
+        return root_node.queryRecordPointer(record2key(rcd));
+    }
+
+    public DataPointer[] queryPointer(byte[] key){
+        return root_node.queryRecordPointer(key);
+    }
+
     public void delete(byte[] key){
         root_node.delete(key);
     }
 
-    public byte[] record2key(Record record){
-        TableAttribute[] index_s = index_schema.getAttrubutes();
-        Field[] fds = record.getFields();
-        int key_length = 0;
-        for (TableAttribute cur : index_s){
-            key_length += cur.getLengthLimit();
-        }
-        byte[] key = new byte[key_length],temp;
-        int cur_len = 0;
-        for (TableAttribute cur : index_s) {
-            for (Field f : fds){
-               if(cur.getAttributeName().equals(f.getAttribute().getAttributeName())){
-                   temp = f.toBytes();
-                   System.arraycopy(temp,0,key,cur_len,temp.length);
-                   break;
-                }
-            }
-            cur_len += cur.getLengthLimit();
-        }
-        return key;
+    public void delete(byte[] key, DataPointer pt){
+        root_node.delete(key,pt);
     }
 
+    public void delete(Record rcd, DataPointer pt){
+        root_node.delete(record2key(rcd),pt);
+    }
 
+    public void delete(Record rcd){
+        root_node.delete(record2key(rcd));
+    }
+
+    public byte[] record2key(Record record){
+        if(root_node != null){
+            return root_node.record2key(record);
+        }
+        throw new NullPointerException("The Index Tree is not initialized!");
+    }
 }

@@ -5,22 +5,26 @@ import java.io.RandomAccessFile;
 
 public class DataStorage{
     //Every table in a database has this instance
-    private String DB_name;
-    private String table_name;
-    private RandomAccessFile raf;
-    private long block_number;      //actual block number in the file
-    private TableSchema schema;
+    String DB_name;
+    String table_name;
+    RandomAccessFile raf;
+    long block_number;      //actual block number in the file
+    TableSchema schema;
+    DataBuffer buffer;
+    ArrayList<Integer> free_blocks;
+    int current_free_block_id;
 
-    public DataStorage(String db_name, String t_name, TableSchema sa){
+    public DataStorage(String db_name, String t_name, TableSchema sa,DataBuffer bf){
         DB_name = db_name;
         schema = sa;
         table_name = t_name;
+        buffer = bf;
         //if the the table is first established, create 1 block of the storage
         try{
             raf = new RandomAccessFile(Util.DataStorageDir + DB_name + "_" + table_name + ".bin","rw");
             if(raf.length() == 0){
                 block_number = 0;
-                WriteDataBlock(new DataBlock(0,schema));
+                buffer.appendDataBlock(DB_name,table_name);
             }else{
                 block_number = raf.length() / Util.DiskBlockSize;
             }
@@ -28,48 +32,87 @@ public class DataStorage{
         }catch(Exception e){
             e.printStackTrace();
         }
+        //blocks that has free space
+        updateFreeBlock();
+        current_free_block_id = getPossibleBlock();
     }
 
-    public void WriteDataBlock(DataBlock block){
-        try{
-            raf = new RandomAccessFile(Util.DataStorageDir + DB_name + "_" + table_name + ".bin","rw");
-            if (block.getPageId() >= block_number){
-                long new_block_number = block.getPageId() - block_number + 1;
-                raf.seek(raf.length());
-                DataBlock empty_block = new DataBlock(0,schema);
-                for(int i = 0; i < new_block_number; i++){
-                    raf.write(empty_block.getData(),0,Util.DiskBlockSize);
-                }
-                block_number += 1;
+
+    public DataPointer insert(Record record){
+        int record_size = record.getSize(),record_id;
+        DataBlock blk;
+        do{
+            blk = buffer.getNode(DB_name,table_name,current_free_block_id);
+            record_id = blk.getRecordNumber();
+            if(record_size <= blk.getEndOfFreeSpace() - 8 * record_id - 15){
+                blk.insertOneRecord(record);
+                return new DataPointer(current_free_block_id,record_id);
             }
-            //block_number = raf.length() / Util.DiskBlockSize;
-            raf.seek(block.getPageId() * Util.DiskBlockSize);
-            raf.write(block.getData(),0,Util.DiskBlockSize);
-            raf.close();
-        }catch(Exception e){
-            e.printStackTrace();
+            cancelFreeBlock(current_free_block_id);
+            current_free_block_id = getPossibleBlock();
+        }while(true);
+    }
+
+    public void delete(DataPointer pt){
+        buffer.getNode(DB_name,table_name,pt.page_id).deleteOneRecord(pt.record_id);
+    }
+
+    public void updateFreeBlock(){
+        if(free_blocks == null){
+            free_blocks = new ArrayList<>();
+            int int_number = (int)Math.ceil((double)block_number / 32);
+            for(int i = 0; i < int_number; i++){
+                free_blocks.add(-1);
+            }
+        }else{
+            if(free_blocks.size() < (int)Math.ceil((double)block_number / 32)){
+                free_blocks.add(-1);
+            }
         }
     }
 
-    public DataBlock ReadDataBlock(int page_id){
-        if (page_id >= block_number)
-            return new DataBlock((int)block_number,schema);
-        byte[] data = new byte[Util.DiskBlockSize];
-        try{
-            raf = new RandomAccessFile(Util.DataStorageDir + DB_name + "_" + table_name + ".bin","rw");
-            raf.seek(page_id * Util.DiskBlockSize);
-            raf.read(data,0,Util.DiskBlockSize);
-            raf.close();
-            return new DataBlock(data,page_id,schema);
-        }catch(Exception e){
-            e.printStackTrace();
+    public int getPossibleBlock(){
+        int len = free_blocks.size();
+        int number,cur = -1,i,j;
+        for(i = 0; i < len; i++){
+            number = free_blocks.get(i);
+            if(number == 0){
+                cur = -1;
+                continue;
+            } else{
+                for (j = 31; j >= 0; j--){
+                   if (((number >> j) & 1) == 1)
+                       break;
+                }
+                cur = 32 - j;
+                break;
+            }
         }
-        return new DataBlock((int)block_number,schema);
+        if (cur == -1){
+            buffer.appendDataBlock(DB_name,table_name);
+            return (int)(block_number - 1);
+        }else{
+            int expected_id = 32 * i - 1 + cur;
+            if(expected_id < block_number)
+                return expected_id;
+            else{
+                buffer.appendDataBlock(DB_name,table_name);
+                return expected_id;
+            }
+        }
     }
+
+    public void cancelFreeBlock(int id){
+        int index = id / 32, k = id - index * 32,number = free_blocks.get(index);
+        number -= (1 << (31 - k));
+        free_blocks.remove(index);
+        free_blocks.add(index,number);
+    }
+
+
 
     public static void main(String[] args){
         System.out.println("-- DataStorage --");
     }
-
 
 }

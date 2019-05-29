@@ -2,6 +2,8 @@
 public class DataBlock {
     //data: contain a number of records -- in slotted page structure
     //other values such as record_number, free_space, can be analysed and calculated
+    String DB_name;
+    String table_name;
     private byte data[];
     private int record_number = -1;
     private int end_of_free_space = -1;
@@ -11,7 +13,9 @@ public class DataBlock {
 
 
     //initialize by creating new data block
-    public DataBlock(int p_id,TableSchema sa){
+    public DataBlock(String d_name,String t_name,int p_id,TableSchema sa){
+        DB_name = d_name;
+        table_name = t_name;
         is_revised = false;
         schema = sa;
         data = new byte[Util.DiskBlockSize];
@@ -23,7 +27,9 @@ public class DataBlock {
     }
 
     // initialize by data from file
-    public DataBlock(byte[] read_data,int p_id,TableSchema sa){
+    public DataBlock(String d_name,String t_name,byte[] read_data,int p_id,TableSchema sa){
+        DB_name = d_name;
+        table_name = t_name;
         is_revised = false;
         schema = sa;
         data = read_data;
@@ -125,6 +131,9 @@ public class DataBlock {
     public Boolean updateOneRecord(int record_id,Record record){
         return deleteOneRecord(record_id) && insertOneRecord(record);
     }
+
+    public int getEndOfFreeSpace(){return end_of_free_space;}
+    public int getRecordNumber(){return record_number;}
 
     public static void main(String[] args){
         System.out.println("-- DataBlock --");
