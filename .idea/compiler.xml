@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="LowSQL-Database-Engine" />
+        <module name="LowDB" />
       </profile>
     </annotationProcessing>
   </component>

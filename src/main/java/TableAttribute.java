@@ -1,5 +1,3 @@
-import com.sun.deploy.security.ValidationState;
-
 public class TableAttribute {
     private String table_name;
     private String attribute_name;

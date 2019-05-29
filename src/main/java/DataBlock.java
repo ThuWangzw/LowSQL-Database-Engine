@@ -9,7 +9,7 @@ public class DataBlock {
     private int end_of_free_space = -1;
     private int page_id = -1;       //page id is the unique id of every data block
     TableSchema schema;
-    private Boolean is_revised;     // to show whether there is a difference between the file and the memory
+    Boolean is_revised;     // to show whether there is a difference between the file and the memory
 
 
     //initialize by creating new data block
