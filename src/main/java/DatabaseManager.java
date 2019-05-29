@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -99,9 +100,11 @@ public class DatabaseManager {
     }
 
     public void deleteTable (String table_name){
-        for(TableManager cur:tables){
+        for(Iterator<TableManager> it = tables.iterator(); it.hasNext(); ){
+            TableManager cur = it.next();
             if(table_name.equals(cur.getTableName())){
-                tables.remove(cur);
+                it.remove();
+                return;
             }
         }
     }

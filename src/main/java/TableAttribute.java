@@ -1,3 +1,5 @@
+import com.sun.deploy.security.ValidationState;
+
 public class TableAttribute {
     private String table_name;
     private String attribute_name;
@@ -39,7 +41,16 @@ public class TableAttribute {
         is_primary_key = is_PK;
     }
 
+    public void setTable_name(String table_name) {
+        this.table_name = table_name;
+    }
+
     public int getType(){return type;}
+
+    public void setIs_primary_key(Boolean is_primary_key) {
+        this.is_primary_key = is_primary_key;
+    }
+
     public String getAttributeName(){return attribute_name;}
     public int getLengthLimit(){
         if(type > Util.VARCHAR)
@@ -62,4 +73,29 @@ public class TableAttribute {
         return result;
     }
 
+    @Override
+    public String toString() {
+        String attribute = new String(getAttributeName());
+        if(type == Util.CHAR){
+            attribute += ",char";
+        }else if(type == Util.INT){
+            attribute += ",int";
+        }else if(type == Util.FLOAT){
+            attribute += ",float";
+        }else if(type == Util.DOUBLE){
+            attribute += ",double";
+        }else if(type == Util.LONG){
+            attribute += ",long";
+        }else if(type == Util.STRING){
+            attribute += ",string("+String.valueOf(length_limit)+")";
+        }else if(type == Util.VARCHAR){
+            attribute += ",varchar("+String.valueOf(length_limit)+")";
+        }else {
+            attribute += ",invalid type";
+        }
+        if(is_primary_key){
+            attribute += ",primary key";
+        }
+        return attribute;
+    }
 }
