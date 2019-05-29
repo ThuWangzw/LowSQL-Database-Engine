@@ -1,4 +1,5 @@
 import javax.xml.crypto.Data;
+import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,10 +111,22 @@ public class DataBuffer {
         }
     }
 
+    public void deleteDataFile(String db_name,String table_name){
+        DataStorage ds = getDataStorage(db_name,table_name);
+        if(ds == null)
+            throw new NullPointerException("delete: Table not exist!");
+        storages.remove(ds);
+        File file = new File(Util.DataStorageDir + db_name + "_" + table_name + ".bin");
+        if(!file.delete())
+            throw new IllegalArgumentException("delete data file failed!");
 
-
-
-
-
+        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
+            if(data_buffer[i] != null){
+                if (data_buffer[i].DB_name.equals(db_name) && data_buffer[i].table_name.equals(table_name)){
+                    data_buffer[i] = null;
+                }
+            }
+        }
+    }
 
 }

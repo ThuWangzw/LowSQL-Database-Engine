@@ -23,6 +23,29 @@ public class IndexBuffer {
         btrees.add(bt);
     }
 
+    public void deleteIndex(String db_name,String table_name,TableSchema index_schema){
+        BTree bt = getBTree(db_name,table_name,index_schema);
+        if(bt == null)
+            throw new NullPointerException("delete: Index not exist!");
+        btrees.remove(bt);
+        File file = new File(Util.IndexStorageDir + "/" + db_name + "_" + table_name + "_" + index_schema.concatNames()+".bin");
+        if(!file.delete())
+            throw new IllegalArgumentException("delete index file failed!");
+        //clear all cached node that belongs to the index
+        TableSchema temp;
+        for(int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
+            if(index_buffer[i] != null){
+                temp = new TableSchema(index_buffer[i].table_name,index_buffer[i].index_attrs);
+                if (index_buffer[i].DB_name.equals(db_name)
+                        && index_buffer[i].table_name.equals(table_name)
+                        && temp.concatNames().equals(index_schema.concatNames())){
+                    index_buffer[i] = null;
+                }
+            }
+        }
+    }
+
+
 
     public void loadIndexMetaData(){
         try {
@@ -209,4 +232,5 @@ public class IndexBuffer {
             }
         }
     }
+
 }

@@ -90,15 +90,16 @@ public class DataStorage{
         }
         if (cur == -1){
             buffer.appendDataBlock(DB_name,table_name);
+            updateFreeBlock();
             return (int)(block_number - 1);
         }else{
-            int expected_id = 32 * i - 1 + cur;
-            if(expected_id < block_number)
+                int expected_id = 32 * i - 1 + cur;
+                if(expected_id >= block_number){
+                    buffer.appendDataBlock(DB_name,table_name);
+                    updateFreeBlock();
+                }
+
                 return expected_id;
-            else{
-                buffer.appendDataBlock(DB_name,table_name);
-                return expected_id;
-            }
         }
     }
 

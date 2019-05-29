@@ -104,6 +104,7 @@ public class DatabaseManager {
             TableManager cur = it.next();
             if(table_name.equals(cur.getTableName())){
                 it.remove();
+                table_number -= 1;
                 return;
             }
         }
