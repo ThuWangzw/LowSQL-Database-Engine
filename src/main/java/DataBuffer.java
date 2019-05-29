@@ -102,6 +102,14 @@ public class DataBuffer {
         }
     }
 
+    public void saveAll(){
+        for (int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
+            if (data_buffer[i] != null && data_buffer[i].is_revised){
+                WriteDataBlock(i);
+            }
+        }
+    }
+
 
 
 

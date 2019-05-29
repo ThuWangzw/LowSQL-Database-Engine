@@ -78,6 +78,16 @@ public class IndexBuffer {
         }
     }
 
+    public ArrayList<BTree> getBTrees(String d_name,String t_name){
+        ArrayList<BTree> tree = new ArrayList<>();
+        for(BTree cur : btrees) {
+            if (cur.DB_name.equals(d_name) && cur.table_name.equals(t_name)) {
+                tree.add(cur);
+            }
+        }
+        return tree;
+    }
+
 
     public BTree getBTree(String d_name,String t_name,TableSchema index_attrs){
         for (BTree cur : btrees){
