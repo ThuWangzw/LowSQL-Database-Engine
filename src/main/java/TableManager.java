@@ -44,7 +44,7 @@ public class TableManager {
     }
 
     public byte[] toMetaByte(){
-        int meta_bytes = schema.getAttributeNumber() * (Util.AttributeNameMaxLength + 4 ) + 8 + Util.TableNameMaxLength;
+        int meta_bytes = schema.getAttributeNumber() * (Util.AttributeNameMaxLength + 8 ) + 8 + Util.TableNameMaxLength;
         byte[] result = new byte[meta_bytes];
         System.arraycopy(Util.int2byte(meta_bytes),0,result,0,4);
         byte[] name_byte = (table_name + "\0").getBytes();
