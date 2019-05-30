@@ -53,7 +53,9 @@ public class DataBlock {
         //return true if the record is successfully inserted
         int size = record.getSize();
         //the record has to be valid
-        if(!record.isValid()) return false;
+        if(!record.isValid()) {
+            throw new IllegalArgumentException("the insert value is not valid");
+        }
         //can not insert to free space
         if (size > end_of_free_space - 8 * record_number - 15) return false;
         System.arraycopy(record.toBytes(),0,data,end_of_free_space - size + 1,size);

@@ -17,6 +17,17 @@ public class IndexBuffer {
         loadIndexMetaData();
     }
 
+    public void reload(DatabaseManager new_db){
+        if(db.getDatabaseName().equals(new_db.getDatabaseName()))
+            return;
+        saveAll();
+        clearBuffer();
+        btrees = null;
+        db = new_db;
+        btrees = new ArrayList<>();
+        loadIndexMetaData();
+    }
+
     public void createIndex(String db_name,String table_name,TableSchema index_schema,int m) {
         BTree bt = new BTree(m,db_name, table_name, index_schema, this);
         saveIndexMetaData(bt);
@@ -51,11 +62,14 @@ public class IndexBuffer {
         try {
             File file = new File(Util.IndexStorageDir);
             byte[] data = new byte[Util.DiskBlockSize];
+            String cur_db_name = db.getDatabaseName();
             if (file.isDirectory()) {
                 String[] filelist = file.list();
                 for (int i = 0; i < filelist.length; i++) {
                     String t = new String(filelist[i]);
                     if(!t.endsWith(".bin"))
+                        continue;
+                    if(!t.startsWith(cur_db_name))
                         continue;
                     RandomAccessFile raf = new RandomAccessFile(Util.IndexStorageDir + "/" + filelist[i],"rw");
                     raf.seek(0);
@@ -230,6 +244,12 @@ public class IndexBuffer {
             if (index_buffer[i] != null && index_buffer[i].is_changed){
                 writeIndexBlock(i);
             }
+        }
+    }
+
+    public void clearBuffer(){
+        for (int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
+            index_buffer[i] = null;
         }
     }
 

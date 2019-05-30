@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.io.RandomAccessFile;
 import java.io.FileOutputStream;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Server {
     private ArrayList<DatabaseManager> databases;
@@ -85,9 +86,11 @@ public class Server {
         for(DatabaseManager cur:databases){
             if(db_name.equals(cur.getDatabaseName())){
                 current_database = cur;
-                //TODO
+                index_buffer.reload(cur);
+                data_buffer.reload(cur);
             }
         }
+        throw new NoSuchElementException("Database " + db_name + "does not exist");
     }
 
     public ArrayList<DatabaseManager> getDatabases(){

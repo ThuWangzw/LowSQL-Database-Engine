@@ -24,6 +24,21 @@ public class DataBuffer {
         }
     }
 
+    void reload(DatabaseManager new_db){
+        if(new_db.getDatabaseName().equals(db.getDatabaseName()))
+            return;
+        saveAll();
+        clearBuffer();
+        //reload
+        db = new_db;
+        storages = null;
+        storages = new ArrayList<>();
+        ArrayList<TableManager> tables = db.getTables();
+        for (TableManager cur : tables){
+            storages.add(new DataStorage(cur.getDBName(),cur.getTableName(),cur.getSchema(),this));
+        }
+    }
+
     public DataStorage getDataStorage(String d_name,String t_name){
         for (DataStorage cur : storages){
             if (cur.DB_name.equals(d_name) && cur.table_name.equals(t_name)) {
@@ -126,6 +141,12 @@ public class DataBuffer {
                     data_buffer[i] = null;
                 }
             }
+        }
+    }
+
+    public void clearBuffer(){
+        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
+            data_buffer[i] = null;
         }
     }
 

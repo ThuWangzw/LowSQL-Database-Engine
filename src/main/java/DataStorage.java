@@ -55,6 +55,7 @@ public class DataStorage{
 
     public void delete(DataPointer pt){
         buffer.getNode(DB_name,table_name,pt.page_id).deleteOneRecord(pt.record_id);
+        freshFreeBlock(pt.page_id);
     }
 
     public void updateFreeBlock(){
@@ -106,6 +107,13 @@ public class DataStorage{
     public void cancelFreeBlock(int id){
         int index = id / 32, k = id - index * 32,number = free_blocks.get(index);
         number -= (1 << (31 - k));
+        free_blocks.remove(index);
+        free_blocks.add(index,number);
+    }
+
+    public void freshFreeBlock(int id){
+        int index = id / 32, k = id - index * 32,number = free_blocks.get(index);
+        number += 1 << (31 - k);
         free_blocks.remove(index);
         free_blocks.add(index,number);
     }
