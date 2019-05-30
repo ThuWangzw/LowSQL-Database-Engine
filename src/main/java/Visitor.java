@@ -360,5 +360,27 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         return null;
     }
-    
+
+    @Override
+    public Object visitSimple_select_stmt(LowSQLParser.Simple_select_stmtContext ctx) {
+        List<ParseTree> nodes = ctx.children;
+//        check table exists
+        String tableName = (String)visit(nodes.get(3));
+        TableManager table = current_database.getOneTable(tableName);
+        if(table == null){
+            throw new RuntimeException("No table named "+tableName);
+        }
+        current_table = table;
+//        get attributes list
+        ArrayList<Integer> attributes = (ArrayList<Integer>)visit(nodes.get(1));
+
+        return super.visitSimple_select_stmt(ctx);
+    }
+
+    @Override
+    public Object visitAttributes(LowSQLParser.AttributesContext ctx) {
+        List<ParseTree> nodes = ctx.children;
+
+        return super.visitAttributes(ctx);
+    }
 }
