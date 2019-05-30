@@ -1,3 +1,4 @@
+import javafx.beans.binding.ObjectExpression;
 import javafx.scene.control.Tab;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -373,14 +374,112 @@ public class Visitor extends LowSQLBaseVisitor {
         current_table = table;
 //        get attributes list
         ArrayList<Integer> attributes = (ArrayList<Integer>)visit(nodes.get(1));
+//          parse where
+        _Query query = null;
+        if(nodes.size() > 4){
+            query = (_Query)visit(nodes.get(5));
+        }
+//        find if index
+        if(query != null){
+            TableAttribute index = current_table.getSchema().getOneAttribute(query.attributeName);
+            TableAttribute[] _index = new TableAttribute[1];
+            _index[0] = index;
+            TableSchema indexSchema = new TableSchema(current_table.getTableName(), _index);
 
+            BTree indexTree = server.index_buffer.getBTree(current_database.getDatabaseName(), current_table.getTableName(), indexSchema);
+            if(indexTree != null){
+//                search by index
+                Field[] fields = new Field[1];
+                fields[0] = new Field(query.value, index);
+                Record target = new Record(fields, indexSchema);
+
+            }
+        }
         return super.visitSimple_select_stmt(ctx);
     }
 
     @Override
     public Object visitAttributes(LowSQLParser.AttributesContext ctx) {
         List<ParseTree> nodes = ctx.children;
+        String firstname = (String)visit(nodes.get(0));
+        ArrayList<Integer> attributes = new ArrayList<>();
+        if(firstname.equals(new String("*"))){
+            for(int i=0; i<current_table.getSchema().getAttrubutes().length; i++ ){
+                attributes.add(new Integer(i));
+            }
+            return attributes;
+        }
 
-        return super.visitAttributes(ctx);
+        TableAttribute[] tableAttributes = current_table.getSchema().getAttrubutes();
+        for(ParseTree node:nodes){
+            if(node instanceof LowSQLParser.NameContext){
+                String attrName = (String)visit(node);
+                boolean find = false;
+                for(int i=0; i<tableAttributes.length; i++){
+                    if(tableAttributes[i].getAttributeName().equals(attrName)){
+                        find = true;
+                        attributes.add(new Integer(i));
+                        break;
+                    }
+                }
+                if(!find){
+                    throw new RuntimeException("Attribute error!");
+                }
+            }
+        }
+        return attributes;
+    }
+
+    @Override
+    public Object visitCompare_stmt(LowSQLParser.Compare_stmtContext ctx) {
+        List<ParseTree> nodes = ctx.children;
+        String attributeName = (String)visit(nodes.get(0));
+        Integer type = (Integer)visit(nodes.get(1));
+        Object value = visit(nodes.get(2));
+//        check attribute right
+        TableAttribute tableAttribute = current_table.getSchema().getOneAttribute(attributeName);
+        if(tableAttribute == null){
+            throw new RuntimeException("Attribute error!");
+        }
+//        check attribute comparable
+        if((type!=Util.E)&&(tableAttribute.getType() == Util.VARCHAR || tableAttribute.getType() == Util.STRING)){
+            throw new RuntimeException("Attribute error!");
+        }
+        return new _Query(attributeName, (int)type, value);
+    }
+
+    @Override
+    public Object visitCompare_symbol(LowSQLParser.Compare_symbolContext ctx) {
+        if(ctx.getStart().getType() == LowSQLParser.EQ){
+            return Util.E;
+        }
+        if(ctx.getStart().getType() == LowSQLParser.LT){
+            return Util.L;
+        }
+        if(ctx.getStart().getType() == LowSQLParser.GT){
+            return Util.G;
+        }
+        if(ctx.getStart().getType() == LowSQLParser.LE){
+            return Util.LE;
+        }
+        if(ctx.getStart().getType() == LowSQLParser.GE){
+            return Util.GE;
+        }
+        if(ctx.getStart().getType() == LowSQLParser.LG){
+            return  Util.NE;
+        }
+        throw new RuntimeException("Invalid comparing");
+    }
+}
+
+class _Query{
+    public String attributeName;
+    public int type;
+    Object value;
+
+    _Query(String attributeName, int type, Object value){
+        this.attributeName = attributeName;
+        this.type = type;
+        this.value = value;
     }
 }

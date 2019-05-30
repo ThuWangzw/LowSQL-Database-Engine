@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09dc7a4a-e0f1-4acf-8ad5-b06b973d6712" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/command.sql" beforeDir="false" afterPath="$PROJECT_DIR$/command.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/test_person.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index/test_person_ID.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/system/metadata.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visitor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
+            <state relative-caret-position="215">
+              <caret line="394" selection-start-line="394" selection-end-line="394" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#visitName#0;class#Visitor#0" />
@@ -35,48 +34,163 @@
                 <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
                 <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
                 <element signature="method#visitTable_schema#0;class#Visitor#0" />
+                <element signature="method#visitAttributes#0;class#Visitor#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="-5">
+              <caret line="99" column="42" lean-forward="true" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#WriteMetaData#0;class#Server#0" />
-                <element signature="method#addDatabase#0;class#Server#0" />
+                <element signature="method#BTreeLeafNode#0;class#BTreeLeafNode#0" />
+                <element signature="method#BTreeLeafNode#1;class#BTreeLeafNode#0" />
+                <element signature="method#deleteAllKeyPointer#0;class#BTreeLeafNode#0" />
+                <element signature="e#1259#1493#1" />
+                <element signature="e#1662#1898#1" />
+                <element signature="e#1738#1888#1" />
+                <element signature="method#deleteOneKeyPointer#0;class#BTreeLeafNode#0" />
+                <element signature="e#2910#3135#1" />
+                <element signature="e#2986#3125#1" />
+                <element signature="e#3936#4214#1" />
+                <element signature="e#4113#4204#1" />
+                <element signature="e#4241#4549#1" />
+                <element signature="e#4447#4539#1" />
+                <element signature="e#4715#4746#1" />
+                <element signature="e#4843#5012#1" />
+                <element signature="e#5069#5268#1" />
+                <element signature="e#5174#5258#1" />
+                <element signature="method#borrowFromRightBrother#0;class#BTreeLeafNode#0" />
+                <element signature="e#5714#5815#1" />
+                <element signature="method#borrowFromLeftBrother#0;class#BTreeLeafNode#0" />
+                <element signature="e#6400#6504#1" />
+                <element signature="method#mergeWithRightNode#0;class#BTreeLeafNode#0" />
+                <element signature="e#6786#7284#1" />
+                <element signature="e#7288#7486#1" />
+                <element signature="e#7562#7785#1" />
+                <element signature="e#7668#7775#1" />
+                <element signature="e#7821#8317#1" />
+                <element signature="e#7878#8284#1" />
+                <element signature="e#8027#8270#1" />
+                <element signature="e#8139#8252#1" />
+                <element signature="method#mergeWithLeftNode#0;class#BTreeLeafNode#0" />
+                <element signature="e#8785#9006#1" />
+                <element signature="e#8890#8996#1" />
+                <element signature="e#9041#9540#1" />
+                <element signature="e#9097#9507#1" />
+                <element signature="e#9246#9493#1" />
+                <element signature="e#9360#9475#1" />
+                <element signature="method#deleteOneKey#0;class#BTreeLeafNode#0" />
+                <element signature="e#9772#10043#1" />
+                <element signature="e#9949#10033#1" />
+                <element signature="e#10070#10371#1" />
+                <element signature="e#10276#10361#1" />
+                <element signature="e#10537#10568#1" />
+                <element signature="e#10687#11645#1" />
+                <element signature="e#10724#11183#1" />
+                <element signature="e#10980#11050#1" />
+                <element signature="e#11056#11169#1" />
+                <element signature="e#11189#11635#1" />
+                <element signature="e#11437#11506#1" />
+                <element signature="e#11510#11621#1" />
+                <element signature="e#11649#11700#1" />
+                <element signature="method#insertOneKeyPointer#0;class#BTreeLeafNode#0" />
+                <element signature="e#11817#12598#1" />
+                <element signature="e#12724#16577#1" />
+                <element signature="e#12925#14094#1" />
+                <element signature="e#12943#12989#0" />
+                <element signature="e#13085#13185#1" />
+                <element signature="e#13189#14080#1" />
+                <element signature="e#13211#13226#0" />
+                <element signature="e#13777#13897#1" />
+                <element signature="e#14098#16567#1" />
+                <element signature="e#14198#15339#1" />
+                <element signature="e#14430#14668#1" />
+                <element signature="e#14672#14746#1" />
+                <element signature="e#14786#15047#1" />
+                <element signature="e#15116#15211#1" />
+                <element signature="e#15215#15321#1" />
+                <element signature="e#15343#16553#1" />
+                <element signature="e#15462#15616#1" />
+                <element signature="e#15620#16535#1" />
+                <element signature="e#16208#16336#1" />
+                <element signature="e#16590#23837#1" />
+                <element signature="e#16658#16988#1" />
+                <element signature="e#16847#16974#1" />
+                <element signature="e#17018#17373#1" />
+                <element signature="e#17233#17359#1" />
+                <element signature="e#17546#18471#1" />
+                <element signature="e#17564#17610#0" />
+                <element signature="e#17706#17806#1" />
+                <element signature="e#17810#18457#1" />
+                <element signature="e#17832#17847#0" />
+                <element signature="e#18251#18371#1" />
+                <element signature="e#18475#23827#1" />
+                <element signature="e#18576#22497#1" />
+                <element signature="e#18703#19009#1" />
+                <element signature="e#19042#19270#1" />
+                <element signature="e#19275#22479#1" />
+                <element signature="e#19467#21723#1" />
+                <element signature="e#19567#21584#1" />
+                <element signature="e#19629#21472#1" />
+                <element signature="e#20776#21183#1" />
+                <element signature="e#21187#21299#1" />
+                <element signature="e#21588#21697#1" />
+                <element signature="e#21727#21828#1" />
+                <element signature="e#21872#22144#1" />
+                <element signature="e#22236#22339#1" />
+                <element signature="e#22343#22457#1" />
+                <element signature="e#22501#23813#1" />
+                <element signature="e#22620#23132#1" />
+                <element signature="e#22759#23028#1" />
+                <element signature="e#23136#23795#1" />
+                <element signature="e#23573#23701#1" />
+                <element signature="method#splitAt#0;class#BTreeLeafNode#0" />
+                <element signature="e#23955#24372#1" />
+                <element signature="e#24648#26447#1" />
+                <element signature="e#24734#25064#1" />
+                <element signature="e#24893#25002#1" />
+                <element signature="e#25131#25909#1" />
+                <element signature="e#26001#26210#1" />
+                <element signature="e#26451#26487#1" />
+                <element signature="method#insertPointerWithExistedKey#0;class#BTreeLeafNode#0" />
+                <element signature="e#27264#27502#1" />
+                <element signature="method#insertKeyPointer#0;class#BTreeLeafNode#0" />
+                <element signature="e#27851#28072#1" />
+                <element signature="method#getLocationAndNumber#0;class#BTreeLeafNode#0" />
+                <element signature="method#getPointer#0;class#BTreeLeafNode#0" />
+                <element signature="method#IndexDataFromByte#0;class#BTreeLeafNode#0" />
+                <element signature="e#30494#30660#1" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/TableAttribute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="55" column="55" lean-forward="true" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+            <state relative-caret-position="-279">
+              <caret line="36" column="106" selection-start-line="36" selection-start-column="106" selection-end-line="36" selection-end-column="106" />
+              <folding>
+                <element signature="e#1580#1581#0" expanded="true" />
+                <element signature="e#1624#1625#0" expanded="true" />
+                <element signature="e#1725#1726#0" expanded="true" />
+                <element signature="e#1777#1778#0" expanded="true" />
+                <element signature="method#toMetaByte#0;class#TableAttribute#0" />
+                <element signature="method#toString#0;class#TableAttribute#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/TableSchema.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="264">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -84,8 +198,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="159" column="18" selection-start-line="159" selection-start-column="18" selection-end-line="159" selection-end-column="18" />
+            <state relative-caret-position="476">
+              <caret line="175" column="92" selection-start-line="175" selection-start-column="92" selection-end-line="175" selection-end-column="92" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#deleteIndex#0;class#IndexBuffer#0" />
@@ -97,33 +211,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="652">
+              <caret line="63" column="31" lean-forward="true" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/BTree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+            <state relative-caret-position="290">
+              <caret line="170" column="36" lean-forward="true" selection-start-line="170" selection-start-column="36" selection-end-line="170" selection-end-column="36" />
               <folding>
                 <element signature="method#BTree#0;class#BTree#0" />
                 <element signature="method#BTree#1;class#BTree#0" />
                 <element signature="method#toByte#0;class#BTree#0" />
                 <element signature="method#getOneFreeBlockID#0;class#BTree#0" />
                 <element signature="method#addFreeBlockID#0;class#BTree#0" />
+                <element signature="e#5803#5804#0" expanded="true" />
+                <element signature="e#5868#5869#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
-              <folding>
-                <element signature="method#DataStorage#0;class#DataStorage#0" />
-                <element signature="method#insert#0;class#DataStorage#0" />
-                <element signature="method#delete#0;class#DataStorage#0" />
-                <element signature="method#updateFreeBlock#0;class#DataStorage#0" />
-                <element signature="method#getPossibleBlock#0;class#DataStorage#0" />
-              </folding>
+            <state relative-caret-position="-109">
+              <caret line="168" column="25" selection-start-line="168" selection-start-column="25" selection-end-line="168" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -131,17 +249,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="34" column="47" lean-forward="true" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
+            <state relative-caret-position="76">
+              <caret line="43" column="26" lean-forward="true" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -153,7 +262,9 @@
       <find>LT</find>
       <find>LT2</find>
       <find>sele</find>
+      <find>compare</find>
       <find>LT</find>
+      <find>binary</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,15 +275,16 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/java/LowSQL.g4" />
         <option value="$PROJECT_DIR$/src/main/java/Server.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Util.java" />
         <option value="$PROJECT_DIR$/src/main/java/Visitor.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-440" />
-    <option name="y" value="95" />
+    <option name="x" value="241" />
+    <option name="y" value="376" />
     <option name="width" value="1750" />
-    <option name="height" value="1250" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -243,7 +355,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6267000" />
+    <option name="totallyTimeSpent" value="12814000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -256,8 +368,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21313673" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21313673" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -267,7 +380,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3177874" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.7818697" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.17422096" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -295,51 +408,38 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>36</line>
+          <line>37</line>
           <properties />
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>40</line>
+          <line>41</line>
           <properties />
           <option name="timeStamp" value="81" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>376</line>
+          <line>397</line>
           <properties />
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>383</line>
+          <line>429</line>
           <properties />
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>368</line>
+          <line>425</line>
           <properties />
-          <option name="timeStamp" value="88" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>82</line>
-          <properties />
-          <option name="timeStamp" value="99" />
+          <option name="timeStamp" value="100" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1577">
-          <caret line="84" column="32" selection-start-line="84" selection-start-column="32" selection-end-line="84" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SQLite.g4">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2007">
@@ -370,32 +470,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
+    <entry file="file://$PROJECT_DIR$/system/metadata.bin">
+      <provider selected="true" editor-type-id="org.exbin.bined" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="53" column="28" lean-forward="true" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
+        <state relative-caret-position="116">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TableAttribute.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="36" column="108" lean-forward="true" selection-start-line="36" selection-start-column="108" selection-end-line="36" selection-end-column="108" />
+        <state relative-caret-position="116">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="55" column="55" lean-forward="true" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-93">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
           <folding>
-            <element signature="e#1580#1581#0" expanded="true" />
-            <element signature="e#1624#1625#0" expanded="true" />
-            <element signature="e#1725#1726#0" expanded="true" />
-            <element signature="e#1777#1778#0" expanded="true" />
-            <element signature="method#toMetaByte#0;class#TableAttribute#0" />
-            <element signature="method#toString#0;class#TableAttribute#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#WriteMetaData#0;class#Server#0" />
+            <element signature="method#addDatabase#0;class#Server#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+          <folding>
+            <element signature="method#DataStorage#0;class#DataStorage#0" />
+            <element signature="method#insert#0;class#DataStorage#0" />
+            <element signature="method#delete#0;class#DataStorage#0" />
+            <element signature="method#updateFreeBlock#0;class#DataStorage#0" />
+            <element signature="method#getPossibleBlock#0;class#DataStorage#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6688">
-          <caret line="1081" selection-start-line="1081" selection-end-line="1081" />
+        <state relative-caret-position="61">
+          <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
           <folding>
             <element signature="e#3647#3648#0" expanded="true" />
             <element signature="e#3671#3672#0" expanded="true" />
@@ -537,29 +665,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="34" column="47" lean-forward="true" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+        <state relative-caret-position="76">
+          <caret line="43" column="26" lean-forward="true" selection-start-line="43" selection-start-column="26" selection-end-line="43" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Util.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
-          <folding>
-            <element signature="method#DataStorage#0;class#DataStorage#0" />
-            <element signature="method#insert#0;class#DataStorage#0" />
-            <element signature="method#delete#0;class#DataStorage#0" />
-            <element signature="method#updateFreeBlock#0;class#DataStorage#0" />
-            <element signature="method#getPossibleBlock#0;class#DataStorage#0" />
-          </folding>
+        <state relative-caret-position="285">
+          <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="63" column="31" lean-forward="true" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TableSchema.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="777">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="159" column="18" selection-start-line="159" selection-start-column="18" selection-end-line="159" selection-end-column="18" />
+        <state relative-caret-position="476">
+          <caret line="175" column="92" selection-start-line="175" selection-start-column="92" selection-end-line="175" selection-end-column="92" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#deleteIndex#0;class#IndexBuffer#0" />
@@ -569,67 +704,182 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TableAttribute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-279">
+          <caret line="36" column="106" selection-start-line="36" selection-start-column="106" selection-end-line="36" selection-end-column="106" />
+          <folding>
+            <element signature="e#1580#1581#0" expanded="true" />
+            <element signature="e#1624#1625#0" expanded="true" />
+            <element signature="e#1725#1726#0" expanded="true" />
+            <element signature="e#1777#1778#0" expanded="true" />
+            <element signature="method#toMetaByte#0;class#TableAttribute#0" />
+            <element signature="method#toString#0;class#TableAttribute#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-109">
+          <caret line="168" column="25" selection-start-line="168" selection-start-column="25" selection-end-line="168" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="99" column="42" lean-forward="true" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
+          <folding>
+            <element signature="method#BTreeLeafNode#0;class#BTreeLeafNode#0" />
+            <element signature="method#BTreeLeafNode#1;class#BTreeLeafNode#0" />
+            <element signature="method#deleteAllKeyPointer#0;class#BTreeLeafNode#0" />
+            <element signature="e#1259#1493#1" />
+            <element signature="e#1662#1898#1" />
+            <element signature="e#1738#1888#1" />
+            <element signature="method#deleteOneKeyPointer#0;class#BTreeLeafNode#0" />
+            <element signature="e#2910#3135#1" />
+            <element signature="e#2986#3125#1" />
+            <element signature="e#3936#4214#1" />
+            <element signature="e#4113#4204#1" />
+            <element signature="e#4241#4549#1" />
+            <element signature="e#4447#4539#1" />
+            <element signature="e#4715#4746#1" />
+            <element signature="e#4843#5012#1" />
+            <element signature="e#5069#5268#1" />
+            <element signature="e#5174#5258#1" />
+            <element signature="method#borrowFromRightBrother#0;class#BTreeLeafNode#0" />
+            <element signature="e#5714#5815#1" />
+            <element signature="method#borrowFromLeftBrother#0;class#BTreeLeafNode#0" />
+            <element signature="e#6400#6504#1" />
+            <element signature="method#mergeWithRightNode#0;class#BTreeLeafNode#0" />
+            <element signature="e#6786#7284#1" />
+            <element signature="e#7288#7486#1" />
+            <element signature="e#7562#7785#1" />
+            <element signature="e#7668#7775#1" />
+            <element signature="e#7821#8317#1" />
+            <element signature="e#7878#8284#1" />
+            <element signature="e#8027#8270#1" />
+            <element signature="e#8139#8252#1" />
+            <element signature="method#mergeWithLeftNode#0;class#BTreeLeafNode#0" />
+            <element signature="e#8785#9006#1" />
+            <element signature="e#8890#8996#1" />
+            <element signature="e#9041#9540#1" />
+            <element signature="e#9097#9507#1" />
+            <element signature="e#9246#9493#1" />
+            <element signature="e#9360#9475#1" />
+            <element signature="method#deleteOneKey#0;class#BTreeLeafNode#0" />
+            <element signature="e#9772#10043#1" />
+            <element signature="e#9949#10033#1" />
+            <element signature="e#10070#10371#1" />
+            <element signature="e#10276#10361#1" />
+            <element signature="e#10537#10568#1" />
+            <element signature="e#10687#11645#1" />
+            <element signature="e#10724#11183#1" />
+            <element signature="e#10980#11050#1" />
+            <element signature="e#11056#11169#1" />
+            <element signature="e#11189#11635#1" />
+            <element signature="e#11437#11506#1" />
+            <element signature="e#11510#11621#1" />
+            <element signature="e#11649#11700#1" />
+            <element signature="method#insertOneKeyPointer#0;class#BTreeLeafNode#0" />
+            <element signature="e#11817#12598#1" />
+            <element signature="e#12724#16577#1" />
+            <element signature="e#12925#14094#1" />
+            <element signature="e#12943#12989#0" />
+            <element signature="e#13085#13185#1" />
+            <element signature="e#13189#14080#1" />
+            <element signature="e#13211#13226#0" />
+            <element signature="e#13777#13897#1" />
+            <element signature="e#14098#16567#1" />
+            <element signature="e#14198#15339#1" />
+            <element signature="e#14430#14668#1" />
+            <element signature="e#14672#14746#1" />
+            <element signature="e#14786#15047#1" />
+            <element signature="e#15116#15211#1" />
+            <element signature="e#15215#15321#1" />
+            <element signature="e#15343#16553#1" />
+            <element signature="e#15462#15616#1" />
+            <element signature="e#15620#16535#1" />
+            <element signature="e#16208#16336#1" />
+            <element signature="e#16590#23837#1" />
+            <element signature="e#16658#16988#1" />
+            <element signature="e#16847#16974#1" />
+            <element signature="e#17018#17373#1" />
+            <element signature="e#17233#17359#1" />
+            <element signature="e#17546#18471#1" />
+            <element signature="e#17564#17610#0" />
+            <element signature="e#17706#17806#1" />
+            <element signature="e#17810#18457#1" />
+            <element signature="e#17832#17847#0" />
+            <element signature="e#18251#18371#1" />
+            <element signature="e#18475#23827#1" />
+            <element signature="e#18576#22497#1" />
+            <element signature="e#18703#19009#1" />
+            <element signature="e#19042#19270#1" />
+            <element signature="e#19275#22479#1" />
+            <element signature="e#19467#21723#1" />
+            <element signature="e#19567#21584#1" />
+            <element signature="e#19629#21472#1" />
+            <element signature="e#20776#21183#1" />
+            <element signature="e#21187#21299#1" />
+            <element signature="e#21588#21697#1" />
+            <element signature="e#21727#21828#1" />
+            <element signature="e#21872#22144#1" />
+            <element signature="e#22236#22339#1" />
+            <element signature="e#22343#22457#1" />
+            <element signature="e#22501#23813#1" />
+            <element signature="e#22620#23132#1" />
+            <element signature="e#22759#23028#1" />
+            <element signature="e#23136#23795#1" />
+            <element signature="e#23573#23701#1" />
+            <element signature="method#splitAt#0;class#BTreeLeafNode#0" />
+            <element signature="e#23955#24372#1" />
+            <element signature="e#24648#26447#1" />
+            <element signature="e#24734#25064#1" />
+            <element signature="e#24893#25002#1" />
+            <element signature="e#25131#25909#1" />
+            <element signature="e#26001#26210#1" />
+            <element signature="e#26451#26487#1" />
+            <element signature="method#insertPointerWithExistedKey#0;class#BTreeLeafNode#0" />
+            <element signature="e#27264#27502#1" />
+            <element signature="method#insertKeyPointer#0;class#BTreeLeafNode#0" />
+            <element signature="e#27851#28072#1" />
+            <element signature="method#getLocationAndNumber#0;class#BTreeLeafNode#0" />
+            <element signature="method#getPointer#0;class#BTreeLeafNode#0" />
+            <element signature="method#IndexDataFromByte#0;class#BTreeLeafNode#0" />
+            <element signature="e#30494#30660#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+        <state relative-caret-position="290">
+          <caret line="170" column="36" lean-forward="true" selection-start-line="170" selection-start-column="36" selection-end-line="170" selection-end-column="36" />
           <folding>
             <element signature="method#BTree#0;class#BTree#0" />
             <element signature="method#BTree#1;class#BTree#0" />
             <element signature="method#toByte#0;class#BTree#0" />
             <element signature="method#getOneFreeBlockID#0;class#BTree#0" />
             <element signature="method#addFreeBlockID#0;class#BTree#0" />
+            <element signature="e#5803#5804#0" expanded="true" />
+            <element signature="e#5868#5869#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/metadata.bin">
-      <provider selected="true" editor-type-id="org.exbin.bined" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#WriteMetaData#0;class#Server#0" />
-            <element signature="method#addDatabase#0;class#Server#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="55" column="55" lean-forward="true" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TableSchema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
+        <state relative-caret-position="215">
+          <caret line="394" selection-start-line="394" selection-end-line="394" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#visitName#0;class#Visitor#0" />
@@ -643,6 +893,7 @@
             <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
             <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
             <element signature="method#visitTable_schema#0;class#Visitor#0" />
+            <element signature="method#visitAttributes#0;class#Visitor#0" />
           </folding>
         </state>
       </provider>
