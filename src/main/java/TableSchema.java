@@ -5,7 +5,7 @@ public class TableSchema {
 
     /* metadata
 
-     |   Attribute name -- 28|unused -- 1|PK --1|limit --1|type -- 1|
+     |   Attribute name -- 28|unused -- 1|PK --1|not null --1|type -- 1|length limit 4|
      |   Attribute name2 ...
 
      */
@@ -15,7 +15,7 @@ public class TableSchema {
         table_name = t_name;
         attribute_number = attr_number;
         attributes = new TableAttribute[attribute_number];
-        int len = Util.AttributeNameMaxLength + 4;
+        int len = Util.AttributeNameMaxLength + 8;
         byte[] temp = new byte[len];
         for (int i = 0; i < attribute_number; i++){
             System.arraycopy(metadata,i * len,temp,0,len);

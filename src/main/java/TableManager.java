@@ -8,7 +8,7 @@ public class TableManager {
     /* metadata
 
      |   Table size --4 | Table Name - 28 | Attribute Number -- 4|
-     |   Attribute name -- 28|unused -- 1|PK --1|limit --1|type -- 1|
+     |   Attribute name -- 28|unused -- 1|PK --1|not null --1|type -- 1| length limit 4 |
      |   Attribute name2 ...
 
      table size is the number of bytes of all the table schema(including table size itself)
