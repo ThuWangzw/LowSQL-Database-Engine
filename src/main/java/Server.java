@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.io.RandomAccessFile;
 import java.io.FileOutputStream;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Server {
     private ArrayList<DatabaseManager> databases;
@@ -70,10 +72,11 @@ public class Server {
     }
 
     public void deleteDatabase(String db_name){
-        for (DatabaseManager cur : databases){
+        for(Iterator<DatabaseManager> it = databases.iterator(); it.hasNext(); ){
+            DatabaseManager cur = it.next();
             if(db_name.equals(cur.getDatabaseName())){
-                databases.remove(cur);
-                break;
+                it.remove();
+                return;
             }
         }
     }
@@ -83,9 +86,11 @@ public class Server {
         for(DatabaseManager cur:databases){
             if(db_name.equals(cur.getDatabaseName())){
                 current_database = cur;
-                //TODO
+                index_buffer.reload(cur);
+                data_buffer.reload(cur);
             }
         }
+        throw new NoSuchElementException("Database " + db_name + "does not exist");
     }
 
     public ArrayList<DatabaseManager> getDatabases(){
@@ -99,6 +104,13 @@ public class Server {
         }
         return null;
     }
+
+    public static void main(String[] args) {
+        System.out.println("-- Node --");
+        //BTreeInternalNode n = new BTreeInternalNode();
+        //n.getIndexData();
+    }
+
 
 
 }

@@ -1,4 +1,5 @@
 import javax.xml.crypto.Data;
+import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,21 @@ public class DataBuffer {
         data_buffer = new DataBlock[DATA_BUFFER_BLOCK_NUNMBER];
         storages = new ArrayList<>();
         db = current_db;
+        ArrayList<TableManager> tables = db.getTables();
+        for (TableManager cur : tables){
+            storages.add(new DataStorage(cur.getDBName(),cur.getTableName(),cur.getSchema(),this));
+        }
+    }
+
+    void reload(DatabaseManager new_db){
+        if(new_db.getDatabaseName().equals(db.getDatabaseName()))
+            return;
+        saveAll();
+        clearBuffer();
+        //reload
+        db = new_db;
+        storages = null;
+        storages = new ArrayList<>();
         ArrayList<TableManager> tables = db.getTables();
         for (TableManager cur : tables){
             storages.add(new DataStorage(cur.getDBName(),cur.getTableName(),cur.getSchema(),this));
@@ -110,10 +126,28 @@ public class DataBuffer {
         }
     }
 
+    public void deleteDataFile(String db_name,String table_name){
+        DataStorage ds = getDataStorage(db_name,table_name);
+        if(ds == null)
+            throw new NullPointerException("delete: Table not exist!");
+        storages.remove(ds);
+        File file = new File(Util.DataStorageDir + db_name + "_" + table_name + ".bin");
+        if(!file.delete())
+            throw new IllegalArgumentException("delete data file failed!");
 
+        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
+            if(data_buffer[i] != null){
+                if (data_buffer[i].DB_name.equals(db_name) && data_buffer[i].table_name.equals(table_name)){
+                    data_buffer[i] = null;
+                }
+            }
+        }
+    }
 
-
-
-
+    public void clearBuffer(){
+        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
+            data_buffer[i] = null;
+        }
+    }
 
 }

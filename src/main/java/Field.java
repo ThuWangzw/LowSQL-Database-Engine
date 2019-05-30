@@ -85,6 +85,22 @@ public class Field {
         if (size > attribute.getLengthLimit()){
                 return false;
         }
+        if(value instanceof Long){
+            if(attribute.getType() != Util.LONG)
+                return false;
+        }else if (value instanceof Integer){
+            if(attribute.getType() != Util.INT)
+                return false;
+        }else if(value instanceof Float){
+            if(attribute.getType() != Util.FLOAT)
+                return false;
+        }else if(value instanceof Double){
+            if(attribute.getType() != Util.DOUBLE)
+                return false;
+        }else if(value instanceof String){
+            if(attribute.getType() != Util.STRING && attribute.getType() != Util.VARCHAR)
+                return false;
+        }
         return true;
     }
 
