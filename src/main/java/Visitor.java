@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.jar.Attributes;
 
 public class Visitor extends LowSQLBaseVisitor {
-    private Server server;
+    static private Server server;
     private DatabaseManager current_database;
     private Visitor(){
         server = new Server();
@@ -30,6 +30,8 @@ public class Visitor extends LowSQLBaseVisitor {
             ParseTree tree = parser.parse();
             Visitor visitor = new Visitor();
             visitor.visit(tree);
+            server.data_buffer.saveAll();
+            server.index_buffer.saveAll();
         }
         catch (RuntimeException e){
             writer.write(e.getMessage());
@@ -80,6 +82,7 @@ public class Visitor extends LowSQLBaseVisitor {
         TableSchema schema = new TableSchema(tablename, attributes1);
         TableManager tableManager = new TableManager(current_database.getDatabaseName(), tablename, schema);
         current_database.addTable(tableManager);
+        server.data_buffer.addDataStorage(tableManager);
         server.WriteMetaData();
 //        add index
         if(primary_keys.size()>0){
@@ -108,11 +111,12 @@ public class Visitor extends LowSQLBaseVisitor {
         List<ParseTree> nodes = ctx.children;
         String attribute = (String) visit(nodes.get(0));
         ArrayList<Integer> types = (ArrayList<Integer>) visit(nodes.get(1));
-
+        boolean not_null = false;
         if(nodes.size() == 3){
 //            not null
+            not_null = true;
         }
-        return new TableAttribute(null ,attribute, (int)types.get(0), (int)types.get(1), false);
+        return new TableAttribute(null ,attribute, (int)types.get(0), (int)types.get(1), false, not_null);
     }
 
     @Override
@@ -326,11 +330,14 @@ public class Visitor extends LowSQLBaseVisitor {
 //            for(int i=fieldIdx; i>attributess.length; i++){
 //                if(attributess[i].)
 //            }
-            String msg = new String("");
+//            String msg = new String("");
+//            for(int i=fieldIdx; i<attributess.length; i++){
+//                msg += attributess[i].getAttributeName()+", ";
+//            }
+//            throw new RuntimeException(msg+"can not be null.");
             for(int i=fieldIdx; i<attributess.length; i++){
-                msg += attributess[i].getAttributeName()+", ";
+                fields[i] = new Field(null, attributess[i]);
             }
-            throw new RuntimeException(msg+"can not be null.");
         }
 
         return new Record(fields, current_table.getSchema());
@@ -353,4 +360,5 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         return null;
     }
+    
 }

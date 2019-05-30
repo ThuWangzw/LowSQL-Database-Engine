@@ -2,22 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09dc7a4a-e0f1-4acf-8ad5-b06b973d6712" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/command.sql" beforeDir="false" afterPath="$PROJECT_DIR$/command.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQL.interp" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQL.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQL.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQL.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLBaseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLBaseVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLLexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/LowSQLVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/LowSQLVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index/test_person_ID.bin" beforeDir="false" afterPath="$PROJECT_DIR$/index/test_person_ID.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index/test_score_name.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQL.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQL.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/test_height.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/test_person.bin" beforeDir="false" afterPath="$PROJECT_DIR$/data/test_person.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/test_score.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index/test_person_ID.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQL.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQL.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQL.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQL.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLLexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/metadata.bin" beforeDir="false" afterPath="$PROJECT_DIR$/system/metadata.bin" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,37 +30,62 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="99" column="13" lean-forward="true" selection-start-line="99" selection-start-column="13" selection-end-line="99" selection-end-column="13" />
+            <state relative-caret-position="397">
+              <caret line="365" column="8" selection-start-line="365" selection-start-column="8" selection-end-line="365" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#main#0;class#Visitor#0" />
                 <element signature="method#visitCreate_table_stmt#0;class#Visitor#0" />
                 <element signature="method#visitName#0;class#Visitor#0" />
-                <element signature="method#visitColumn_def#0;class#Visitor#0" />
                 <element signature="method#visitType_name#0;class#Visitor#0" />
                 <element signature="method#visitTable_constraint#0;class#Visitor#0" />
                 <element signature="e#6096#6097#0" expanded="true" />
                 <element signature="e#6145#6146#0" expanded="true" />
                 <element signature="e#6240#6241#0" expanded="true" />
                 <element signature="e#6289#6290#0" expanded="true" />
+                <element signature="method#visitDrop_table_stmt#0;class#Visitor#0" />
                 <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
                 <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
                 <element signature="method#visitTable_schema#0;class#Visitor#0" />
-                <element signature="method#visitInsert_one_data#0;class#Visitor#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="55" column="55" lean-forward="true" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="25" column="32" lean-forward="true" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="171">
-              <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+              <caret line="33" column="10" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -67,11 +93,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/TableAttribute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="217">
+              <caret line="36" column="108" lean-forward="true" selection-start-line="36" selection-start-column="108" selection-end-line="36" selection-end-column="108" />
               <folding>
-                <element signature="method#TableAttribute#0;class#TableAttribute#0" />
-                <element signature="method#TableAttribute#1;class#TableAttribute#0" />
+                <element signature="e#1580#1581#0" expanded="true" />
+                <element signature="e#1624#1625#0" expanded="true" />
+                <element signature="e#1725#1726#0" expanded="true" />
+                <element signature="e#1777#1778#0" expanded="true" />
                 <element signature="method#toMetaByte#0;class#TableAttribute#0" />
                 <element signature="method#toString#0;class#TableAttribute#0" />
               </folding>
@@ -82,20 +110,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-108">
-              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="112" column="36" selection-start-line="112" selection-start-column="36" selection-end-line="112" selection-end-column="36" />
-              <folding>
-                <element signature="method#DatabaseManager#0;class#DatabaseManager#0" />
-              </folding>
+            <state relative-caret-position="63">
+              <caret line="53" column="28" lean-forward="true" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -116,8 +132,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/Visitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/LowSQL.g4" />
+        <option value="$PROJECT_DIR$/src/main/java/Server.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Visitor.java" />
       </list>
     </option>
   </component>
@@ -149,16 +166,6 @@
             <path>
               <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
               <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
-              <item name="index" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -174,16 +181,18 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
     </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="$PROJECT_DIR$/src/main/java/LowSQL.g4::/auto-gen" value="false" />
+    <property name="$PROJECT_DIR$/src/main/java/LowSQL.g4::/gen-listener" value="true" />
+    <property name="$PROJECT_DIR$/src/main/java/LowSQL.g4::/gen-visitor" value="true" />
+    <property name="$PROJECT_DIR$/src/main/java/LowSQL.g4::/output-dir" value="D:\learn\LowSQL-Database-Engine\src\main\java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -204,7 +213,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2590000" />
+    <option name="totallyTimeSpent" value="3880000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -217,8 +226,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21313673" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21313673" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -228,7 +238,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3177874" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.29036826" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.22804533" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -238,8 +248,8 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
       <window_info anchor="bottom" id="Version Control" order="12" />
-      <window_info active="true" anchor="bottom" id="ANTLR Preview" order="13" visible="true" weight="0.3654391" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.37818697" />
+      <window_info anchor="bottom" id="ANTLR Preview" order="13" weight="0.3654391" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.47025496" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -250,6 +260,30 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
     </layout>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>36</line>
+          <properties />
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>84</line>
+          <properties />
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/BTree.java">
@@ -263,25 +297,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-379">
-          <caret line="45" column="28" lean-forward="true" selection-start-line="45" selection-start-column="28" selection-end-line="45" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#WriteMetaData#0;class#Server#0" />
-            <element signature="method#addDatabase#0;class#Server#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="1094" selection-start-line="1094" selection-end-line="1094" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
@@ -291,13 +306,6 @@
             <element signature="method#deleteIndex#0;class#IndexBuffer#0" />
             <element signature="method#saveIndexMetaData#0;class#IndexBuffer#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
         </state>
       </provider>
     </entry>
@@ -328,44 +336,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="99" column="13" lean-forward="true" selection-start-line="99" selection-start-column="13" selection-end-line="99" selection-end-column="13" />
+        <state relative-caret-position="437">
+          <caret line="74" column="34" selection-start-line="74" selection-start-column="34" selection-end-line="74" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#main#0;class#Visitor#0" />
-            <element signature="method#visitCreate_table_stmt#0;class#Visitor#0" />
-            <element signature="method#visitName#0;class#Visitor#0" />
-            <element signature="method#visitColumn_def#0;class#Visitor#0" />
-            <element signature="method#visitType_name#0;class#Visitor#0" />
-            <element signature="method#visitTable_constraint#0;class#Visitor#0" />
-            <element signature="e#6096#6097#0" expanded="true" />
-            <element signature="e#6145#6146#0" expanded="true" />
-            <element signature="e#6240#6241#0" expanded="true" />
-            <element signature="e#6289#6290#0" expanded="true" />
-            <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
-            <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
-            <element signature="method#visitTable_schema#0;class#Visitor#0" />
-            <element signature="method#visitInsert_one_data#0;class#Visitor#0" />
+            <element signature="method#WriteMetaData#0;class#Server#0" />
+            <element signature="method#addDatabase#0;class#Server#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/io/Writer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="156" selection-start-line="156" selection-end-line="156" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/javalib/antlr-4.7.1-complete.jar!/org/antlr/v4/runtime/tree/AbstractParseTreeVisitor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#347#348#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="25" column="32" lean-forward="true" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="55" column="55" lean-forward="true" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-108">
-          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+        <state relative-caret-position="63">
+          <caret line="53" column="28" lean-forward="true" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TableAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="217">
+          <caret line="36" column="108" lean-forward="true" selection-start-line="36" selection-start-column="108" selection-end-line="36" selection-end-column="108" />
           <folding>
-            <element signature="method#TableAttribute#0;class#TableAttribute#0" />
-            <element signature="method#TableAttribute#1;class#TableAttribute#0" />
+            <element signature="e#1580#1581#0" expanded="true" />
+            <element signature="e#1624#1625#0" expanded="true" />
+            <element signature="e#1725#1726#0" expanded="true" />
+            <element signature="e#1777#1778#0" expanded="true" />
             <element signature="method#toMetaByte#0;class#TableAttribute#0" />
             <element signature="method#toString#0;class#TableAttribute#0" />
           </folding>
@@ -375,7 +407,179 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
-          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+          <caret line="33" column="10" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6688">
+          <caret line="1081" selection-start-line="1081" selection-end-line="1081" />
+          <folding>
+            <element signature="e#3647#3648#0" expanded="true" />
+            <element signature="e#3671#3672#0" expanded="true" />
+            <element signature="e#3721#3722#0" expanded="true" />
+            <element signature="e#3745#3746#0" expanded="true" />
+            <element signature="e#4337#4338#0" expanded="true" />
+            <element signature="e#4396#4397#0" expanded="true" />
+            <element signature="e#4449#4450#0" expanded="true" />
+            <element signature="e#4509#4510#0" expanded="true" />
+            <element signature="e#4547#4548#0" expanded="true" />
+            <element signature="e#4598#4599#0" expanded="true" />
+            <element signature="e#4635#4636#0" expanded="true" />
+            <element signature="e#4687#4688#0" expanded="true" />
+            <element signature="e#4756#4757#0" expanded="true" />
+            <element signature="e#4793#4794#0" expanded="true" />
+            <element signature="e#6832#6833#0" expanded="true" />
+            <element signature="e#6869#6870#0" expanded="true" />
+            <element signature="e#8273#8274#0" expanded="true" />
+            <element signature="e#8327#8328#0" expanded="true" />
+            <element signature="e#8370#8371#0" expanded="true" />
+            <element signature="e#8425#8426#0" expanded="true" />
+            <element signature="e#8502#8503#0" expanded="true" />
+            <element signature="e#8539#8540#0" expanded="true" />
+            <element signature="e#10687#10688#0" expanded="true" />
+            <element signature="e#10751#10752#0" expanded="true" />
+            <element signature="e#10803#10804#0" expanded="true" />
+            <element signature="e#10865#10866#0" expanded="true" />
+            <element signature="e#10917#10918#0" expanded="true" />
+            <element signature="e#10979#10980#0" expanded="true" />
+            <element signature="e#11023#11024#0" expanded="true" />
+            <element signature="e#11081#11082#0" expanded="true" />
+            <element signature="e#11139#11140#0" expanded="true" />
+            <element signature="e#11204#11205#0" expanded="true" />
+            <element signature="e#11276#11277#0" expanded="true" />
+            <element signature="e#11313#11314#0" expanded="true" />
+            <element signature="e#13168#13169#0" expanded="true" />
+            <element signature="e#13219#13220#0" expanded="true" />
+            <element signature="e#13267#13268#0" expanded="true" />
+            <element signature="e#13323#13324#0" expanded="true" />
+            <element signature="e#13370#13371#0" expanded="true" />
+            <element signature="e#13427#13428#0" expanded="true" />
+            <element signature="e#13487#13488#0" expanded="true" />
+            <element signature="e#13549#13550#0" expanded="true" />
+            <element signature="e#13608#13609#0" expanded="true" />
+            <element signature="e#13671#13672#0" expanded="true" />
+            <element signature="e#13752#13753#0" expanded="true" />
+            <element signature="e#13789#13790#0" expanded="true" />
+            <element signature="e#16050#16051#0" expanded="true" />
+            <element signature="e#16107#16108#0" expanded="true" />
+            <element signature="e#16213#16214#0" expanded="true" />
+            <element signature="e#16264#16265#0" expanded="true" />
+            <element signature="e#16388#16389#0" expanded="true" />
+            <element signature="e#16447#16448#0" expanded="true" />
+            <element signature="e#16529#16530#0" expanded="true" />
+            <element signature="e#16566#16567#0" expanded="true" />
+            <element signature="e#18152#18153#0" expanded="true" />
+            <element signature="e#18202#18203#0" expanded="true" />
+            <element signature="e#18237#18238#0" expanded="true" />
+            <element signature="e#18288#18289#0" expanded="true" />
+            <element signature="e#18362#18363#0" expanded="true" />
+            <element signature="e#18399#18400#0" expanded="true" />
+            <element signature="e#20198#20199#0" expanded="true" />
+            <element signature="e#20249#20250#0" expanded="true" />
+            <element signature="e#20299#20300#0" expanded="true" />
+            <element signature="e#20360#20361#0" expanded="true" />
+            <element signature="e#20408#20409#0" expanded="true" />
+            <element signature="e#20468#20469#0" expanded="true" />
+            <element signature="e#20544#20545#0" expanded="true" />
+            <element signature="e#20581#20582#0" expanded="true" />
+            <element signature="e#22337#22338#0" expanded="true" />
+            <element signature="e#22374#22375#0" expanded="true" />
+            <element signature="e#24093#24094#0" expanded="true" />
+            <element signature="e#24144#24145#0" expanded="true" />
+            <element signature="e#24375#24376#0" expanded="true" />
+            <element signature="e#24412#24413#0" expanded="true" />
+            <element signature="e#26112#26113#0" expanded="true" />
+            <element signature="e#26172#26173#0" expanded="true" />
+            <element signature="e#26227#26228#0" expanded="true" />
+            <element signature="e#26288#26289#0" expanded="true" />
+            <element signature="e#26368#26369#0" expanded="true" />
+            <element signature="e#26405#26406#0" expanded="true" />
+            <element signature="e#28261#28262#0" expanded="true" />
+            <element signature="e#28312#28313#0" expanded="true" />
+            <element signature="e#28380#28381#0" expanded="true" />
+            <element signature="e#28417#28418#0" expanded="true" />
+            <element signature="e#30045#30046#0" expanded="true" />
+            <element signature="e#30096#30097#0" expanded="true" />
+            <element signature="e#30174#30175#0" expanded="true" />
+            <element signature="e#30211#30212#0" expanded="true" />
+            <element signature="e#31448#31449#0" expanded="true" />
+            <element signature="e#31499#31500#0" expanded="true" />
+            <element signature="e#31539#31540#0" expanded="true" />
+            <element signature="e#31595#31596#0" expanded="true" />
+            <element signature="e#31657#31658#0" expanded="true" />
+            <element signature="e#31720#31721#0" expanded="true" />
+            <element signature="e#31781#31782#0" expanded="true" />
+            <element signature="e#31845#31846#0" expanded="true" />
+            <element signature="e#31919#31920#0" expanded="true" />
+            <element signature="e#31956#31957#0" expanded="true" />
+            <element signature="e#33643#33644#0" expanded="true" />
+            <element signature="e#33694#33695#0" expanded="true" />
+            <element signature="e#33742#33743#0" expanded="true" />
+            <element signature="e#33802#33803#0" expanded="true" />
+            <element signature="e#33875#33876#0" expanded="true" />
+            <element signature="e#33912#33913#0" expanded="true" />
+            <element signature="e#35477#35478#0" expanded="true" />
+            <element signature="e#35514#35515#0" expanded="true" />
+            <element signature="e#37345#37346#0" expanded="true" />
+            <element signature="e#37382#37383#0" expanded="true" />
+            <element signature="e#38847#38848#0" expanded="true" />
+            <element signature="e#38898#38899#0" expanded="true" />
+            <element signature="e#38977#38978#0" expanded="true" />
+            <element signature="e#39014#39015#0" expanded="true" />
+            <element signature="e#40506#40507#0" expanded="true" />
+            <element signature="e#40565#40566#0" expanded="true" />
+            <element signature="e#40703#40704#0" expanded="true" />
+            <element signature="e#40764#40765#0" expanded="true" />
+            <element signature="e#40821#40822#0" expanded="true" />
+            <element signature="e#40883#40884#0" expanded="true" />
+            <element signature="e#40958#40959#0" expanded="true" />
+            <element signature="e#40995#40996#0" expanded="true" />
+            <element signature="e#42803#42804#0" expanded="true" />
+            <element signature="e#42853#42854#0" expanded="true" />
+            <element signature="e#42888#42889#0" expanded="true" />
+            <element signature="e#42939#42940#0" expanded="true" />
+            <element signature="e#43015#43016#0" expanded="true" />
+            <element signature="e#43052#43053#0" expanded="true" />
+            <element signature="e#44794#44795#0" expanded="true" />
+            <element signature="e#44853#44854#0" expanded="true" />
+            <element signature="e#44906#44907#0" expanded="true" />
+            <element signature="e#44966#44967#0" expanded="true" />
+            <element signature="e#45045#45046#0" expanded="true" />
+            <element signature="e#45082#45083#0" expanded="true" />
+            <element signature="e#47021#47022#0" expanded="true" />
+            <element signature="e#47058#47059#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="365" column="8" selection-start-line="365" selection-start-column="8" selection-end-line="365" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#visitCreate_table_stmt#0;class#Visitor#0" />
+            <element signature="method#visitName#0;class#Visitor#0" />
+            <element signature="method#visitType_name#0;class#Visitor#0" />
+            <element signature="method#visitTable_constraint#0;class#Visitor#0" />
+            <element signature="e#6096#6097#0" expanded="true" />
+            <element signature="e#6145#6146#0" expanded="true" />
+            <element signature="e#6240#6241#0" expanded="true" />
+            <element signature="e#6289#6290#0" expanded="true" />
+            <element signature="method#visitDrop_table_stmt#0;class#Visitor#0" />
+            <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
+            <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
+            <element signature="method#visitTable_schema#0;class#Visitor#0" />
+          </folding>
         </state>
       </provider>
     </entry>
