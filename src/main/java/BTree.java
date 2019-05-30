@@ -159,20 +159,13 @@ public class BTree {
         root_node.insert(record2key(rcd),page_id,record_id);
     }
 
-    public BTreeLeafNode queryNode(Record rcd){
-        return root_node.queryRecordNode(record2key(rcd));
+    //return [node_id index]
+    public int[] query(Record rcd){
+        return root_node.query(record2key(rcd));
     }
 
-    public BTreeLeafNode queryNode(byte[] key){
-        return root_node.queryRecordNode(key);
-    }
-
-    public DataPointer[] queryPointer(Record rcd){
-        return root_node.queryRecordPointer(record2key(rcd));
-    }
-
-    public DataPointer[] queryPointer(byte[] key){
-        return root_node.queryRecordPointer(key);
+    public int[] query(byte[] key){
+        return root_node.query(key);
     }
 
     public void delete(byte[] key){

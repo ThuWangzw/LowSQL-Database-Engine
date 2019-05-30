@@ -166,56 +166,30 @@ abstract public class BTreeNode {
     }
 
 
-    public BTreeLeafNode queryRecordNode(byte[] key){
-        //return leaf node that stores the key --
-        //return null means the key is not stored in the index tree
-        int index;
-        index = BinarySearch(key,0,key_number - 1);
-        if(index == key_number){
-            if(next_id != 0){
-                BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
-                if(compare2key(key,next_node.keys.get(0)) != Util.L){
-                    return next_node.queryRecordNode(key);
-                }
-            }
-            return null;
-        }
-
-        if(type == 1){
-            if(compare2key(key,keys.get(index)) == Util.E)
-                return (BTreeLeafNode) this;
-            return null;
-        }else if (type == 0){
-            BTreeInternalNode temp = (BTreeInternalNode) this;
-            return buffer.getNode(temp.getPointer(index),DB_name,table_name,index_attrs).queryRecordNode(key);
-        }else
-            return null;
-    }
-
-    public DataPointer[] queryRecordPointer(byte[] key){
+    public int[] query(byte[] key){
+        //return [node_id index_id]
         //return pointer list node that stores the key
         //return null means the key is not stored in the index tree
-        int index;
-        index = BinarySearch(key,0,key_number - 1);
+        int index = BinarySearch(key,0,key_number - 1);
         if(index == key_number){
             if(next_id != 0){
                 BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
                 if(compare2key(key,next_node.keys.get(0)) != Util.L){
-                    return next_node.queryRecordPointer(key);
+                    return next_node.query(key);
                 }
             }
-            return null;
+            if (type == 0){
+                BTreeInternalNode temp = (BTreeInternalNode) this;
+                return buffer.getNode(temp.getPointer(index - 1),DB_name,table_name,index_attrs).query(key);
+            }
+            return new int[]{node_id,index};
         }
 
         if(type == 1){
-            if(compare2key(key,keys.get(index)) == Util.E){
-                BTreeLeafNode temp = (BTreeLeafNode) this;
-                return temp.getPointer(index);
-            }
-            return null;
+            return new int[]{node_id,index};
         }else if (type == 0){
             BTreeInternalNode temp = (BTreeInternalNode) this;
-            return buffer.getNode(temp.getPointer(index),DB_name,table_name,index_attrs).queryRecordPointer(key);
+            return buffer.getNode(temp.getPointer(index),DB_name,table_name,index_attrs).query(key);
         }else
             return null;
     }
@@ -608,6 +582,33 @@ abstract public class BTreeNode {
         return key;
     }
 
+    public Boolean hasNext(){
+        if(next_id != 0 || right_bro_id != 0)
+            return true;
+        return false;
+    }
+
+    public Boolean hasPrior(){
+        if(prior_id != 0 || left_bro_id != 0)
+            return true;
+        return false;
+    }
+
+    public BTreeNode next(){
+        if (next_id != 0)
+            return buffer.getNode(next_id,DB_name,table_name,index_attrs);
+        if (right_bro_id != 0)
+            return buffer.getNode(right_bro_id,DB_name, table_name,index_attrs);
+        return null;
+    }
+
+    public BTreeNode prior(){
+        if (prior_id != 0)
+            return buffer.getNode(prior_id,DB_name,table_name,index_attrs);
+        if (left_bro_id != 0)
+            return buffer.getNode(left_bro_id,DB_name,table_name,index_attrs);
+        return null;
+    }
 
 
     public static void main(String[] args) {
