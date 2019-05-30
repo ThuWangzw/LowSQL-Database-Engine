@@ -132,6 +132,19 @@ public class DataBuffer {
         }
     }
 
+    public void appendDataBlock(DataStorage st){
+        try {
+            RandomAccessFile raf = new RandomAccessFile(Util.DataStorageDir + st.DB_name + "_" + st.table_name + ".bin", "rw");
+            raf.seek(raf.length());
+            DataBlock empty_block = new DataBlock(st.DB_name, st.table_name, 0, st.schema);
+            raf.write(empty_block.getData(), 0, Util.DiskBlockSize);
+            st.block_number += 1;
+            raf.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void saveAll(){
         for (int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
             if (data_buffer[i] != null && data_buffer[i].is_revised){

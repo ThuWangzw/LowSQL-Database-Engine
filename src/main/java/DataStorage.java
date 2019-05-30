@@ -24,7 +24,7 @@ public class DataStorage{
             raf = new RandomAccessFile(Util.DataStorageDir + DB_name + "_" + table_name + ".bin","rw");
             if(raf.length() == 0){
                 block_number = 0;
-                buffer.appendDataBlock(DB_name,table_name);
+                buffer.appendDataBlock(this);
             }else{
                 block_number = raf.length() / Util.DiskBlockSize;
             }
