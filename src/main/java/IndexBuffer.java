@@ -43,6 +43,8 @@ public class IndexBuffer {
         if(!file.delete())
             throw new IllegalArgumentException("delete index file failed!");
         //clear all cached node that belongs to the index
+        if(!db_name.equals(db.getDatabaseName()))
+            return;
         TableSchema temp;
         for(int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
             if(index_buffer[i] != null){
@@ -56,6 +58,40 @@ public class IndexBuffer {
         }
     }
 
+    public void deleteIndex(BTree bt){
+        btrees.remove(bt);
+        File file = new File(Util.IndexStorageDir + "/" + bt.DB_name + "_" + bt.table_name + "_" + bt.index_schema.concatNames()+".bin");
+        if(!file.delete())
+            throw new IllegalArgumentException("delete index file failed!");
+        //clear all cached node that belongs to the index
+        if(!bt.DB_name.equals(db.getDatabaseName()))
+            return;
+        TableSchema temp;
+        for(int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
+            if(index_buffer[i] != null){
+                temp = new TableSchema(index_buffer[i].table_name,index_buffer[i].index_attrs);
+                if (index_buffer[i].DB_name.equals(bt.DB_name)
+                        && index_buffer[i].table_name.equals(bt.table_name)
+                        && temp.concatNames().equals(bt.index_schema.concatNames())){
+                    index_buffer[i] = null;
+                }
+            }
+        }
+    }
+
+    public void deleteIndex(String db_name,String table_name){
+        ArrayList<BTree> bts = getBTrees(db_name,table_name);
+        for(BTree b : bts){
+            deleteIndex(b);
+        }
+    }
+
+    public void deleteIndex(String db_name){
+        ArrayList<BTree> bts = getBTrees(db_name);
+        for(BTree b : bts){
+            deleteIndex(b);
+        }
+    }
 
 
     public void loadIndexMetaData(){
@@ -66,10 +102,9 @@ public class IndexBuffer {
             if (file.isDirectory()) {
                 String[] filelist = file.list();
                 for (int i = 0; i < filelist.length; i++) {
-                    String t = new String(filelist[i]);
-                    if(!t.endsWith(".bin"))
+                    if(!filelist[i].endsWith(".bin"))
                         continue;
-                    if(!t.startsWith(cur_db_name))
+                    if(!filelist[i].startsWith(cur_db_name))
                         continue;
                     RandomAccessFile raf = new RandomAccessFile(Util.IndexStorageDir + "/" + filelist[i],"rw");
                     raf.seek(0);
@@ -119,6 +154,16 @@ public class IndexBuffer {
         ArrayList<BTree> tree = new ArrayList<>();
         for(BTree cur : btrees) {
             if (cur.DB_name.equals(d_name) && cur.table_name.equals(t_name)) {
+                tree.add(cur);
+            }
+        }
+        return tree;
+    }
+
+    public ArrayList<BTree> getBTrees(String db_name){
+        ArrayList<BTree> tree = new ArrayList<>();
+        for(BTree cur : btrees) {
+            if (cur.DB_name.equals(db_name)) {
                 tree.add(cur);
             }
         }

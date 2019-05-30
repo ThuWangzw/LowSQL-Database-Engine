@@ -36,7 +36,9 @@ public class Server {
                 addDatabase(new DatabaseManager("test"));
                 WriteMetaData();
             }
-            setCurrentDatabase("test");
+
+            //setCurrentDatabase("test");
+            current_database = databases.get(0);
             //init index buffer
             index_buffer = new IndexBuffer(current_database);
             //init data buffer
@@ -72,9 +74,14 @@ public class Server {
     }
 
     public void deleteDatabase(String db_name){
+        if(current_database.getDatabaseName().equals(db_name))
+            throw new IllegalArgumentException("Can not delete the running database");
+
         for(Iterator<DatabaseManager> it = databases.iterator(); it.hasNext(); ){
             DatabaseManager cur = it.next();
             if(db_name.equals(cur.getDatabaseName())){
+                index_buffer.deleteIndex(db_name);
+                data_buffer.deleteDataFile(db_name);
                 it.remove();
                 return;
             }
