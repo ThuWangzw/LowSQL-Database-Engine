@@ -39,6 +39,10 @@ public class DataBuffer {
         }
     }
 
+    public void addDataStorage(TableManager table){
+        storages.add(new DataStorage(table.getDBName(),table.getTableName(),table.getSchema(),this));
+    }
+
     public DataStorage getDataStorage(String d_name,String t_name){
         for (DataStorage cur : storages){
             if (cur.DB_name.equals(d_name) && cur.table_name.equals(t_name)) {
@@ -46,6 +50,16 @@ public class DataBuffer {
             }
         }
         return null;
+    }
+
+    public ArrayList<DataStorage> getDataStorages(String d_name){
+        ArrayList<DataStorage> dss = new ArrayList<>();
+        for (DataStorage cur : storages){
+            if (cur.DB_name.equals(d_name)) {
+                dss.add(cur);
+            }
+        }
+        return dss;
     }
 
     public DataBlock loadDataBlockFromFile(String DB_name,String table_name,int node_id){
@@ -135,12 +149,38 @@ public class DataBuffer {
         if(!file.delete())
             throw new IllegalArgumentException("delete data file failed!");
 
+        if(!db_name.equals(db.getDatabaseName()))
+            return;
         for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
             if(data_buffer[i] != null){
                 if (data_buffer[i].DB_name.equals(db_name) && data_buffer[i].table_name.equals(table_name)){
                     data_buffer[i] = null;
                 }
             }
+        }
+    }
+
+    public void deleteDataFile(DataStorage ds){
+        storages.remove(ds);
+        File file = new File(Util.DataStorageDir + ds.DB_name + "_" + ds.table_name + ".bin");
+        if(!file.delete())
+            throw new IllegalArgumentException("delete data file failed!");
+
+        if(!ds.DB_name.equals(db.getDatabaseName()))
+            return;
+        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
+            if(data_buffer[i] != null){
+                if (data_buffer[i].DB_name.equals(ds.DB_name) && data_buffer[i].table_name.equals(ds.table_name)){
+                    data_buffer[i] = null;
+                }
+            }
+        }
+    }
+
+    public void deleteDataFile(String db_name){
+        ArrayList<DataStorage> dss = getDataStorages(db_name);
+        for (DataStorage ds : dss){
+            deleteDataFile(ds);
         }
     }
 

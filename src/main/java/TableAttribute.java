@@ -4,10 +4,11 @@ public class TableAttribute {
     private int type;
     private int length_limit;
     private Boolean is_primary_key;
+    private Boolean not_null;       //default: not null is false, means the value can be null
 
     /* metadata
 
-    | Attribute name -- 28|unused -- 1|PK --1|limit --1|type -- 1  |
+    | Attribute name -- 28|not used |PK --1| not-null -- 1|type -- 1 | length limit 4 |
 
      */
 
@@ -26,17 +27,20 @@ public class TableAttribute {
         System.arraycopy(metadata,Util.AttributeNameMaxLength,bits4,0,4);
         int temp = Util.byte2int(bits4);
         type = temp & 0xff;
-        length_limit = ( temp >> 8) & 0xff;
+        not_null = (( temp >> 8) & 0xff) == 1;
         is_primary_key = ((temp >> 16) & 0xff) == 1;
+        System.arraycopy(metadata,Util.AttributeNameMaxLength + 4,bits4,0,4);
+        length_limit = Util.byte2int(bits4);
     }
 
     //create  a new Attribute
-    public TableAttribute(String t_name,String attr_name,int the_type,int the_limit, Boolean is_PK){
+    public TableAttribute(String t_name,String attr_name,int the_type,int the_limit, Boolean is_PK,Boolean n_n){
         table_name = t_name;
         attribute_name = attr_name;
         type = the_type;
         length_limit = the_limit;
         is_primary_key = is_PK;
+        not_null = n_n;
     }
 
     public void setTable_name(String table_name) {
@@ -57,8 +61,9 @@ public class TableAttribute {
     }
 
     public byte[] toMetaByte(){
-        if ( attribute_name.length() > Util.AttributeNameMaxLength) return null;
-        byte[] result = new byte[Util.AttributeNameMaxLength + 4];
+        if ( attribute_name.length() > Util.AttributeNameMaxLength)
+            throw new IllegalArgumentException("The name of attribute is too long");
+        byte[] result = new byte[Util.AttributeNameMaxLength + 8];
         byte[] name_byte = (attribute_name + "\0").getBytes();
         int copy_len = (name_byte.length < Util.AttributeNameMaxLength) ? name_byte.length : Util.AttributeNameMaxLength;
         System.arraycopy(name_byte,0,result,0,copy_len);
@@ -66,10 +71,18 @@ public class TableAttribute {
         if(is_primary_key){
             temp = (1 << 16);
         }
-        temp |= ((length_limit << 8) & 0xff00) | (type & 0xff);
+        if(not_null){
+            temp |= (1 << 8);
+        }
+        temp |= (type & 0xff);
         System.arraycopy(Util.int2byte(temp),0,result,Util.AttributeNameMaxLength,4);
+        System.arraycopy(Util.int2byte(length_limit),0,result,Util.AttributeNameMaxLength + 4,4);
         return result;
     }
+
+    public Boolean getPK() {return is_primary_key;}
+
+    public Boolean getNotNull() {return not_null;}
 
     @Override
     public String toString() {
