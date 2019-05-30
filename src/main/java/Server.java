@@ -36,7 +36,8 @@ public class Server {
                 addDatabase(new DatabaseManager("test"));
                 WriteMetaData();
             }
-            setCurrentDatabase("test");
+//            setCurrentDatabase("test");
+            current_database = databases.get(0);
             //init index buffer
             index_buffer = new IndexBuffer(current_database);
             //init data buffer

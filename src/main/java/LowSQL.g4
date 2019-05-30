@@ -20,6 +20,7 @@ sql_stmt
     | drop_table_stmt
     | show_table_stmt
     | insert_stmt
+    | simple_select_stmt
     )
  ;
 
@@ -29,6 +30,28 @@ sql_stmt
 create_table_stmt
  : K_CREATE K_TABLE name ( '(' column_def ( ',' column_def )* ( ',' table_constraint )* ')')
  ;
+
+simple_select_stmt
+ : K_SELECT attributes K_FROM name (K_WHERE compare_stmt)?
+ ;
+
+attributes
+ : '*'
+ | name (',' name)*
+ ;
+
+compare_stmt
+: name compare_symbol literal_value
+;
+
+compare_symbol
+: (   LT
+    | GT
+    | LE
+    | GE
+    | EQ
+    | LG)
+;
 
 drop_table_stmt
  : K_DROP K_TABLE ( K_IF K_EXISTS )? name
@@ -53,12 +76,11 @@ column_def
  ;
 
 type_name
- : name+ ( '(' signed_number ')'
-         | '(' signed_number ',' signed_number ')' )?
+ : name ( '(' signed_number ')' )?
  ;
 
 signed_number
- : ( '+' | '-' )? NUMERIC_LITERAL
+ : ( '+' | '-' )? INTEGER_LITERAL
  ;
 
 column_constraint
@@ -103,7 +125,16 @@ K_SHOW : S H O W;
 K_INSERT : I N S E R T;
 K_INTO : I N T O;
 K_VALUES: V A L U E S;
+K_SELECT: S E L E C T;
+K_FROM: F R O M;
+K_WHERE: W H E R E;
 
+LT : '<';
+GT : '>';
+LE : '<=';
+GE : '>=';
+EQ : '=';
+LG : '<>';
 
 IDENTIFIER
  : '"' (~'"' | '""')* '"'
@@ -131,6 +162,8 @@ SPACES
 UNEXPECTED_CHAR
  : .
  ;
+
+
 
 fragment DIGIT : [0-9];
 

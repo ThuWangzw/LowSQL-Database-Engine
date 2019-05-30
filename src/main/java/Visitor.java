@@ -3,10 +3,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Attributes;
@@ -18,26 +15,29 @@ public class Visitor extends LowSQLBaseVisitor {
         server = new Server();
         current_database = server.getOneDatabase("test");
     }
+    static private OutputStreamWriter writer;
     private TableManager current_table;
     public static void main(String[] args) throws Exception {
+        writer = new OutputStreamWriter(System.out);
         try {
             File file = new File("command.sql");
+
             FileInputStream fileInputStream = new FileInputStream(file);
             ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
             LowSQLLexer lexer = new LowSQLLexer(input);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             LowSQLParser parser = new LowSQLParser(tokens);
             ParseTree tree = parser.parse();
-
             Visitor visitor = new Visitor();
             visitor.visit(tree);
-            System.out.println(tree.toStringTree(parser));
         }
         catch (RuntimeException e){
-            System.out.println(e.getMessage());
+            writer.write(e.getMessage());
+            writer.flush();
         }
         catch (IOException e){
-            System.out.println(e.getMessage());
+            writer.write(e.getMessage());
+            writer.flush();
         }
     }
 
@@ -82,10 +82,19 @@ public class Visitor extends LowSQLBaseVisitor {
         current_database.addTable(tableManager);
         server.WriteMetaData();
 //        add index
-        TableSchema primary_schema = tableManager.createIndexSchema(primary_keys);
-        server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 10000);
-        server.index_buffer.saveAll();
-        return new String("Create table success.");
+        if(primary_keys.size()>0){
+            TableSchema primary_schema = tableManager.createIndexSchema(primary_keys);
+            server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 10000);
+            server.index_buffer.saveAll();
+        }
+        try {
+            writer.write("Create table success.");
+            writer.flush();
+        }
+        catch (IOException e){
+            System.out.println("IO exception");
+        }
+        return null;
     }
 
     @Override
@@ -186,10 +195,28 @@ public class Visitor extends LowSQLBaseVisitor {
         if(find){
             current_database.deleteTable(name);
             server.WriteMetaData();
-            return new String("Drop table success.");
+            server.data_buffer.deleteDataFile(current_database.getDatabaseName(), current_table.getTableName());
+            //TODO delete index
+//            server.index_buffer.deleteIndex(current_database.getDatabaseName(), current_table.getTableName());
+
+            try {
+                writer.write("Drop table success.");
+                writer.flush();
+            }
+            catch (IOException e){
+                System.out.println("IO exception");
+            }
+            return null;
         }
         if(if_exists){
-            return new String("Drop table success.");
+            try {
+                writer.write("Drop table success.");
+                writer.flush();
+            }
+            catch (IOException e){
+                System.out.println("IO exception");
+            }
+            return null;
         }
         else {
             throw new RuntimeException("no table named "+name);
@@ -213,7 +240,13 @@ public class Visitor extends LowSQLBaseVisitor {
             for(TableAttribute attribute : showTable.getSchema().getAttrubutes()){
                 res += attribute.toString()+"\r\n";
             }
-            return res;
+           try {
+               writer.write(res);
+           }
+           catch (IOException e){
+               System.out.println("IO exception");
+           }
+           return null;
        }
        else {
            throw new RuntimeException("no table named "+name);
@@ -234,7 +267,16 @@ public class Visitor extends LowSQLBaseVisitor {
                 }
             }
         }
-        return new String("Insert success.");
+//        server.data_buffer.saveAll();
+//        server.index_buffer.saveAll();
+        try {
+            writer.write("Insert table success.\r\n");
+            writer.flush();
+        }
+        catch (IOException e){
+            System.out.println("IO exception");
+        }
+        return null;
     }
 
     @Override

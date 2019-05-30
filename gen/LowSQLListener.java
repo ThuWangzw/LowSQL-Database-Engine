@@ -1,4 +1,4 @@
-// Generated from /Users/poolei/Desktop/LowDB/src/main/java/LowSQL.g4 by ANTLR 4.7.2
+// Generated from D:/learn/LowSQL-Database-Engine/src/main/java\LowSQL.g4 by ANTLR 4.7.2
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -56,6 +56,46 @@ public interface LowSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCreate_table_stmt(LowSQLParser.Create_table_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#simple_select_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimple_select_stmt(LowSQLParser.Simple_select_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#simple_select_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimple_select_stmt(LowSQLParser.Simple_select_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#attributes}.
+	 * @param ctx the parse tree
+	 */
+	void enterAttributes(LowSQLParser.AttributesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#attributes}.
+	 * @param ctx the parse tree
+	 */
+	void exitAttributes(LowSQLParser.AttributesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#compare_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompare_stmt(LowSQLParser.Compare_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#compare_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompare_stmt(LowSQLParser.Compare_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#compare_symbol}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompare_symbol(LowSQLParser.Compare_symbolContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#compare_symbol}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompare_symbol(LowSQLParser.Compare_symbolContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LowSQLParser#drop_table_stmt}.
 	 * @param ctx the parse tree

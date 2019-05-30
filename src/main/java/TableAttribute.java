@@ -51,7 +51,7 @@ public class TableAttribute {
 
     public String getAttributeName(){return attribute_name;}
     public int getLengthLimit(){
-        if(type > Util.VARCHAR)
+        if(type < Util.VARCHAR)
             return Util.DataTypeSize[type];
         return length_limit;
     }

@@ -1,4 +1,4 @@
-// Generated from /Users/poolei/Desktop/LowDB/src/main/java/LowSQL.g4 by ANTLR 4.7.2
+// Generated from D:/learn/LowSQL-Database-Engine/src/main/java\LowSQL.g4 by ANTLR 4.7.2
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -39,6 +39,30 @@ public interface LowSQLVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCreate_table_stmt(LowSQLParser.Create_table_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#simple_select_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSimple_select_stmt(LowSQLParser.Simple_select_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#attributes}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAttributes(LowSQLParser.AttributesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#compare_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompare_stmt(LowSQLParser.Compare_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#compare_symbol}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompare_symbol(LowSQLParser.Compare_symbolContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LowSQLParser#drop_table_stmt}.
 	 * @param ctx the parse tree
