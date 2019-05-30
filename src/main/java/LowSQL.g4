@@ -85,6 +85,7 @@ insert_one_data
 
 literal_value
  : NUMERIC_LITERAL
+ | INTEGER_LITERAL
  | STRING_LITERAL
  | K_NULL
  ;
@@ -113,6 +114,10 @@ IDENTIFIER
 STRING_LITERAL
  : '\'' ( ~'\'' | '\'\'' )* '\''
  ;
+
+INTEGER_LITERAL
+:DIGIT+
+;
 
 NUMERIC_LITERAL
  : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?

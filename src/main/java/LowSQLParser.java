@@ -19,7 +19,7 @@ public class LowSQLParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, K_CREATE=7, K_TABLE=8, 
 		K_PRIMARY=9, K_KEY=10, K_NOT=11, K_NULL=12, K_DROP=13, K_IF=14, K_EXISTS=15, 
 		K_SHOW=16, K_INSERT=17, K_INTO=18, K_VALUES=19, IDENTIFIER=20, STRING_LITERAL=21, 
-		NUMERIC_LITERAL=22, SPACES=23, UNEXPECTED_CHAR=24;
+		INTEGER_LITERAL=22, NUMERIC_LITERAL=23, SPACES=24, UNEXPECTED_CHAR=25;
 	public static final int
 		RULE_parse = 0, RULE_error = 1, RULE_sql_stmt_list = 2, RULE_sql_stmt = 3, 
 		RULE_create_table_stmt = 4, RULE_drop_table_stmt = 5, RULE_table_constraint = 6, 
@@ -47,8 +47,8 @@ public class LowSQLParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, "K_CREATE", "K_TABLE", "K_PRIMARY", 
 			"K_KEY", "K_NOT", "K_NULL", "K_DROP", "K_IF", "K_EXISTS", "K_SHOW", "K_INSERT", 
-			"K_INTO", "K_VALUES", "IDENTIFIER", "STRING_LITERAL", "NUMERIC_LITERAL", 
-			"SPACES", "UNEXPECTED_CHAR"
+			"K_INTO", "K_VALUES", "IDENTIFIER", "STRING_LITERAL", "INTEGER_LITERAL", 
+			"NUMERIC_LITERAL", "SPACES", "UNEXPECTED_CHAR"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -1335,6 +1335,7 @@ public class LowSQLParser extends Parser {
 
 	public static class Literal_valueContext extends ParserRuleContext {
 		public TerminalNode NUMERIC_LITERAL() { return getToken(LowSQLParser.NUMERIC_LITERAL, 0); }
+		public TerminalNode INTEGER_LITERAL() { return getToken(LowSQLParser.INTEGER_LITERAL, 0); }
 		public TerminalNode STRING_LITERAL() { return getToken(LowSQLParser.STRING_LITERAL, 0); }
 		public TerminalNode K_NULL() { return getToken(LowSQLParser.K_NULL, 0); }
 		public Literal_valueContext(ParserRuleContext parent, int invokingState) {
@@ -1365,7 +1366,7 @@ public class LowSQLParser extends Parser {
 			{
 			setState(202);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << K_NULL) | (1L << STRING_LITERAL) | (1L << NUMERIC_LITERAL))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << K_NULL) | (1L << STRING_LITERAL) | (1L << INTEGER_LITERAL) | (1L << NUMERIC_LITERAL))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1387,7 +1388,7 @@ public class LowSQLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\32\u00cf\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33\u00cf\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\3\2\3\2\7\2)\n\2\f\2\16\2,\13\2\3\2\3\2\3\3\3\3\3\3\3\4\3\4"+
@@ -1403,13 +1404,13 @@ public class LowSQLParser extends Parser {
 		"\16\20\u00b5\13\20\3\21\3\21\3\21\3\21\3\21\7\21\u00bc\n\21\f\21\16\21"+
 		"\u00bf\13\21\3\21\3\21\5\21\u00c3\n\21\3\22\3\22\3\22\7\22\u00c8\n\22"+
 		"\f\22\16\22\u00cb\13\22\3\23\3\23\3\23\2\2\24\2\4\6\b\n\f\16\20\22\24"+
-		"\26\30\32\34\36 \"$\2\4\3\2\7\b\4\2\16\16\27\30\2\u00d4\2*\3\2\2\2\4/"+
+		"\26\30\32\34\36 \"$\2\4\3\2\7\b\4\2\16\16\27\31\2\u00d4\2*\3\2\2\2\4/"+
 		"\3\2\2\2\6\62\3\2\2\2\bH\3\2\2\2\nJ\3\2\2\2\f_\3\2\2\2\16g\3\2\2\2\20"+
 		"z\3\2\2\2\22|\3\2\2\2\24~\3\2\2\2\26\u0089\3\2\2\2\30\u009a\3\2\2\2\32"+
 		"\u009e\3\2\2\2\34\u00a1\3\2\2\2\36\u00a5\3\2\2\2 \u00b6\3\2\2\2\"\u00c4"+
 		"\3\2\2\2$\u00cc\3\2\2\2&)\5\6\4\2\')\5\4\3\2(&\3\2\2\2(\'\3\2\2\2),\3"+
 		"\2\2\2*(\3\2\2\2*+\3\2\2\2+-\3\2\2\2,*\3\2\2\2-.\7\2\2\3.\3\3\2\2\2/\60"+
-		"\7\32\2\2\60\61\b\3\1\2\61\5\3\2\2\2\62;\5\b\5\2\63\65\7\3\2\2\64\63\3"+
+		"\7\33\2\2\60\61\b\3\1\2\61\5\3\2\2\2\62;\5\b\5\2\63\65\7\3\2\2\64\63\3"+
 		"\2\2\2\65\66\3\2\2\2\66\64\3\2\2\2\66\67\3\2\2\2\678\3\2\2\28:\5\b\5\2"+
 		"9\64\3\2\2\2:=\3\2\2\2;9\3\2\2\2;<\3\2\2\2<A\3\2\2\2=;\3\2\2\2>@\7\3\2"+
 		"\2?>\3\2\2\2@C\3\2\2\2A?\3\2\2\2AB\3\2\2\2B\7\3\2\2\2CA\3\2\2\2DI\5\n"+
@@ -1433,7 +1434,7 @@ public class LowSQLParser extends Parser {
 		"\5\2\2\u0094\u0095\5\30\r\2\u0095\u0096\7\6\2\2\u0096\u0098\3\2\2\2\u0097"+
 		"\u008d\3\2\2\2\u0097\u0091\3\2\2\2\u0097\u0098\3\2\2\2\u0098\27\3\2\2"+
 		"\2\u0099\u009b\t\2\2\2\u009a\u0099\3\2\2\2\u009a\u009b\3\2\2\2\u009b\u009c"+
-		"\3\2\2\2\u009c\u009d\7\30\2\2\u009d\31\3\2\2\2\u009e\u009f\7\r\2\2\u009f"+
+		"\3\2\2\2\u009c\u009d\7\31\2\2\u009d\31\3\2\2\2\u009e\u009f\7\r\2\2\u009f"+
 		"\u00a0\7\16\2\2\u00a0\33\3\2\2\2\u00a1\u00a2\7\22\2\2\u00a2\u00a3\7\n"+
 		"\2\2\u00a3\u00a4\5\20\t\2\u00a4\35\3\2\2\2\u00a5\u00a6\7\23\2\2\u00a6"+
 		"\u00a7\7\24\2\2\u00a7\u00a8\5 \21\2\u00a8\u00a9\7\25\2\2\u00a9\u00aa\7"+

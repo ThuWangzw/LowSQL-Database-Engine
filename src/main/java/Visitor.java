@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class Visitor extends LowSQLBaseVisitor {
     private Server server;
@@ -17,6 +18,7 @@ public class Visitor extends LowSQLBaseVisitor {
         server = new Server();
         current_database = server.getOneDatabase("test");
     }
+    private TableManager current_table;
     public static void main(String[] args) throws Exception {
         try {
             File file = new File("command.sql");
@@ -78,7 +80,11 @@ public class Visitor extends LowSQLBaseVisitor {
         TableSchema schema = new TableSchema(tablename, attributes1);
         TableManager tableManager = new TableManager(current_database.getDatabaseName(), tablename, schema);
         current_database.addTable(tableManager);
+        server.WriteMetaData();
 //        add index
+        TableSchema primary_schema = tableManager.createIndexSchema(primary_keys);
+        server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 10000);
+        server.index_buffer.saveAll();
         return new String("Create table success.");
     }
 
@@ -179,6 +185,7 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         if(find){
             current_database.deleteTable(name);
+            server.WriteMetaData();
             return new String("Drop table success.");
         }
         if(if_exists){
@@ -216,7 +223,92 @@ public class Visitor extends LowSQLBaseVisitor {
     @Override
     public Object visitInsert_stmt(LowSQLParser.Insert_stmtContext ctx) {
         List<ParseTree> nodes = ctx.children;
-        TableManager table = (TableManager)visit(nodes.get(2));
-        return super.visitInsert_stmt(ctx);
+        current_table = (TableManager)visit(nodes.get(2));
+        for(int i=0; i<nodes.size(); i++){
+            ParseTree node = nodes.get(i);
+            if(node instanceof LowSQLParser.Insert_one_dataContext){
+                Record record = (Record) visit(node);
+                DataPointer dataPointer = server.data_buffer.getDataStorage(current_database.getDatabaseName(), current_table.getTableName()).insert(record);
+                for(BTree bTree : server.index_buffer.getBTrees(current_database.getDatabaseName(), current_table.getTableName())){
+                    bTree.insert(record, dataPointer.page_id, dataPointer.record_id);
+                }
+            }
+        }
+        return new String("Insert success.");
+    }
+
+    @Override
+    public Object visitTable_schema(LowSQLParser.Table_schemaContext ctx) {
+        List<ParseTree> nodes = ctx.children;
+        String tableName = (String) visit(nodes.get(0));
+//        check if table exists
+        TableManager table = current_database.getOneTable(tableName);
+        if(table==null){
+            throw new RuntimeException("Table not exists");
+        }
+//        check if schema right
+        for(int i=1;i<nodes.size(); i++){
+            ParseTree node = nodes.get(i);
+
+            if(node instanceof LowSQLParser.NameContext){
+                String attributeName = (String)visit(node);
+                TableAttribute attribute = table.getSchema().getOneAttribute(attributeName);
+                if(attribute == null){
+                    throw new RuntimeException("No attribute "+attributeName+" in table.");
+                }
+            }
+        }
+        return table;
+    }
+
+    @Override
+    public Object visitInsert_one_data(LowSQLParser.Insert_one_dataContext ctx) {
+        List<ParseTree> nodes = ctx.children;
+//        ArrayList<Object> fields = new ArrayList<>();
+        TableAttribute[] attributess = current_table.getSchema().getAttrubutes();
+        Field[] fields = new Field[current_table.getSchema().getAttrubutes().length];
+        int fieldIdx = 0;
+        for(int i=0; i<nodes.size(); i++){
+            ParseTree node = nodes.get(i);
+            if(node instanceof LowSQLParser.Literal_valueContext){
+//                fields.add(visit(node));
+                if(fieldIdx==fields.length){
+                    throw new RuntimeException("Redundant attributes.");
+                }
+                fields[fieldIdx] = new Field(visit(node), attributess[fieldIdx]);
+                fieldIdx++;
+            }
+        }
+        if(fieldIdx < attributess.length){
+            //TODO: add is_null
+//            for(int i=fieldIdx; i>attributess.length; i++){
+//                if(attributess[i].)
+//            }
+            String msg = new String("");
+            for(int i=fieldIdx; i<attributess.length; i++){
+                msg += attributess[i].getAttributeName()+", ";
+            }
+            throw new RuntimeException(msg+"can not be null.");
+        }
+
+        return new Record(fields, current_table.getSchema());
+    }
+
+    @Override
+    public Object visitLiteral_value(LowSQLParser.Literal_valueContext ctx) {
+        String value = (String)visit(ctx.children.get(0));
+        if(ctx.start.getType() == LowSQLParser.STRING_LITERAL){
+            return value.substring(1, value.length()-1);
+        }
+        else if(ctx.start.getType() == LowSQLParser.NUMERIC_LITERAL){
+            return Double.parseDouble(value);
+        }
+        else if(ctx.start.getType() == LowSQLParser.INTEGER_LITERAL){
+            return Integer.parseInt(value);
+        }
+        else if(ctx.start.getType() == LowSQLParser.K_NULL){
+            return null;
+        }
+        return null;
     }
 }
