@@ -1,1 +1,1 @@
-select * from person where a='1'
+select name,ID from person where name='a';
