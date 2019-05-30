@@ -44,7 +44,7 @@ public class TableSchema {
     }
 
     public byte[] toMetaByte(){
-        int len = Util.AttributeNameMaxLength + 4;
+        int len = Util.AttributeNameMaxLength + 8;
         byte[] result = new byte[attribute_number * len];
         for (int i = 0 ; i < attribute_number; i++){
             System.arraycopy(attributes[i].toMetaByte(),0,result,i * len,len);
