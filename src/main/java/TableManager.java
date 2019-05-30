@@ -51,7 +51,7 @@ public class TableManager {
         int copy_len = (name_byte.length < Util.TableNameMaxLength) ? name_byte.length : Util.TableNameMaxLength;
         System.arraycopy(name_byte,0,result,4,copy_len);
         System.arraycopy(Util.int2byte(schema.getAttributeNumber()),0,result,4 + Util.TableNameMaxLength,4);
-        System.arraycopy(schema.toMetaByte(),0,result,8 + Util.TableNameMaxLength,schema.getAttributeNumber() * (Util.AttributeNameMaxLength + 4 ));
+        System.arraycopy(schema.toMetaByte(),0,result,8 + Util.TableNameMaxLength,schema.getAttributeNumber() * (Util.AttributeNameMaxLength + 8 ));
         return result;
     }
 
