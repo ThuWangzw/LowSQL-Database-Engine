@@ -234,17 +234,18 @@ public class IndexBuffer {
         BTree bt = getBTree(DB_name,table_name,temp);
         if(bt == null)
             return null;
-        if(index_buffer[node_id] == null)
+        int buffer_index = node_id % INDEX_BUFFER_BLOCK_NUNMBER;
+        if(index_buffer[buffer_index] == null)
             return loadIndexBlockFromFile(DB_name,table_name,temp,node_id,bt.M);
-        TableSchema temp2 = new TableSchema(index_buffer[node_id].table_name,index_buffer[node_id].index_attrs);
-        if (!index_buffer[node_id].DB_name.equals(DB_name)
-                || !index_buffer[node_id].table_name.equals(table_name)
+        TableSchema temp2 = new TableSchema(index_buffer[buffer_index].table_name,index_buffer[buffer_index].index_attrs);
+        if (!index_buffer[buffer_index].DB_name.equals(DB_name)
+                || !index_buffer[buffer_index].table_name.equals(table_name)
                 || !temp2.concatNames().equals(temp.concatNames())){
             writeIndexBlock(node_id);
-            index_buffer[node_id] = null;
+            index_buffer[buffer_index] = null;
             return loadIndexBlockFromFile(DB_name,table_name,temp,node_id,bt.M);
         }
-        return index_buffer[node_id];
+        return index_buffer[buffer_index];
     }
 
 

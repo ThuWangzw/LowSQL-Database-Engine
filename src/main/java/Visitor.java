@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,8 @@ public class Visitor extends LowSQLBaseVisitor {
     public static void main(String[] args) throws Exception {
         writer = new OutputStreamWriter(System.out);
         try {
-            File file = new File("command.sql");
-
+            File file = new File("insert.sql");
+            long start = System.currentTimeMillis();
             FileInputStream fileInputStream = new FileInputStream(file);
             ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
             LowSQLLexer lexer = new LowSQLLexer(input);
@@ -31,8 +32,22 @@ public class Visitor extends LowSQLBaseVisitor {
             ParseTree tree = parser.parse();
             Visitor visitor = new Visitor();
             visitor.visit(tree);
+
+//            FileOutputStream fileOutputStream = new FileOutputStream(file);
+//            String dropString = new String("drop table if exists person;\r\n");
+//            String createString = new String("CREATE TABLE person (name String(256), ID Int not null, PRIMARY KEY(ID));\r\n");
+//            fileOutputStream.write(dropString.getBytes());
+//            fileOutputStream.write(createString.getBytes());
+//
+//            for(int i=0; i<1000; i++){
+//                String record = new String("insert into person values ('Alice");
+//                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
+//                fileOutputStream.write(record.getBytes());
+//            }
+            long end = System.currentTimeMillis();
             server.data_buffer.saveAll();
             server.index_buffer.saveAll();
+            System.out.println((float) (end-start)/1000);
         }
         catch (RuntimeException e){
             writer.write(e.getMessage());
@@ -88,7 +103,7 @@ public class Visitor extends LowSQLBaseVisitor {
 //        add index
         if(primary_keys.size()>0){
             TableSchema primary_schema = tableManager.createIndexSchema(primary_keys);
-            server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 10000);
+            server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 100);
             server.index_buffer.saveAll();
         }
         try {
@@ -200,7 +215,7 @@ public class Visitor extends LowSQLBaseVisitor {
         if(find){
             current_database.deleteTable(name);
             server.WriteMetaData();
-            server.data_buffer.deleteDataFile(current_database.getDatabaseName(), current_table.getTableName());
+            server.data_buffer.deleteDataFile(current_database.getDatabaseName(), name);
             //TODO delete index
 //            server.index_buffer.deleteIndex(current_database.getDatabaseName(), current_table.getTableName());
 
@@ -362,6 +377,16 @@ public class Visitor extends LowSQLBaseVisitor {
         return null;
     }
 
+    public void writeOneResult(DataPointer pointer, ArrayList<Integer> attributes) throws IOException{
+        Record record = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
+        Field[] fields = record.getFields();
+        for(Integer i:attributes){
+            writer.write(fields[i].getValue().toString()+",");
+        }
+        writer.write("\r\n");
+        writer.flush();
+    }
+
     @Override
     public Object visitSimple_select_stmt(LowSQLParser.Simple_select_stmtContext ctx) {
         List<ParseTree> nodes = ctx.children;
@@ -393,8 +418,33 @@ public class Visitor extends LowSQLBaseVisitor {
                 fields[0] = new Field(query.value, index);
                 Record target = new Record(fields, indexSchema);
 
+                int[] queryRes = indexTree.query(target);
+                int nodeid = queryRes[0];
+                int keyidx = queryRes[1];
+
+                BTreeLeafNode node = (BTreeLeafNode) server.index_buffer.getNode(nodeid, current_database.getDatabaseName(), current_table.getTableName(), _index);
+                if(query.type == Util.E){
+//                    a='1'
+                    if((keyidx == node.key_length)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) != Util.E)){
+                        return null;
+                    }
+                    DataPointer[] results = node.getPointer(keyidx);
+                    try{
+                        for(DataPointer result : results){
+                            writeOneResult(result, attributes);
+                        }
+                    }
+                    catch (IOException e){
+                        System.out.println("write error");
+                        return null;
+                    }
+                }
+                System.out.println('1');
+
             }
         }
+
+
         return super.visitSimple_select_stmt(ctx);
     }
 

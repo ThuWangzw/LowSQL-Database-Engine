@@ -35,7 +35,7 @@ public class BTree {
 
 
         root_id = 1;
-        root_node = new BTreeLeafNode(Util.BTree_M,root_id,0,0,0,0,0,0,0,buffer,index_schema.getAttrubutes(),DB_name,table_name);
+        root_node = new BTreeLeafNode(M,root_id,0,0,0,0,0,0,0,buffer,index_schema.getAttrubutes(),DB_name,table_name);
         buffer.addNewNode(root_node);
 
         node_block_number = 1;

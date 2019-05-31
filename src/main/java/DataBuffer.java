@@ -87,15 +87,16 @@ public class DataBuffer {
         DataStorage st = getDataStorage(DB_name,table_name);
         if(st == null)
             throw new NullPointerException("Table not exists in current database");
-        if(data_buffer[node_id] == null)
+        int buffer_index = node_id % DATA_BUFFER_BLOCK_NUNMBER;
+        if(data_buffer[buffer_index] == null)
             return loadDataBlockFromFile(DB_name,table_name,node_id);
-        if (!data_buffer[node_id].DB_name.equals(DB_name)
-                || !data_buffer[node_id].table_name.equals(table_name)){
+        if (!data_buffer[buffer_index].DB_name.equals(DB_name)
+                || !data_buffer[buffer_index].table_name.equals(table_name)){
             WriteDataBlock(node_id);
-            data_buffer[node_id] = null;
+            data_buffer[buffer_index] = null;
             return loadDataBlockFromFile(DB_name,table_name,node_id);
         }
-        return data_buffer[node_id];
+        return data_buffer[buffer_index];
     }
 
 

@@ -232,9 +232,9 @@ public class BTreeInternalNode extends BTreeNode {
                     insertKeyPointer(insert_index,new_key,pointer_id);
                 }else{
                     BTreeInternalNode new_node = new BTreeInternalNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,
-                            node_id,0,prior_key_number + key_number - 1,0,buffer,index_attrs,DB_name,table_name);
-                    byte[] biggest_key = keys.get(key_length - 1);
-                    short pt = getPointer(key_length -  1);
+                            node_id,0,prior_key_number + key_number,0,buffer,index_attrs,DB_name,table_name);
+                    byte[] biggest_key = keys.get(key_number - 1);
+                    short pt = getPointer(key_number -  1);
                     deleteKeyPointer(key_number - 1);
                     new_node.insertOneKeyPointer(biggest_key,pt);
                     buffer.addNewNode(new_node);
@@ -325,9 +325,17 @@ public class BTreeInternalNode extends BTreeNode {
                 if (free_space >= 2 + key_length){
                     insertKeyPointer(insert_index,new_key,pointer_id);
                 }else{
-                    BTreeInternalNode new_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
-                    byte[] biggest_key = keys.get(key_length - 1);
-                    short pt = getPointer(key_length -  1);
+                    BTreeInternalNode new_node = new BTreeInternalNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,
+                            node_id,0,prior_key_number + key_number,0,buffer,index_attrs,DB_name,table_name);
+                    if(next_id != 0){
+                        BTreeNode origin_next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                        origin_next_node.prior_id =  new_node.node_id;
+                        new_node.next_id = origin_next_node.node_id;
+                        new_node.updateNextKeyNumber(origin_next_node.key_number + origin_next_node.next_key_number);
+                    }
+                    next_id = new_node.node_id;
+                    byte[] biggest_key = keys.get(key_number - 1);
+                    short pt = getPointer(key_number -  1);
                     deleteKeyPointer(key_number - 1);
                     new_node.insertOneKeyPointer(biggest_key,pt);
                     insertOneKeyPointer(new_key,pointer_id);
