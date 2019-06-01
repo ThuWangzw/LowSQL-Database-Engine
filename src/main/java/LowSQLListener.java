@@ -67,6 +67,16 @@ public interface LowSQLListener extends ParseTreeListener {
 	 */
 	void exitSimple_select_stmt(LowSQLParser.Simple_select_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#delete_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterDelete_stmt(LowSQLParser.Delete_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#delete_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitDelete_stmt(LowSQLParser.Delete_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LowSQLParser#attributes}.
 	 * @param ctx the parse tree
 	 */

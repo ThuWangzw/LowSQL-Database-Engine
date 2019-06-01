@@ -7,6 +7,8 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.jar.Attributes;
 
@@ -22,7 +24,7 @@ public class Visitor extends LowSQLBaseVisitor {
     public static void main(String[] args) throws Exception {
         writer = new OutputStreamWriter(System.out);
         try {
-            File file = new File("select.sql");
+            File file = new File("delete.sql");
             long start = System.currentTimeMillis();
             FileInputStream fileInputStream = new FileInputStream(file);
             ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
@@ -593,6 +595,36 @@ public class Visitor extends LowSQLBaseVisitor {
         }
     }
 
+    ArrayList<DataPointer> getDeleteList(BTreeLeafNode leaf, int startidx, boolean is_left){
+        ArrayList<DataPointer> pointers = new ArrayList<>();
+        while (true){
+            if(is_left){
+                for(int i=startidx; i>=0; i--){
+                    pointers.addAll(Arrays.asList(leaf.getPointer(i)));
+                }
+                if(leaf.hasPrior()){
+                    leaf = (BTreeLeafNode) leaf.prior();
+                    startidx = leaf.key_number-1;
+                }
+                else {
+                    return pointers;
+                }
+            }
+            else {
+                for(int i=startidx; i<leaf.key_number; i++){
+                    pointers.addAll(Arrays.asList(leaf.getPointer(i)));
+                }
+                if(leaf.hasNext()){
+                    leaf = (BTreeLeafNode) leaf.next();
+                    startidx = 0;
+                }
+                else {
+                    return pointers;
+                }
+            }
+        }
+    }
+
     @Override
     public Object visitAttributes(LowSQLParser.AttributesContext ctx) {
         List<ParseTree> nodes = ctx.children;
@@ -660,6 +692,129 @@ public class Visitor extends LowSQLBaseVisitor {
             return  Util.NE;
         }
         throw new RuntimeException("Invalid comparing");
+    }
+
+    @Override
+    public Object visitDelete_stmt(LowSQLParser.Delete_stmtContext ctx) {
+        List<ParseTree> nodes = ctx.children;
+        String tableName = (String)visit(nodes.get(2));
+        TableManager table = current_database.getOneTable(tableName);
+        if(table == null){
+            throw new RuntimeException("No table named "+tableName);
+        }
+        current_table = table;
+        _Query query = null;
+        if(nodes.size() > 3){
+            query = (_Query)visit(nodes.get(4));
+        }
+        ArrayList<DataPointer> pointers = new ArrayList<>();
+        if(query != null){
+            TableAttribute index = current_table.getSchema().getOneAttribute(query.attributeName);
+            TableAttribute[] _index = new TableAttribute[1];
+            _index[0] = index;
+            TableSchema indexSchema = new TableSchema(current_table.getTableName(), _index);
+
+            BTree indexTree = server.index_buffer.getBTree(current_database.getDatabaseName(), current_table.getTableName(), indexSchema);
+            if(indexTree != null){
+//                search by index
+                Field[] fields = new Field[1];
+                fields[0] = new Field(query.value, index);
+                Record target = new Record(fields, indexSchema);
+
+                int[] queryRes = indexTree.query(target);
+                int nodeid = queryRes[0];
+                int keyidx = queryRes[1];
+                BTreeLeafNode node = (BTreeLeafNode) server.index_buffer.getNode(nodeid, current_database.getDatabaseName(), current_table.getTableName(), _index);
+                if(query.type == Util.E){
+//                    a='1'
+                    if((keyidx == node.key_number)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) != Util.E)){
+                        return null;
+                    }
+                    pointers.addAll(Arrays.asList(node.getPointer(keyidx)));
+                }
+                else {
+                    if(query.type == Util.L){
+                        pointers.addAll(getDeleteList(node, keyidx-1, true));
+                    }
+                    else if(query.type == Util.G){
+                        int startidx = keyidx;
+                        if((keyidx != node.key_number)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) == Util.E)){
+                            startidx = keyidx+1;
+                        }
+                        pointers.addAll(getDeleteList(node, startidx, false));
+                    }
+                    else if(query.type == Util.NE){
+                        //left
+                        pointers.addAll(getDeleteList(node, keyidx-1, true));
+                        //right
+                        int startidx = keyidx;
+                        if((keyidx != node.key_number)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) == Util.E)){
+                            startidx = keyidx+1;
+                        }
+                        pointers.addAll(getDeleteList(node, startidx, false));
+                    }
+                    else if(query.type == Util.LE){
+                        if(keyidx == node.key_number){
+                            pointers.addAll(getDeleteList(node, node.key_number-1, true));
+                        }
+                        else if(node.compare2key(node.record2key(target), node.keys.get(keyidx)) == Util.E){
+                            pointers.addAll(getDeleteList(node, keyidx, true));
+                        }
+                        else {
+                            pointers.addAll(getDeleteList(node, keyidx-1, true));
+                        }
+                    }
+                    else if(query.type == Util.GE){
+                        pointers.addAll(getDeleteList(node, keyidx, false));
+                    }
+                    else {
+                        throw new RuntimeException("No query type!");
+                    }
+                }
+            }
+            else {
+                String databaseName = current_database.getDatabaseName();
+                String curtableName = current_table.getTableName();
+                long blockNumber = server.data_buffer.getDataStorage(databaseName, curtableName).block_number;
+                for(int i=0; i<blockNumber; i++){
+                    Record[] records = server.data_buffer.getNode(databaseName, curtableName, i).extractAllRecords();
+                    for(int j=0; j<records.length; j++){
+                        Record record = records[j];
+                        for(Field field:record.getFields()){
+                            if(field.getAttribute().getAttributeName().equals(query.attributeName)){
+                                int compareRes = field.compareTo(new Field(query.value, index));
+                                if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                    pointers.add(new DataPointer(i, j));
+                                }
+                                if((compareRes==0)&&((query.type==Util.LE)||(query.type==Util.GE)||(query.type==Util.E))){
+                                    pointers.add(new DataPointer(i, j));
+                                }
+                                if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                    pointers.add(new DataPointer(i, j));
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            //delete all
+
+            return null;
+        }
+        //get data
+        for(DataPointer pointer : pointers){
+            Record record = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
+            //delete in all index-tree
+            for(BTree btree : server.index_buffer.getBTrees(current_database.getDatabaseName(), current_table.getTableName())){
+                btree.delete(record);
+            }
+            //delete data
+            server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
+        }
+        return null;
     }
 }
 

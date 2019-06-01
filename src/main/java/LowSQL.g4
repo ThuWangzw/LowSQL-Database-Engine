@@ -21,6 +21,7 @@ sql_stmt
     | show_table_stmt
     | insert_stmt
     | simple_select_stmt
+    | delete_stmt
     )
  ;
 
@@ -33,6 +34,11 @@ create_table_stmt
 
 simple_select_stmt
  : K_SELECT attributes K_FROM name (K_WHERE compare_stmt)?
+ ;
+
+delete_stmt
+ : K_DELETE K_FROM name
+   (K_WHERE compare_stmt)?
  ;
 
 attributes
@@ -128,6 +134,7 @@ K_VALUES: V A L U E S;
 K_SELECT: S E L E C T;
 K_FROM: F R O M;
 K_WHERE: W H E R E;
+K_DELETE : D E L E T E;
 
 LT : '<';
 GT : '>';

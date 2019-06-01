@@ -87,6 +87,18 @@ public class LowSQLBaseListener implements LowSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDelete_stmt(LowSQLParser.Delete_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDelete_stmt(LowSQLParser.Delete_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAttributes(LowSQLParser.AttributesContext ctx) { }
 	/**
 	 * {@inheritDoc}
