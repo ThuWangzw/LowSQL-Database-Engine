@@ -103,7 +103,7 @@ public class Visitor extends LowSQLBaseVisitor {
 //        add index
         if(primary_keys.size()>0){
             TableSchema primary_schema = tableManager.createIndexSchema(primary_keys);
-            server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 100);
+            server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 666);
             server.index_buffer.saveAll();
         }
         try {

@@ -25,6 +25,7 @@ public class BTreeInternalNode extends BTreeNode {
         super(m,n_id,data,bf,attrs,db_name,table_name);
         free_space = Util.DiskBlockSize - (19 + key_number * (key_length + 2));
         IndexDataFromByte();
+        savePointer();
     }
 
 
@@ -235,10 +236,10 @@ public class BTreeInternalNode extends BTreeNode {
                             node_id,0,prior_key_number + key_number,0,buffer,index_attrs,DB_name,table_name);
                     byte[] biggest_key = keys.get(key_number - 1);
                     short pt = getPointer(key_number -  1);
+                    next_id = new_node.node_id;
+                    buffer.addNewNode(new_node);
                     deleteKeyPointer(key_number - 1);
                     new_node.insertOneKeyPointer(biggest_key,pt);
-                    buffer.addNewNode(new_node);
-                    next_id = new_node.node_id;
                     insertOneKeyPointer(new_key,pointer_id);
                 }
             }
@@ -257,6 +258,7 @@ public class BTreeInternalNode extends BTreeNode {
                     prior_node.insertOneKeyPointer(new_key,pointer_id);
                 }else{
                     byte[] old_biggest = getBiggestKey();
+                    int old_next_id = next_id;
                     if(M % 2 == 1){
                         if(compare2key(keys.get(mid),new_key) == Util.G){
                             if (mid == prior_key_number){
@@ -295,6 +297,8 @@ public class BTreeInternalNode extends BTreeNode {
                     }
                     if(parent_id != 0){
                         BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id,DB_name,table_name,index_attrs);
+                        if(old_next_id != 0)
+                            parent_node.updateKeyPointer(old_biggest,getBiggestKey(),getHeadNode().node_id);
                         parent_node.insertOneKeyPointer(split_node.getBiggestKey(),split_node.node_id);
                     }
                     if(compare2key(keys.get(mid - prior_key_number),new_key) == Util.G){
@@ -334,6 +338,7 @@ public class BTreeInternalNode extends BTreeNode {
                         new_node.updateNextKeyNumber(origin_next_node.key_number + origin_next_node.next_key_number);
                     }
                     next_id = new_node.node_id;
+                    buffer.addNewNode(new_node);
                     byte[] biggest_key = keys.get(key_number - 1);
                     short pt = getPointer(key_number -  1);
                     deleteKeyPointer(key_number - 1);

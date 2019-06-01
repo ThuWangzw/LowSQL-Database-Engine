@@ -173,7 +173,7 @@ abstract public class BTreeNode {
         int index = BinarySearch(key,0,key_number - 1);
         if(index == key_number){
             if(next_id != 0){
-                BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                BTreeNode next_node =  buffer.getNode(next_id,DB_name,table_name,index_attrs);
                 if(compare2key(key,next_node.keys.get(0)) != Util.L){
                     return next_node.query(key);
                 }
