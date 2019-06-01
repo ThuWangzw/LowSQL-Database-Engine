@@ -1,1 +1,1 @@
-select * from person where name = 'Alice760';
+select * from person where name > 'Alice760';
