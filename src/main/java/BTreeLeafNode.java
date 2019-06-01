@@ -293,15 +293,15 @@ public class BTreeLeafNode extends BTreeNode{
                     //data overflow
                     //create a new node
                     BTreeLeafNode new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,
-                            right_bro_id,node_id,0,prior_key_number + key_number - 1,0,buffer,index_attrs,DB_name,table_name);
+                            right_bro_id,node_id,0,prior_key_number + key_number,0,buffer,index_attrs,DB_name,table_name);
                     byte[] biggest_key = keys.get(key_number - 1);
                     DataPointer[] pt = getPointer(key_number -  1);
+                    next_id = new_node.node_id;
+                    buffer.addNewNode(new_node);
                     deleteAllKeyPointer(key_number - 1);
                     for(int i = 0 ; i < pt.length;i++){
                         new_node.insertOneKeyPointer(biggest_key,pt[i].page_id,pt[i].record_id);
                     }
-                    buffer.addNewNode(new_node);
-                    next_id = new_node.node_id;
                     insertOneKeyPointer(new_key,page_id,record_id);
                 }
             }else{
@@ -336,15 +336,15 @@ public class BTreeLeafNode extends BTreeNode{
                     }else{
                         //no enough space to insert
                         BTreeLeafNode new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,node_id,0,
-                                key_number + prior_key_number - 1,0,buffer,index_attrs,DB_name,table_name);
+                                key_number + prior_key_number,0,buffer,index_attrs,DB_name,table_name);
                         byte[] biggest_key = keys.get(key_number - 1);
                         DataPointer[] pt = getPointer(key_number -  1);
+                        next_id = new_node.node_id;
+                        buffer.addNewNode(new_node);
                         deleteAllKeyPointer(key_number - 1);
                         for(int i = 0 ; i < pt.length;i++){
                             new_node.insertOneKeyPointer(biggest_key,pt[i].page_id,pt[i].record_id);
                         }
-                        buffer.addNewNode(new_node);
-                        next_id = new_node.node_id;
                         insertOneKeyPointer(new_key,page_id,record_id);
                     }
                 }
@@ -395,6 +395,7 @@ public class BTreeLeafNode extends BTreeNode{
                      //this node split
                         BTreeLeafNode split_node;
                         byte[] old_biggest = getBiggestKey();
+                        int origin_next_id = next_id;
                         if(M % 2 == 1) {
                             if (compare2key(keys.get(mid - prior_key_number), new_key) == Util.G) {
                                 if(mid == prior_key_number ){
@@ -434,6 +435,8 @@ public class BTreeLeafNode extends BTreeNode{
 
                         if(parent_id != 0){
                             BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id,DB_name,table_name,index_attrs);
+                            if(origin_next_id != 0)
+                                parent_node.updateKeyPointer(old_biggest,getBiggestKey(),getHeadNode().node_id);
                             parent_node.insertOneKeyPointer(split_node.getBiggestKey(),split_node.node_id);
                         }
                         if(compare2key(keys.get(mid - prior_key_number),new_key) == Util.G){
