@@ -216,7 +216,6 @@ public class Visitor extends LowSQLBaseVisitor {
             current_database.deleteTable(name);
             server.WriteMetaData();
             server.data_buffer.deleteDataFile(current_database.getDatabaseName(), name);
-            //TODO delete index
             server.index_buffer.deleteIndex(current_database.getDatabaseName(), name);
 
             try {
@@ -289,13 +288,6 @@ public class Visitor extends LowSQLBaseVisitor {
         }
 //        server.data_buffer.saveAll();
 //        server.index_buffer.saveAll();
-        try {
-            writer.write("Insert table success.\r\n");
-            writer.flush();
-        }
-        catch (IOException e){
-            System.out.println("IO exception");
-        }
         return null;
     }
 
