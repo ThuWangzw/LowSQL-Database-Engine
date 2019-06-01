@@ -457,7 +457,8 @@ public class BTreeInternalNode extends BTreeNode {
         if (index < key_number -1){
             byte[] temp_key;
             short pt;
-            for(int i = index + 1; i < key_number; i++){
+            int origin_key_number = key_number;
+            for(int i = index + 1; i < origin_key_number; i++){
                 pt = getPointer(index+1);
                 temp_key = keys.get(index+1);
                 new_node.insertOneKeyPointer(temp_key,pt);

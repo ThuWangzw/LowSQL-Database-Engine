@@ -1,5 +1,5 @@
 drop table if exists person;
-CREATE TABLE person (name String(256), ID Int not null, PRIMARY KEY(ID));
+CREATE TABLE person (name String(256), ID Int not null);
 insert into person values ('Alice0', 0);
 insert into person values ('Alice1', 1);
 insert into person values ('Alice2', 2);

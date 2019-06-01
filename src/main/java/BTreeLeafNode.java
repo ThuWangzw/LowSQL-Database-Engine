@@ -498,7 +498,8 @@ public class BTreeLeafNode extends BTreeNode{
         BTreeLeafNode new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,0,right_bro_id,0,0,0,0,buffer,index_attrs,DB_name,table_name);
         if(index < key_number - 1){
             byte[] temp_key;
-            for(int i = index + 1; i < key_number; i++){
+            int origin_key_number = key_number;
+            for(int i = index + 1; i < origin_key_number; i++){
                 DataPointer[] pt = getPointer(index + 1);
                 temp_key = keys.get(index + 1);
                 for (int j = 0; j < pt.length; j++){

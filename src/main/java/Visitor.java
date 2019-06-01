@@ -22,7 +22,7 @@ public class Visitor extends LowSQLBaseVisitor {
     public static void main(String[] args) throws Exception {
         writer = new OutputStreamWriter(System.out);
         try {
-            File file = new File("insert.sql");
+            File file = new File("select.sql");
             long start = System.currentTimeMillis();
             FileInputStream fileInputStream = new FileInputStream(file);
             ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
@@ -217,7 +217,7 @@ public class Visitor extends LowSQLBaseVisitor {
             server.WriteMetaData();
             server.data_buffer.deleteDataFile(current_database.getDatabaseName(), name);
             //TODO delete index
-//            server.index_buffer.deleteIndex(current_database.getDatabaseName(), current_table.getTableName());
+            server.index_buffer.deleteIndex(current_database.getDatabaseName(), name);
 
             try {
                 writer.write("Drop table success.");
@@ -387,6 +387,15 @@ public class Visitor extends LowSQLBaseVisitor {
         writer.flush();
     }
 
+    public void writeOneResult(Record record, ArrayList<Integer> attributes) throws IOException {
+        Field[] fields = record.getFields();
+        for(Integer i:attributes){
+            writer.write(fields[i].getValue().toString()+",");
+        }
+        writer.write("\r\n");
+        writer.flush();
+    }
+
     @Override
     public Object visitSimple_select_stmt(LowSQLParser.Simple_select_stmtContext ctx) {
         List<ParseTree> nodes = ctx.children;
@@ -425,7 +434,7 @@ public class Visitor extends LowSQLBaseVisitor {
                 BTreeLeafNode node = (BTreeLeafNode) server.index_buffer.getNode(nodeid, current_database.getDatabaseName(), current_table.getTableName(), _index);
                 if(query.type == Util.E){
 //                    a='1'
-                    if((keyidx == node.key_length)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) != Util.E)){
+                    if((keyidx == node.key_number)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) != Util.E)){
                         return null;
                     }
                     DataPointer[] results = node.getPointer(keyidx);
@@ -439,13 +448,157 @@ public class Visitor extends LowSQLBaseVisitor {
                         return null;
                     }
                 }
-                System.out.println('1');
+                else {
 
+                    if(query.type == Util.L){
+                        writeListResult(node, keyidx-1, true, attributes);
+                    }
+                    else if(query.type == Util.G){
+                        int startidx = keyidx;
+                        if((keyidx != node.key_number)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) == Util.E)){
+                            startidx = keyidx+1;
+                        }
+                        writeListResult(node, startidx, false, attributes);
+                    }
+                    else if(query.type == Util.NE){
+                        //left
+                        writeListResult(node, keyidx-1, true, attributes);
+                        //right
+                        int startidx = keyidx;
+                        if((keyidx != node.key_number)||(node.compare2key(node.record2key(target), node.keys.get(keyidx)) == Util.E)){
+                            startidx = keyidx+1;
+                        }
+                        writeListResult(node, startidx, false, attributes);
+                    }
+                    else if(query.type == Util.LE){
+                        if(keyidx == node.key_number){
+                            writeListResult(node, node.key_number-1, true, attributes);
+                        }
+                        else if(node.compare2key(node.record2key(target), node.keys.get(keyidx)) == Util.E){
+                            writeListResult(node, keyidx, true, attributes);
+                        }
+                        else {
+                            writeListResult(node, keyidx-1, true, attributes);
+                        }
+                    }
+                    else if(query.type == Util.GE){
+                        writeListResult(node, keyidx, false, attributes);
+                    }
+                    else {
+                        throw new RuntimeException("No query type!");
+                    }
+                }
+            }
+            else {
+                String databaseName = current_database.getDatabaseName();
+                String curtableName = current_table.getTableName();
+                long blockNumber = server.data_buffer.getDataStorage(databaseName, curtableName).block_number;
+                for(int i=0; i<blockNumber; i++){
+                    Record[] records = server.data_buffer.getNode(databaseName, curtableName, i).extractAllRecords();
+                    for(Record record : records){
+                        for(Field field:record.getFields()){
+                            if(field.getAttribute().getAttributeName().equals(query.attributeName)){
+                                int compareRes = field.compareTo(new Field(query.value, index));
+                                if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                    try{
+                                        writeOneResult(record, attributes);
+                                    }
+                                    catch (IOException e){
+                                        System.out.println("write error");
+                                        return null;
+                                    }
+                                }
+                                if((compareRes==0)&&((query.type==Util.LE)||(query.type==Util.GE)||(query.type==Util.E))){
+                                    try{
+                                        writeOneResult(record, attributes);
+                                    }
+                                    catch (IOException e){
+                                        System.out.println("write error");
+                                        return null;
+                                    }
+                                }
+                                if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                    try{
+                                        writeOneResult(record, attributes);
+                                    }
+                                    catch (IOException e){
+                                        System.out.println("write error");
+                                        return null;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
+        else {
+            //select all
+            String databaseName = current_database.getDatabaseName();
+            String curtableName = current_table.getTableName();
+            long blockNumber = server.data_buffer.getDataStorage(databaseName, curtableName).block_number;
+            for(int i=0; i<blockNumber; i++){
+                Record[] records = server.data_buffer.getNode(databaseName, curtableName, i).extractAllRecords();
+                for(Record record : records){
+                    try{
+                        writeOneResult(record, attributes);
+                    }
+                    catch (IOException e){
+                        System.out.println("write error");
+                        return null;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
-
-        return super.visitSimple_select_stmt(ctx);
+    void writeListResult(BTreeLeafNode leaf, int startidx, boolean is_left, ArrayList<Integer> attributes){
+        while (true){
+            if(is_left){
+                for(int i=startidx; i>=0; i--){
+                    DataPointer[] results = leaf.getPointer(i);
+                    try{
+                        for(DataPointer result : results){
+                            writeOneResult(result, attributes);
+                        }
+                    }
+                    catch (IOException e){
+                        System.out.println("write error");
+                        return;
+                    }
+                }
+                if(leaf.hasPrior()){
+                    leaf = (BTreeLeafNode) leaf.prior();
+                    startidx = leaf.key_number-1;
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                for(int i=startidx; i<leaf.key_number; i++){
+                    DataPointer[] results = leaf.getPointer(i);
+                    try{
+                        for(DataPointer result : results){
+                            writeOneResult(result, attributes);
+                        }
+                    }
+                    catch (IOException e){
+                        System.out.println("write error");
+                        return;
+                    }
+                }
+                if(leaf.hasNext()){
+                    leaf = (BTreeLeafNode) leaf.next();
+                    startidx = 0;
+                }
+                else {
+                    return ;
+                }
+            }
+        }
     }
 
     @Override
@@ -489,10 +642,6 @@ public class Visitor extends LowSQLBaseVisitor {
 //        check attribute right
         TableAttribute tableAttribute = current_table.getSchema().getOneAttribute(attributeName);
         if(tableAttribute == null){
-            throw new RuntimeException("Attribute error!");
-        }
-//        check attribute comparable
-        if((type!=Util.E)&&(tableAttribute.getType() == Util.VARCHAR || tableAttribute.getType() == Util.STRING)){
             throw new RuntimeException("Attribute error!");
         }
         return new _Query(attributeName, (int)type, value);

@@ -1,3 +1,4 @@
+import javax.print.DocFlavor;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
@@ -169,4 +170,37 @@ public class Field {
     }
 
     public TableAttribute getAttribute(){return  attribute;}
+
+    public int compareTo(Object f){
+        if(this == f){
+            return 0;
+        }
+        if(f instanceof Field){
+            Field ff = (Field)f;
+            int type = attribute.getType();
+            int ftype = ff.attribute.getType();
+            if(type != ftype){
+                return 1;
+            }
+            if((type == Util.STRING) || (type == Util.VARCHAR)){
+                String a = (String) value;
+                String b = (String) ff.value;
+                return a.compareTo(b);
+            }
+            else if(type == Util.INT){
+                return (int)value-(int)ff.value;
+            }
+            else if(type == Util.LONG){
+                 long res = (long)value-(long)ff.value;
+                 if(res==0) return 0;
+                 return res<0?-1:1;
+            }
+            else if((type == Util.FLOAT) || (type == Util.DOUBLE)){
+                double res = (double)value-(double)ff.value;
+                if(res == 0)return 0;
+                return res<0?-1:1;
+            }
+        }
+        return 1;
+    }
 }
