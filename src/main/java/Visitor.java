@@ -808,17 +808,9 @@ public class Visitor extends LowSQLBaseVisitor {
         for(DataPointer pointer : pointers){
             Record record = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
             //delete in all index-tree
-            if(record.getFields()[1].getValue() instanceof  Integer){
-                int tp = (int) record.getFields()[1].getValue();
-                if(tp == 835){
-                    int a = 2;
-                }
-            }
-
             for(BTree btree : server.index_buffer.getBTrees(current_database.getDatabaseName(), current_table.getTableName())){
                 btree.delete(record,pointer);
             }
-
             //delete data
             server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
         }
