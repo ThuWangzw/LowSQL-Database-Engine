@@ -15,6 +15,7 @@ public class IndexBuffer {
         btrees = new ArrayList<>();
         index_buffer = new BTreeNode[INDEX_BUFFER_BLOCK_NUNMBER];
         loadIndexMetaData();
+        preload();
     }
 
     public void reload(DatabaseManager new_db){
@@ -90,6 +91,14 @@ public class IndexBuffer {
         ArrayList<BTree> bts = getBTrees(db_name);
         for(BTree b : bts){
             deleteIndex(b);
+        }
+    }
+
+
+    public void preload(){
+        for(BTree b: btrees){
+            for(int i = 1; i <= b.node_block_number;i++)
+            getNode(i,b.DB_name,b.table_name,b.index_schema.getAttrubutes());
         }
     }
 
