@@ -24,7 +24,7 @@ public class Visitor extends LowSQLBaseVisitor {
     public static void main(String[] args) throws Exception {
         writer = new OutputStreamWriter(System.out);
         try {
-            File file = new File("delete.sql");
+            File file = new File("select.sql");
             long start = System.currentTimeMillis();
             FileInputStream fileInputStream = new FileInputStream(file);
             ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
@@ -808,10 +808,11 @@ public class Visitor extends LowSQLBaseVisitor {
         for(DataPointer pointer : pointers){
             Record record = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
             //delete in all index-tree
-            for(BTree btree : server.index_buffer.getBTrees(current_database.getDatabaseName(), current_table.getTableName())){
-                btree.delete(record);
-            }
+
             //delete data
+            for(BTree btree : server.index_buffer.getBTrees(current_database.getDatabaseName(), current_table.getTableName())){
+                btree.delete(record,pointer);
+            }
             server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
         }
         return null;

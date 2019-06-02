@@ -39,13 +39,12 @@ public class DataStorage{
 
 
     public DataPointer insert(Record record){
-        int record_size = record.getSize(),record_id;
+        int record_id;
         DataBlock blk;
         do{
             blk = buffer.getNode(DB_name,table_name,current_free_block_id);
-            record_id = blk.getRecordNumber();
-            if(record_size <= blk.getEndOfFreeSpace() - 8 * record_id - 15){
-                blk.insertOneRecord(record);
+            if(blk.isFreeSpaceEnough(record)){
+                record_id = blk.insertOneRecord(record);
                 return new DataPointer(current_free_block_id,record_id);
             }
             cancelFreeBlock(current_free_block_id);

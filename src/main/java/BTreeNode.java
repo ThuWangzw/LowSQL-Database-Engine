@@ -130,7 +130,7 @@ abstract public class BTreeNode {
             int index = BinarySearch(key,0,key_number - 1);
             if (index == key_number){
                 if(next_id != 0){
-                    BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                    BTreeNode next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
                     if(compare2key(key,next_node.keys.get(0)) != Util.L){
                         next_node.delete(key);
                         return;
@@ -152,7 +152,7 @@ abstract public class BTreeNode {
             int index = BinarySearch(key,0,key_number - 1);
             if (index == key_number){
                 if(next_id != 0){
-                    BTreeInternalNode next_node = (BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                    BTreeNode next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
                     if(compare2key(key,next_node.keys.get(0)) != Util.L){
                         next_node.delete(key,pt);
                         return;
@@ -301,7 +301,7 @@ abstract public class BTreeNode {
                 while(temp.prior_id != 0){
                     temp = buffer.getNode(temp.prior_id,DB_name,table_name,index_attrs);
                     temp.next_key_number += delta;
-                    System.arraycopy(Util.short2byte((short)temp.next_key_number),0,index_data,17,2);
+                    System.arraycopy(Util.short2byte((short)temp.next_key_number),0,temp.index_data,17,2);
                     temp.is_changed = true;
                 }
             }
@@ -311,10 +311,26 @@ abstract public class BTreeNode {
                 while(temp.next_id != 0){
                     temp = buffer.getNode(temp.next_id,DB_name,table_name,index_attrs);
                     temp.prior_key_number += delta;
-                    System.arraycopy(Util.short2byte((short)temp.prior_key_number),0,index_data,15,2);
+                    System.arraycopy(Util.short2byte((short)temp.prior_key_number),0,temp.index_data,15,2);
                     temp.is_changed = true;
                 }
             }
+        }
+    }
+
+    public void updateNextBro(int next){
+        if(next_id != next){
+            next_id = next;
+            System.arraycopy(Util.short2byte((short)next),0,index_data,13,2);
+            is_changed = true;
+        }
+    }
+
+    public void updatePriorBro(int prior){
+        if(prior_id != prior){
+            prior_id = prior;
+            System.arraycopy(Util.short2byte((short)prior),0,index_data,11,2);
+            is_changed = true;
         }
     }
 
@@ -395,7 +411,7 @@ abstract public class BTreeNode {
         BTreeNode temp;
         if (new_right != right_bro_id){
             right_bro_id = new_right;
-            System.arraycopy(Util.short2byte((short)new_right),0,index_data,7,2);
+            System.arraycopy(Util.short2byte((short)new_right),0,index_data,9,2);
             is_changed = true;
 
             if(next_id != 0){
@@ -403,7 +419,7 @@ abstract public class BTreeNode {
                 while(temp.next_id != 0){
                     temp = buffer.getNode(temp.next_id,DB_name,table_name,index_attrs);
                     temp.right_bro_id = new_right;
-                    System.arraycopy(Util.short2byte((short)new_right),0,temp.index_data,7,2);
+                    System.arraycopy(Util.short2byte((short)new_right),0,temp.index_data,9,2);
                     temp.is_changed = true;
                 }
             }
@@ -413,7 +429,7 @@ abstract public class BTreeNode {
                 while(temp.prior_id != 0){
                     temp = buffer.getNode(temp.prior_id,DB_name,table_name,index_attrs);
                     temp.right_bro_id = new_right;
-                    System.arraycopy(Util.short2byte((short)new_right),0,temp.index_data,7,2);
+                    System.arraycopy(Util.short2byte((short)new_right),0,temp.index_data,9,2);
                     temp.is_changed = true;
                 }
             }
