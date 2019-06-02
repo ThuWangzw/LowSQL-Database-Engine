@@ -13,6 +13,7 @@ public class DataBlock {
     private int page_id = -1;       //page id is the unique id of every data block
     TableSchema schema;
     Boolean is_revised;     // to show whether there is a difference between the file and the memory
+    private Record record;
 
 
     //initialize by creating new data block
@@ -66,6 +67,13 @@ public class DataBlock {
         if(!isFreeSpaceEnough(record))
             throw new IllegalArgumentException("No enough space to insert");
 
+        if(record.getFields()[1].getValue() instanceof Integer){
+            int tp = (int )record.getFields()[1].getValue();
+            if(tp == 666) {
+                int a= 0;
+
+            }
+        }
         int insert_id = record_number;
         if(actual_number < record_number){
             for(int i = 0; i < record_number; i++){

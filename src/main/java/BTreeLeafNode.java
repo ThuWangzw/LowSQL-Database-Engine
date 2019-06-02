@@ -385,11 +385,11 @@ public class BTreeLeafNode extends BTreeNode{
                     if (mid >= key_number + prior_key_number){
                         //this node do not split
                         BTreeLeafNode next_node = (BTreeLeafNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
-                        next_node.insertOneKeyPointer(new_key,page_id,node_id);
+                        next_node.insertOneKeyPointer(new_key,page_id,record_id);
                         return;
                     }else if (mid < prior_key_number) {
                         BTreeLeafNode prior_node = (BTreeLeafNode) buffer.getNode(prior_id,DB_name,table_name,index_attrs);
-                        prior_node.insertOneKeyPointer(new_key,page_id,node_id);
+                        prior_node.insertOneKeyPointer(new_key,page_id,record_id);
                         return;
                     }else {
                      //this node split
