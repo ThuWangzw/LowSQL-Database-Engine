@@ -52,11 +52,29 @@ public interface LowSQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDelete_stmt(LowSQLParser.Delete_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#update_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUpdate_stmt(LowSQLParser.Update_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#complex_select_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComplex_select_stmt(LowSQLParser.Complex_select_stmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LowSQLParser#attributes}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAttributes(LowSQLParser.AttributesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#two_attributes}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTwo_attributes(LowSQLParser.Two_attributesContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link LowSQLParser#compare_stmt}.
 	 * @param ctx the parse tree

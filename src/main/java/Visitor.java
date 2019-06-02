@@ -1,16 +1,11 @@
-import javafx.beans.binding.ObjectExpression;
-import javafx.scene.control.Tab;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.jar.Attributes;
 
 public class Visitor extends LowSQLBaseVisitor {
     static private Server server;
@@ -24,7 +19,7 @@ public class Visitor extends LowSQLBaseVisitor {
     public static void main(String[] args) throws Exception {
         writer = new OutputStreamWriter(System.out);
         try {
-            File file = new File("delete.sql");
+            File file = new File("complex_select.sql");
             long start = System.currentTimeMillis();
             FileInputStream fileInputStream = new FileInputStream(file);
             ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
@@ -36,19 +31,32 @@ public class Visitor extends LowSQLBaseVisitor {
             visitor.visit(tree);
 
 //            FileOutputStream fileOutputStream = new FileOutputStream(file);
-//            String dropString = new String("drop table if exists person;\r\n");
-//            String createString = new String("CREATE TABLE person (name String(256), ID Int not null, PRIMARY KEY(ID));\r\n");
-//            fileOutputStream.write(dropString.getBytes());
-//            fileOutputStream.write(createString.getBytes());
+//            String drop1String = new String("drop table if exists teacher;\r\n");
+//            String create1String = new String("CREATE TABLE teacher (name String(256), TEACH_ID Int not null, PRIMARY KEY(TEACH_ID));\r\n");
+//            String drop2String = new String("drop table if exists student;\r\n");
+//            String create2String = new String("CREATE TABLE student (name String(256), STUDY_ID Int not null, PRIMARY KEY(STUDY_ID));\r\n");
+//            fileOutputStream.write(drop1String.getBytes());
+//            fileOutputStream.write(create1String.getBytes());
+//            fileOutputStream.write(drop2String.getBytes());
+//            fileOutputStream.write(create2String.getBytes());
 //
 //            for(int i=0; i<1000; i++){
-//                String record = new String("insert into person values ('Alice");
+//                String record = new String("insert into teacher values ('Alice");
 //                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
 //                fileOutputStream.write(record.getBytes());
 //            }
+//            for(int i=900; i<1900; i++){
+//                String record = new String("insert into student values ('Alice");
+//                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
+//                fileOutputStream.write(record.getBytes());
+//            }
+//            String selectString = new String("select teacher.name, student.name from teacher join student on teacher.name = student.name where name > 'Alice400'");
+//            fileOutputStream.write(selectString.getBytes());
             long end = System.currentTimeMillis();
-            server.data_buffer.saveAll();
-            server.index_buffer.saveAll();
+            if(server != null){
+                server.data_buffer.saveAll();
+                server.index_buffer.saveAll();
+            }
             System.out.println((float) (end-start)/1000);
         }
         catch (RuntimeException e){
@@ -815,6 +823,86 @@ public class Visitor extends LowSQLBaseVisitor {
             server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
         }
         return null;
+    }
+
+    @Override
+    public Object visitComplex_select_stmt(LowSQLParser.Complex_select_stmtContext ctx) {
+        List<ParseTree> nodes = ctx.children;
+        String tableAname = (String)visit(nodes.get(3));
+        String tableBname = (String)visit(nodes.get(5));
+        TableManager tableA = current_database.getOneTable(tableAname);
+        TableManager tableB = current_database.getOneTable(tableBname);
+        if((tableA==null)||(tableB==null)){
+            throw new RuntimeException("Table not found;");
+        }
+//        get join-table schema
+        TableAttribute[] joinAttributes = new TableAttribute[tableA.getSchema().getAttrubutes().length+tableB.getSchema().getAttrubutes().length-1];
+        String table1name = (String)visit(nodes.get(7));
+        String table1join = (String)visit(nodes.get(9));
+        String table2name = (String)visit(nodes.get(11));
+        String table2join = (String)visit(nodes.get(13));
+        int tableAJoinIdx = -1;
+        int tableBJoinIdx = -1;
+        if(table1name.equals(tableAname)){
+            for(int i=0; i<tableA.getSchema().getAttrubutes().length; i++){
+                TableAttribute attribute = tableA.getSchema().getAttrubutes()[i];
+                if(attribute.getAttributeName().equals(table1join)){
+                    tableAJoinIdx = i;
+                    break;
+                }
+            }
+            if(!table2name.equals(tableBname)){
+                throw new RuntimeException("Table not found");
+            }
+            for(int i=0; i<tableB.getSchema().getAttrubutes().length; i++){
+                TableAttribute attribute = tableB.getSchema().getAttrubutes()[i];
+                if(attribute.getAttributeName().equals(table2join)){
+                    tableBJoinIdx = i;
+                    break;
+                }
+            }
+            if((tableAJoinIdx==-1)||(tableBJoinIdx==-1)){
+                throw new RuntimeException("Table not found");
+            }
+        }
+        else if(table1name.equals(tableBname)){
+            for(int i=0; i<tableB.getSchema().getAttrubutes().length; i++){
+                TableAttribute attribute = tableB.getSchema().getAttrubutes()[i];
+                if(attribute.getAttributeName().equals(table1join)){
+                    tableBJoinIdx = i;
+                    break;
+                }
+            }
+            if(!table2name.equals(tableBname)){
+                throw new RuntimeException("Table not found");
+            }
+            for(int i=0; i<tableA.getSchema().getAttrubutes().length; i++){
+                TableAttribute attribute = tableA.getSchema().getAttrubutes()[i];
+                if(attribute.getAttributeName().equals(table2join)){
+                    tableAJoinIdx = i;
+                    break;
+                }
+            }
+            if((tableAJoinIdx==-1)||(tableBJoinIdx==-1)){
+                throw new RuntimeException("Table not found");
+            }
+        }
+        else {
+            throw new RuntimeException("Table not found");
+        }
+        int joinidx = 0;
+        joinAttributes[joinidx++] = tableA.getSchema().getAttrubutes()[tableAJoinIdx];
+        for(int i=0; i<tableA.getSchema().getAttrubutes().length; i++){
+            TableAttribute attribute = tableA.getSchema().getAttrubutes()[i];
+            if(i==tableAJoinIdx) continue;
+            joinAttributes[joinidx++] = attribute;
+        }
+        for(int i=0; i<tableB.getSchema().getAttrubutes().length; i++){
+            TableAttribute attribute = tableB.getSchema().getAttrubutes()[i];
+            if(i==tableBJoinIdx) continue;
+            joinAttributes[joinidx++] = attribute;
+        }
+        return super.visitComplex_select_stmt(ctx);
     }
 }
 

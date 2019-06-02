@@ -21,7 +21,9 @@ sql_stmt
     | show_table_stmt
     | insert_stmt
     | simple_select_stmt
+    | complex_select_stmt
     | delete_stmt
+    | update_stmt
     )
  ;
 
@@ -41,9 +43,22 @@ delete_stmt
    (K_WHERE compare_stmt)?
  ;
 
+update_stmt
+ : K_UPDATE name
+   K_SET name '=' literal_value ( K_WHERE compare_stmt )?
+ ;
+
+complex_select_stmt
+ : K_SELECT two_attributes K_FROM name K_JOIN name K_ON name'.'name '=' name'.'name ( K_WHERE compare_stmt )?
+ ;
 attributes
  : '*'
  | name (',' name)*
+ ;
+
+two_attributes
+ : '*'
+ | name'.'name (',' name'.'name)*
  ;
 
 compare_stmt
@@ -135,6 +150,10 @@ K_SELECT: S E L E C T;
 K_FROM: F R O M;
 K_WHERE: W H E R E;
 K_DELETE : D E L E T E;
+K_UPDATE: U P D A T E;
+K_SET: S E T;
+K_JOIN: J O I N;
+K_ON: O N;
 
 LT : '<';
 GT : '>';

@@ -99,6 +99,30 @@ public class LowSQLBaseListener implements LowSQLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterUpdate_stmt(LowSQLParser.Update_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUpdate_stmt(LowSQLParser.Update_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterComplex_select_stmt(LowSQLParser.Complex_select_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitComplex_select_stmt(LowSQLParser.Complex_select_stmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAttributes(LowSQLParser.AttributesContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -106,6 +130,18 @@ public class LowSQLBaseListener implements LowSQLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAttributes(LowSQLParser.AttributesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTwo_attributes(LowSQLParser.Two_attributesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTwo_attributes(LowSQLParser.Two_attributesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -77,6 +77,26 @@ public interface LowSQLListener extends ParseTreeListener {
 	 */
 	void exitDelete_stmt(LowSQLParser.Delete_stmtContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#update_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterUpdate_stmt(LowSQLParser.Update_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#update_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitUpdate_stmt(LowSQLParser.Update_stmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#complex_select_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterComplex_select_stmt(LowSQLParser.Complex_select_stmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#complex_select_stmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitComplex_select_stmt(LowSQLParser.Complex_select_stmtContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link LowSQLParser#attributes}.
 	 * @param ctx the parse tree
 	 */
@@ -86,6 +106,16 @@ public interface LowSQLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAttributes(LowSQLParser.AttributesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link LowSQLParser#two_attributes}.
+	 * @param ctx the parse tree
+	 */
+	void enterTwo_attributes(LowSQLParser.Two_attributesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link LowSQLParser#two_attributes}.
+	 * @param ctx the parse tree
+	 */
+	void exitTwo_attributes(LowSQLParser.Two_attributesContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link LowSQLParser#compare_stmt}.
 	 * @param ctx the parse tree

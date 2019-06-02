@@ -109,6 +109,7 @@ compound_select_stmt
  ;
 
 create_index_stmt
+
  : K_CREATE K_UNIQUE? K_INDEX ( K_IF K_NOT K_EXISTS )?
    ( database_name '.' )? index_name K_ON table_name '(' indexed_column ( ',' indexed_column )* ')'
    ( K_WHERE expr )?
