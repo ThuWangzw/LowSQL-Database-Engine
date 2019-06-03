@@ -20,7 +20,7 @@ public class Visitor extends LowSQLBaseVisitor {
 
     public void setServer(Server server) {
         this.server = server;
-        current_database = server.getOneDatabase("test");
+        current_database = server.getCurrentDatabase();
         writer = server.getWriter();
     }
 

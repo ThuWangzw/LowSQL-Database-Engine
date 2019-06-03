@@ -9,15 +9,13 @@ public class Client {
         try {
             String importStmt = "import(\\s+)(\\S+)";
             Pattern importPtn = Pattern.compile(importStmt);
-            String sqlStmt = "sql\\b";
-            Pattern sqlPtn = Pattern.compile(sqlStmt);
             String exitStmt = "exit\\b";
             Pattern exitPtn = Pattern.compile(exitStmt);
 
             while (true){
                 Socket socket = new Socket("127.0.0.1", 10086);
                 Scanner in = new Scanner(System.in);
-                System.out.println("import/sql/exit...");
+                System.out.println("import/exit...");
                 String mode = in.nextLine();
                 if(importPtn.matcher(mode).find()){
                     Matcher matcher = importPtn.matcher(mode);
@@ -39,9 +37,6 @@ public class Client {
                         content.append((char) ch);
                     }
                     System.out.println(content.toString());
-                }
-                else if(sqlPtn.matcher(mode).find()){
-                    System.out.println("\r\n>");
                 }
                 else if(exitPtn.matcher(mode).find()){
                     System.out.println("Bye~");

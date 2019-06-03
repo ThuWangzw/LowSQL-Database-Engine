@@ -118,6 +118,9 @@ public class Server {
         return writer;
     }
 
+    DatabaseManager getCurrentDatabase(){return current_database;}
+
+
     public static void main(String[] args) {
         System.out.println("server init..");
         Server server = new Server();
