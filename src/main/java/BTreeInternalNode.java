@@ -329,16 +329,27 @@ public class BTreeInternalNode extends BTreeNode {
                 if (free_space >= 2 + key_length){
                     insertKeyPointer(insert_index,new_key,pointer_id);
                 }else{
-                    BTreeInternalNode new_node = new BTreeInternalNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,
-                            node_id,0,prior_key_number + key_number,0,buffer,index_attrs,DB_name,table_name);
+                    BTreeInternalNode new_node;
+                    Boolean create_new_node = false;
                     if(next_id != 0){
+                        new_node =(BTreeInternalNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                        if(new_node.free_space < key_length + 2){
+                            new_node = new BTreeInternalNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id, node_id,0,prior_key_number + key_number,0,buffer,index_attrs,DB_name,table_name);
+                            buffer.addNewNode(new_node);
+                            create_new_node = true;
+                        }
+                    }else{
+                        new_node = new BTreeInternalNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id, node_id,0,prior_key_number + key_number,0,buffer,index_attrs,DB_name,table_name);
+                        buffer.addNewNode(new_node);
+                        create_new_node = true;
+                    }
+                    if(create_new_node && next_id != 0){
                         BTreeNode origin_next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
                         origin_next_node.updatePriorBro(new_node.node_id);
                         new_node.updateNextBro(origin_next_node.node_id);
                         new_node.updateNextKeyNumber(origin_next_node.key_number + origin_next_node.next_key_number);
                     }
                     updateNextBro(new_node.node_id);
-                    buffer.addNewNode(new_node);
                     byte[] biggest_key = keys.get(key_number - 1);
                     short pt = getPointer(key_number -  1);
                     deleteKeyPointer(key_number - 1);
