@@ -1,3 +1,4 @@
+drop table if exists person;
 drop table if exists teacher;
 CREATE TABLE teacher (name String(256), TEACH_ID Int not null, PRIMARY KEY(TEACH_ID));
 drop table if exists student;
@@ -1973,3 +1974,4 @@ insert into student values ('Alice1867', 1867);
 insert into student values ('Alice1868', 1868);
 insert into student values ('Alice1869', 1869);
 insert into student values ('Alice1870', 1870);
+select * from teacher where TEACH_ID > 0;

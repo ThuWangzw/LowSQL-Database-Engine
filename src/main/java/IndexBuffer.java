@@ -15,7 +15,7 @@ public class IndexBuffer {
         btrees = new ArrayList<>();
         index_buffer = new BTreeNode[INDEX_BUFFER_BLOCK_NUNMBER];
         loadIndexMetaData();
-        preload();
+        //preload();
     }
 
     public void reload(DatabaseManager new_db){
@@ -203,7 +203,7 @@ public class IndexBuffer {
             }
             raf.close();
             //simplest strategy
-            index_buffer[node_id] = temp;
+            index_buffer[node_id%INDEX_BUFFER_BLOCK_NUNMBER] = temp;
             return temp;
         } catch (Exception e) {
             e.printStackTrace();
@@ -212,9 +212,10 @@ public class IndexBuffer {
     }
 
     public void writeIndexBlock(int node_id){
-        if(index_buffer[node_id] == null)
+        int buffer_index = node_id%INDEX_BUFFER_BLOCK_NUNMBER;
+        if(index_buffer[buffer_index] == null)
             return;
-        BTreeNode temp= index_buffer[node_id];
+        BTreeNode temp= index_buffer[buffer_index];
         TableSchema t = new TableSchema(temp.table_name,temp.index_attrs);
         if(!temp.is_changed)
             return;
@@ -232,6 +233,7 @@ public class IndexBuffer {
             raf.seek(temp.node_id * Util.DiskBlockSize);
             raf.write(temp.index_data,0,Util.DiskBlockSize);
             raf.close();
+            temp.is_changed = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -250,7 +252,7 @@ public class IndexBuffer {
         if (!index_buffer[buffer_index].DB_name.equals(DB_name)
                 || !index_buffer[buffer_index].table_name.equals(table_name)
                 || !temp2.concatNames().equals(temp.concatNames())){
-            writeIndexBlock(node_id);
+            writeIndexBlock(buffer_index);
             index_buffer[buffer_index] = null;
             return loadIndexBlockFromFile(DB_name,table_name,temp,node_id,bt.M);
         }
@@ -259,11 +261,12 @@ public class IndexBuffer {
 
 
     public void addNewNode(BTreeNode node){
-        if(index_buffer[node.node_id] != null){
+        int buffer_index = node.node_id % INDEX_BUFFER_BLOCK_NUNMBER;
+        if(index_buffer[buffer_index ] != null){
             writeIndexBlock(node.node_id);
-            index_buffer[node.node_id] = null;
+            index_buffer[buffer_index] = null;
         }
-        index_buffer[node.node_id] = node;
+        index_buffer[buffer_index] = node;
         writeIndexBlock(node.node_id);
     }
 
@@ -271,14 +274,13 @@ public class IndexBuffer {
         TableSchema temp = new TableSchema(index_buffer[node.node_id].table_name,index_buffer[node.node_id].index_attrs);
         BTree bt = getBTree(node.DB_name,node.table_name,temp);
         bt.addFreeBlockID((short)node.node_id);
-        index_buffer[node.node_id] = null;
+        index_buffer[node.node_id % INDEX_BUFFER_BLOCK_NUNMBER] = null;
     }
 
     public void newRootNode(int new_root_id,String DB_name,String table_name,TableAttribute[] attrs){
         TableSchema temp = new TableSchema(table_name,attrs);
         BTree bt = getBTree(DB_name,table_name,temp);
         bt.root_id = new_root_id;
-        bt.root_node = getNode(new_root_id,DB_name,table_name,attrs);
         saveIndexMetaData(bt);
         writeIndexBlock(new_root_id);
     }

@@ -298,8 +298,8 @@ public class Visitor extends LowSQLBaseVisitor {
                 }
             }
         }
-//        server.data_buffer.saveAll();
-//        server.index_buffer.saveAll();
+        //server.data_buffer.saveAll();
+        //server.index_buffer.saveAll();
         return null;
     }
 
