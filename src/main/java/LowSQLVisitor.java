@@ -40,6 +40,36 @@ public interface LowSQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCreate_table_stmt(LowSQLParser.Create_table_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#show_table_in_database}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShow_table_in_database(LowSQLParser.Show_table_in_databaseContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#drop_database_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDrop_database_stmt(LowSQLParser.Drop_database_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#show_databases}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShow_databases(LowSQLParser.Show_databasesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#use_database_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUse_database_stmt(LowSQLParser.Use_database_stmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#create_database_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreate_database_stmt(LowSQLParser.Create_database_stmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LowSQLParser#simple_select_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

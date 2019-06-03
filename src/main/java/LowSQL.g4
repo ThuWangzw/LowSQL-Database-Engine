@@ -24,10 +24,35 @@ sql_stmt
     | complex_select_stmt
     | delete_stmt
     | update_stmt
+    | create_database_stmt
+    | drop_database_stmt
+    | use_database_stmt
+    | show_databases
+    | show_table_in_database
     )
  ;
 create_table_stmt
  : K_CREATE K_TABLE name ( '(' column_def ( ',' column_def )* ( ',' table_constraint )* ')')
+ ;
+
+show_table_in_database
+ : K_SHOW K_DATABASE name
+ ;
+
+drop_database_stmt
+ : K_DROP K_DATABASE name
+  ;
+
+show_databases
+ : K_SHOW K_DATABASES
+ ;
+
+use_database_stmt
+ : K_USE K_DATABASE name
+ ;
+
+create_database_stmt
+ : K_CREATE K_DATABASE name
  ;
 
 simple_select_stmt
@@ -122,6 +147,8 @@ insert_one_data
  : literal_value ( ',' literal_value )*
  ;
 
+
+
 literal_value
  : NUMERIC_LITERAL
  | INTEGER_LITERAL
@@ -129,6 +156,7 @@ literal_value
  | K_NULL
  ;
 
+K_DATABASES : D A T A B A S E S;
 K_CREATE : C R E A T E;
 K_TABLE : T A B L E;
 K_PRIMARY : P R I M A R Y;
@@ -150,6 +178,8 @@ K_UPDATE: U P D A T E;
 K_SET: S E T;
 K_JOIN: J O I N;
 K_ON: O N;
+K_DATABASE : D A T A B A S E;
+K_USE : U S E;
 
 LT : '<';
 GT : '>';

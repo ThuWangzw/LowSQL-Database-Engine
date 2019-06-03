@@ -93,6 +93,7 @@ public class Server {
                 current_database = cur;
                 index_buffer.reload(cur);
                 data_buffer.reload(cur);
+                return;
             }
         }
         throw new NoSuchElementException("Database " + db_name + "does not exist");

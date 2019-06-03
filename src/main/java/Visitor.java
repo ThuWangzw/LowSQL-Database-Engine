@@ -3,6 +3,7 @@ import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import javax.print.DocFlavor;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -23,7 +24,6 @@ public class Visitor extends LowSQLBaseVisitor {
         try {
             Visitor visitor = new Visitor();
             File file = new File("select.sql");
-
             FileInputStream fileInputStream = new FileInputStream(file);
             ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
             LowSQLLexer lexer = new LowSQLLexer(input);
@@ -1315,6 +1315,59 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         try{
             writer.write(new String("update ")+String.valueOf(records.size())+new String(" rows."));
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Object visitCreate_database_stmt(LowSQLParser.Create_database_stmtContext ctx) {
+        String newName = (String)visit(ctx.children.get(2));
+        DatabaseManager newDatabase = new DatabaseManager(newName);
+        server.addDatabase(newDatabase);
+        return null;
+    }
+
+    @Override
+    public Object visitDrop_database_stmt(LowSQLParser.Drop_database_stmtContext ctx) {
+        String dropName = (String)visit(ctx.children.get(2));
+        server.deleteDatabase(dropName);
+        return null;
+    }
+
+    @Override
+    public Object visitUse_database_stmt(LowSQLParser.Use_database_stmtContext ctx) {
+        String name = (String)visit(ctx.children.get(2));
+        server.setCurrentDatabase(name);
+        current_database = server.getOneDatabase(name);
+        return null;
+    }
+
+    @Override
+    public Object visitShow_databases(LowSQLParser.Show_databasesContext ctx) {
+        try{
+            for(DatabaseManager database:server.getDatabases()){
+                writer.write(database.getDatabaseName()+"\r\n");
+            }
+            writer.flush();
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Object visitShow_table_in_database(LowSQLParser.Show_table_in_databaseContext ctx) {
+        String databaseName = (String)visit(ctx.children.get(2));
+        DatabaseManager database = server.getOneDatabase(databaseName);
+        try{
+            for(TableManager table:database.getTables()){
+                writer.write(table.getTableName()+"\r\n");
+            }
+            writer.flush();
         }
         catch (IOException e){
             System.out.println(e.getMessage());
