@@ -11,65 +11,71 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Visitor extends LowSQLBaseVisitor {
-    static private Server server;
+    private Server server;
     private DatabaseManager current_database;
-    private Visitor(){
-        server = new Server();
-        current_database = server.getOneDatabase("test");
+    OutputStream writer;
+    public Visitor(){
+
     }
-    static private OutputStreamWriter writer;
+
+    public void setServer(Server server) {
+        this.server = server;
+        current_database = server.getOneDatabase("test");
+        writer = server.getWriter();
+    }
+
     private TableManager current_table;
     public static void main(String[] args) throws Exception {
-        writer = new OutputStreamWriter(System.out);
-        try {
-            Visitor visitor = new Visitor();
-            File file = new File("select.sql");
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
-            LowSQLLexer lexer = new LowSQLLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            LowSQLParser parser = new LowSQLParser(tokens);
-            ParseTree tree = parser.parse();
-            long start = System.currentTimeMillis();
-            visitor.visit(tree);
-            writer.flush();
-//            FileOutputStream fileOutputStream = new FileOutputStream(file);
-//            String drop1String = new String("drop table if exists teacher;\r\n");
-//            String create1String = new String("CREATE TABLE teacher (name String(256), TEACH_ID Int not null, PRIMARY KEY(TEACH_ID));\r\n");
-//            String drop2String = new String("drop table if exists student;\r\n");
-//            String create2String = new String("CREATE TABLE student (name String(256), STUDY_ID Int not null, PRIMARY KEY(STUDY_ID));\r\n");
-//            fileOutputStream.write(drop1String.getBytes());
-//            fileOutputStream.write(create1String.getBytes());
-//            fileOutputStream.write(drop2String.getBytes());
-//            fileOutputStream.write(create2String.getBytes());
-//
-//            for(int i=0; i<1000; i++){
-//                String record = new String("insert into teacher values ('Alice");
-//                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
-//                fileOutputStream.write(record.getBytes());
+//        writer = new OutputStreamWriter(System.out);
+//        try {
+//            Visitor visitor = new Visitor();
+//            File file = new File("select.sql");
+//            FileInputStream fileInputStream = new FileInputStream(file);
+//            ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
+//            LowSQLLexer lexer = new LowSQLLexer(input);
+//            CommonTokenStream tokens = new CommonTokenStream(lexer);
+//            LowSQLParser parser = new LowSQLParser(tokens);
+//            ParseTree tree = parser.parse();
+//            long start = System.currentTimeMillis();
+//            visitor.visit(tree);
+//            writer.flush();
+////            FileOutputStream fileOutputStream = new FileOutputStream(file);
+////            String drop1String = new String("drop table if exists teacher;\r\n");
+////            String create1String = new String("CREATE TABLE teacher (name String(256), TEACH_ID Int not null, PRIMARY KEY(TEACH_ID));\r\n");
+////            String drop2String = new String("drop table if exists student;\r\n");
+////            String create2String = new String("CREATE TABLE student (name String(256), STUDY_ID Int not null, PRIMARY KEY(STUDY_ID));\r\n");
+////            fileOutputStream.write(drop1String.getBytes());
+////            fileOutputStream.write(create1String.getBytes());
+////            fileOutputStream.write(drop2String.getBytes());
+////            fileOutputStream.write(create2String.getBytes());
+////
+////            for(int i=0; i<1000; i++){
+////                String record = new String("insert into teacher values ('Alice");
+////                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
+////                fileOutputStream.write(record.getBytes());
+////            }
+////            for(int i=900; i<1900; i++){
+////                String record = new String("insert into student values ('Alice");
+////                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
+////                fileOutputStream.write(record.getBytes());
+////            }
+////            String selectString = new String("select teacher.name, student.name from teacher join student on teacher.name = student.name where name > 'Alice400'");
+////            fileOutputStream.write(selectString.getBytes());
+//            long end = System.currentTimeMillis();
+//            if(server != null){
+//                server.data_buffer.saveAll();
+//                server.index_buffer.saveAll();
 //            }
-//            for(int i=900; i<1900; i++){
-//                String record = new String("insert into student values ('Alice");
-//                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
-//                fileOutputStream.write(record.getBytes());
-//            }
-//            String selectString = new String("select teacher.name, student.name from teacher join student on teacher.name = student.name where name > 'Alice400'");
-//            fileOutputStream.write(selectString.getBytes());
-            long end = System.currentTimeMillis();
-            if(server != null){
-                server.data_buffer.saveAll();
-                server.index_buffer.saveAll();
-            }
-            System.out.println((float) (end-start)/1000);
-        }
-        catch (RuntimeException e){
-            writer.write(e.getMessage());
-            writer.flush();
-        }
-        catch (IOException e){
-            writer.write(e.getMessage());
-            writer.flush();
-        }
+//            System.out.println((float) (end-start)/1000);
+//        }
+//        catch (RuntimeException e){
+//            writer.write(e.getMessage());
+//            writer.flush();
+//        }
+//        catch (IOException e){
+//            writer.write(e.getMessage());
+//            writer.flush();
+//        }
     }
 
     @Override
@@ -120,7 +126,7 @@ public class Visitor extends LowSQLBaseVisitor {
             server.index_buffer.saveAll();
         }
         try {
-            writer.write("Create table success.");
+            writer.write("Create table success.\r\n".getBytes());
             writer.flush();
         }
         catch (IOException e){
@@ -232,7 +238,7 @@ public class Visitor extends LowSQLBaseVisitor {
             server.index_buffer.deleteIndex(current_database.getDatabaseName(), name);
 
             try {
-                writer.write("Drop table success.");
+                writer.write("Drop table success.\r\n".getBytes());
                 writer.flush();
             }
             catch (IOException e){
@@ -242,7 +248,7 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         if(if_exists){
             try {
-                writer.write("Drop table success.");
+                writer.write("Drop table success.\r\n".getBytes());
                 writer.flush();
             }
             catch (IOException e){
@@ -273,7 +279,7 @@ public class Visitor extends LowSQLBaseVisitor {
                 res += attribute.toString()+"\r\n";
             }
            try {
-               writer.write(res);
+               writer.write(res.getBytes());
            }
            catch (IOException e){
                System.out.println("IO exception");
@@ -384,18 +390,18 @@ public class Visitor extends LowSQLBaseVisitor {
         Record record = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
         Field[] fields = record.getFields();
         for(Integer i:attributes){
-            writer.write(fields[i].getValue().toString()+",");
+            writer.write((fields[i].getValue().toString()+",").getBytes());
         }
-        writer.write("\r\n");
+        writer.write(("\r\n").getBytes());
         writer.flush();
     }
 
     public void writeOneResult(Record record, ArrayList<Integer> attributes) throws IOException {
         Field[] fields = record.getFields();
         for(Integer i:attributes){
-            writer.write(fields[i].getValue().toString()+",");
+            writer.write((fields[i].getValue().toString()+",").toString().getBytes());
         }
-        writer.write("\r\n");
+        writer.write(("\r\n").toString().getBytes());
         writer.flush();
     }
 
@@ -417,6 +423,15 @@ public class Visitor extends LowSQLBaseVisitor {
             query = (_Query)visit(nodes.get(5));
         }
 //        find if index
+        try{
+            for(Integer atttibute : attributes){
+                writer.write((current_table.getSchema().getAttrubutes()[atttibute].getAttributeName()+",").getBytes());
+            }
+            writer.write("\r\n".getBytes());
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
         if(query != null){
             TableAttribute index = current_table.getSchema().getOneAttribute(query.attributeName);
             TableAttribute[] _index = new TableAttribute[1];
@@ -967,6 +982,16 @@ public class Visitor extends LowSQLBaseVisitor {
 
         _Query query = null;
         if(nodes.size() > 14) query = (_Query)visit(nodes.get(15));
+
+        try{
+            for(Integer atttibute : attributes){
+                writer.write((joinAttributes[atttibute]+",").getBytes());
+            }
+            writer.write("\r\n".getBytes());
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
 //        rested-loop
         boolean find = false;
         int whereIdx = -1;
@@ -1314,7 +1339,7 @@ public class Visitor extends LowSQLBaseVisitor {
             }
         }
         try{
-            writer.write(new String("update ")+String.valueOf(records.size())+new String(" rows."));
+            writer.write((new String("update ")+String.valueOf(records.size())+new String(" rows.")).getBytes());
         }
         catch (IOException e){
             System.out.println(e.getMessage());
@@ -1349,7 +1374,7 @@ public class Visitor extends LowSQLBaseVisitor {
     public Object visitShow_databases(LowSQLParser.Show_databasesContext ctx) {
         try{
             for(DatabaseManager database:server.getDatabases()){
-                writer.write(database.getDatabaseName()+"\r\n");
+                writer.write((database.getDatabaseName()+"\r\n").toString().getBytes());
             }
             writer.flush();
         }
@@ -1365,7 +1390,7 @@ public class Visitor extends LowSQLBaseVisitor {
         DatabaseManager database = server.getOneDatabase(databaseName);
         try{
             for(TableManager table:database.getTables()){
-                writer.write(table.getTableName()+"\r\n");
+                writer.write((table.getTableName()+"\r\n").toString().getBytes());
             }
             writer.flush();
         }

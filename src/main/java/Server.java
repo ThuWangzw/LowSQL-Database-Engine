@@ -1,15 +1,19 @@
+import java.io.*;
+import org.antlr.v4.runtime.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
-import java.io.RandomAccessFile;
-import java.io.FileOutputStream;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class Server {
     private ArrayList<DatabaseManager> databases;
     private DatabaseManager current_database;
     IndexBuffer index_buffer;
     DataBuffer data_buffer;
-
+    OutputStream writer;
 
     public Server(){
         //load all database
@@ -46,7 +50,6 @@ public class Server {
             e.printStackTrace();
         }
     }
-
 
     public void WriteMetaData(){
         try {
@@ -111,8 +114,77 @@ public class Server {
         return null;
     }
 
+    public OutputStream getWriter() {
+        return writer;
+    }
+
     public static void main(String[] args) {
-        System.out.println("-- Node --");
+        System.out.println("server init..");
+        Server server = new Server();
+
+        System.out.println("server init done");
+        while (true){
+//            wait for client
+            ServerSocket serverSocket;
+            Socket socket;
+            try {
+                serverSocket = new ServerSocket(10086);
+                System.out.println("Waiting for client...");
+                socket = serverSocket.accept();
+                System.out.println("Accept.");
+            }
+            catch (IOException e){
+                System.out.println(e.getMessage());
+                break;
+            }
+            try {
+                InputStream in = socket.getInputStream();
+                server.writer = socket.getOutputStream();
+                Visitor visitor = new Visitor();
+                visitor.setServer(server);
+                while (true){
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+                    StringBuffer content= new StringBuffer();
+                    int ch;
+                    while ((ch = bufferedReader.read()) != 65535) {
+                        System.out.println(ch);
+                        content.append((char) ch);
+                    }
+
+                    ANTLRInputStream input = new ANTLRInputStream(content.toString());
+                    LowSQLLexer lexer = new LowSQLLexer(input);
+                    CommonTokenStream tokens = new CommonTokenStream(lexer);
+                    LowSQLParser parser = new LowSQLParser(tokens);
+                    long start = System.currentTimeMillis();
+                    ParseTree tree = parser.parse();
+                    visitor.visit(tree);
+                    long end = System.currentTimeMillis();
+                    visitor.writer.write(("running time: "+String.valueOf((float) (end-start)/1000)+"s\r\n").getBytes());
+                    visitor.writer.flush();
+                    socket.getOutputStream().close();
+                    break;
+                }
+            }
+            catch (IOException e){
+                System.out.println("Connection failed");
+            }
+            catch (RuntimeException e){
+
+                System.out.println(e.getMessage());
+            }
+            try {
+                socket.close();
+                serverSocket.close();
+            }
+            catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+            server.data_buffer.saveAll();
+            server.index_buffer.saveAll();
+        }
+
+
+
         //BTreeInternalNode n = new BTreeInternalNode();
         //n.getIndexData();
     }
