@@ -111,6 +111,8 @@ public class Server {
         return null;
     }
 
+    DatabaseManager getCurrentDatabase(){return current_database;}
+
     public static void main(String[] args) {
         System.out.println("-- Node --");
         //BTreeInternalNode n = new BTreeInternalNode();

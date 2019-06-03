@@ -361,9 +361,21 @@ public class BTreeLeafNode extends BTreeNode{
                 }else{
                     //data overflow
                     //get the next node
-                    BTreeLeafNode new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,node_id,0,key_number+prior_key_number,0,buffer,index_attrs,DB_name,table_name);
-                    buffer.addNewNode(new_node);
+                    BTreeLeafNode new_node;
+                    Boolean create_new_node = false;
                     if(next_id != 0){
+                        new_node =(BTreeLeafNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                        if(new_node.free_space < getPairTotalSize(key_number - 1)){
+                            new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,node_id,0,key_number+prior_key_number,0,buffer,index_attrs,DB_name,table_name);
+                            buffer.addNewNode(new_node);
+                            create_new_node = true;
+                        }
+                    }else{
+                        new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,node_id,0,key_number+prior_key_number,0,buffer,index_attrs,DB_name,table_name);
+                        buffer.addNewNode(new_node);
+                        create_new_node = true;
+                    }
+                    if(create_new_node && next_id != 0){
                         BTreeNode origin_next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
                         origin_next_node.updatePriorBro(new_node.node_id);
                         new_node.updateNextBro(origin_next_node.node_id);
@@ -466,9 +478,21 @@ public class BTreeLeafNode extends BTreeNode{
                         insertKeyPointer(insert_index,new_key,page_id,record_id);
                     }else{
                         //no enough space to insert
-                        BTreeLeafNode new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,node_id,0,key_number+prior_key_number,0,buffer,index_attrs,DB_name,table_name);
-                        buffer.addNewNode(new_node);
+                        BTreeLeafNode new_node;
+                        Boolean create_new_node = false;
                         if(next_id != 0){
+                            new_node =(BTreeLeafNode) buffer.getNode(next_id,DB_name,table_name,index_attrs);
+                            if(new_node.free_space < getPairTotalSize(key_number - 1)){
+                                new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,node_id,0,key_number+prior_key_number,0,buffer,index_attrs,DB_name,table_name);
+                                buffer.addNewNode(new_node);
+                                create_new_node = true;
+                            }
+                        }else{
+                            new_node = new BTreeLeafNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),parent_id,left_bro_id,right_bro_id,node_id,0,key_number+prior_key_number,0,buffer,index_attrs,DB_name,table_name);
+                            buffer.addNewNode(new_node);
+                            create_new_node = true;
+                        }
+                        if(create_new_node && next_id != 0){
                             BTreeNode origin_next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
                             origin_next_node.updatePriorBro(new_node.node_id);
                             new_node.updateNextBro(origin_next_node.node_id);
@@ -617,6 +641,10 @@ public class BTreeLeafNode extends BTreeNode{
             pt[i] = new DataPointer(page_id,record_id);
         }
         return pt;
+    }
+
+    public int getPairTotalSize(int index){
+        return key_length + 4 + getLocationAndNumber(index)[1] * 8;
     }
 
     public void IndexDataFromByte(){

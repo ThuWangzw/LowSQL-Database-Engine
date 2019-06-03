@@ -15,7 +15,7 @@ public class Visitor extends LowSQLBaseVisitor {
     private DatabaseManager current_database;
     private Visitor(){
         server = new Server();
-        current_database = server.getOneDatabase("test");
+        current_database = server.getCurrentDatabase();
     }
     static private OutputStreamWriter writer;
     private TableManager current_table;

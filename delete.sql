@@ -1,1 +1,1 @@
-delete from person where ID > 500;
+delete from student where ID > 200;
