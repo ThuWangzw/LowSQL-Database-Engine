@@ -1,8 +1,10 @@
+import javafx.scene.control.Tab;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -671,11 +673,6 @@ public class Visitor extends LowSQLBaseVisitor {
         String attributeName = (String)visit(nodes.get(0));
         Integer type = (Integer)visit(nodes.get(1));
         Object value = visit(nodes.get(2));
-//        check attribute right
-        TableAttribute tableAttribute = current_table.getSchema().getOneAttribute(attributeName);
-        if(tableAttribute == null){
-            throw new RuntimeException("Attribute error!");
-        }
         return new _Query(attributeName, (int)type, value);
     }
 
@@ -836,8 +833,60 @@ public class Visitor extends LowSQLBaseVisitor {
         if((tableA==null)||(tableB==null)){
             throw new RuntimeException("Table not found;");
         }
+        int tableARecordnum = server.data_buffer.getDataStorageRecordNum(current_database.getDatabaseName(), tableA.getTableName());
+        int tableBRecordnum = server.data_buffer.getDataStorageRecordNum(current_database.getDatabaseName(), tableB.getTableName());
+        if(tableARecordnum>tableBRecordnum){
+            TableManager tmp = tableA;
+            tableA = tableB;
+            tableB = tmp;
+
+            String nametmp = tableAname;
+            tableAname = tableBname;
+            tableBname = nametmp;
+
+            int numtmp = tableARecordnum;
+            tableARecordnum = tableBRecordnum;
+            tableBRecordnum = numtmp;
+        }
+
+//        get attributes
+        ArrayList<Integer> AAttributes = new ArrayList<>();
+        ArrayList<Integer> BAttributes = new ArrayList<>();
+        ArrayList<Integer> attributes = new ArrayList<>();
+        ArrayList<String> attributesName = (ArrayList<String>) visit(nodes.get(1));
+
+        for(int i=0; i<attributesName.size();){
+            String tablename = attributesName.get(i);
+            String attrname = attributesName.get(i+1);
+            boolean attrfind = false;
+            if(tablename.equals(tableAname)){
+                for(int j=0; j< tableA.getSchema().getAttrubutes().length; j++){
+                    TableAttribute attribute = tableA.getSchema().getAttrubutes()[j];
+                    if(attribute.getAttributeName().equals(attrname)){
+                        attrfind = true;
+                        AAttributes.add(new Integer(j));
+                    }
+                }
+            }
+            else if(tablename.equals(tableBname)){
+                for(int j=0; j< tableB.getSchema().getAttrubutes().length; j++){
+                    TableAttribute attribute = tableB.getSchema().getAttrubutes()[j];
+                    if(attribute.getAttributeName().equals(attrname)){
+                        attrfind = true;
+                        BAttributes.add(new Integer(j));
+                    }
+                }
+            }
+            else {
+                throw new RuntimeException("Table not found.");
+            }
+            if(!attrfind){
+                throw new RuntimeException("Table not found.");
+            }
+            i+=2;
+        }
 //        get join-table schema
-        TableAttribute[] joinAttributes = new TableAttribute[tableA.getSchema().getAttrubutes().length+tableB.getSchema().getAttrubutes().length-1];
+        TableAttribute[] joinAttributes = new TableAttribute[tableA.getSchema().getAttrubutes().length+tableB.getSchema().getAttrubutes().length];
         String table1name = (String)visit(nodes.get(7));
         String table1join = (String)visit(nodes.get(9));
         String table2name = (String)visit(nodes.get(11));
@@ -874,7 +923,7 @@ public class Visitor extends LowSQLBaseVisitor {
                     break;
                 }
             }
-            if(!table2name.equals(tableBname)){
+            if(!table2name.equals(tableAname)){
                 throw new RuntimeException("Table not found");
             }
             for(int i=0; i<tableA.getSchema().getAttrubutes().length; i++){
@@ -892,18 +941,135 @@ public class Visitor extends LowSQLBaseVisitor {
             throw new RuntimeException("Table not found");
         }
         int joinidx = 0;
-        joinAttributes[joinidx++] = tableA.getSchema().getAttrubutes()[tableAJoinIdx];
         for(int i=0; i<tableA.getSchema().getAttrubutes().length; i++){
+            for(Integer j : AAttributes){
+                if(j==i){
+                    attributes.add(joinidx);
+                    break;
+                }
+            }
             TableAttribute attribute = tableA.getSchema().getAttrubutes()[i];
-            if(i==tableAJoinIdx) continue;
             joinAttributes[joinidx++] = attribute;
         }
         for(int i=0; i<tableB.getSchema().getAttrubutes().length; i++){
+            for(Integer j : BAttributes){
+                if(j==i){
+                    attributes.add(joinidx);
+                    break;
+                }
+            }
             TableAttribute attribute = tableB.getSchema().getAttrubutes()[i];
-            if(i==tableBJoinIdx) continue;
             joinAttributes[joinidx++] = attribute;
         }
-        return super.visitComplex_select_stmt(ctx);
+        TableSchema joinSchema = new TableSchema(null, joinAttributes);
+
+        _Query query = null;
+        if(nodes.size() > 14) query = (_Query)visit(nodes.get(15));
+//        rested-loop
+        boolean find = false;
+        int whereIdx = -1;
+        if(query != null){
+            for(int i=0; i<joinAttributes.length; i++){
+                TableAttribute attribute = joinAttributes[i];
+                if(attribute.getAttributeName().equals(query.attributeName)){
+                    find = true;
+                    whereIdx = i;
+                    break;
+                }
+            }
+            if(!find){
+                throw new RuntimeException("Table not found.");
+            }
+        }
+
+
+        boolean isAouter = true;
+        //nested-loop join
+        TableAttribute[] AindexAttrs = new TableAttribute[1];
+        AindexAttrs[0] = new TableAttribute(tableA.getTableName(), table1name.equals(tableA.getTableName())?table1join:table2join, -1, -1, false, false);
+        TableSchema Aindex_schema = new TableSchema(tableA.getTableName(), AindexAttrs);
+        TableAttribute[] BindexAttrs = new TableAttribute[1];
+        BindexAttrs[0] = new TableAttribute(tableA.getTableName(), table2name.equals(tableB.getTableName())?table2join:table1join, -1, -1, false, false);
+        TableSchema Bindex_schema = new TableSchema(tableB.getTableName(), BindexAttrs);
+        BTree Atree = server.index_buffer.getBTree(current_database.getDatabaseName(), tableAname, Aindex_schema);
+        BTree Btree = server.index_buffer.getBTree(current_database.getDatabaseName(), tableBname, Bindex_schema);
+        if((Atree!=null)&&(Btree==null)) isAouter = false;
+        TableManager outerTable = isAouter?tableA:tableB;
+        TableManager innerTable = isAouter?tableB:tableA;
+        for(int i=0; i<server.data_buffer.getDataStorage(current_database.getDatabaseName(), outerTable.getTableName()).block_number; i++){
+            for(Record record:server.data_buffer.getNode(current_database.getDatabaseName(), outerTable.getTableName(), i).extractAllRecords()){
+                if(((isAouter)&&(Btree != null)) || ((!isAouter)&&(Atree!=null))){
+//                    index-nested-loop
+                    if(isAouter){
+                        Field[] falsefield = new Field[1];
+                        falsefield[0] = new Field(record.getFields()[tableAJoinIdx].getValue(), tableB.getSchema().getAttrubutes()[tableBJoinIdx]);
+                        Record falserecord = new Record(falsefield, null);
+                        int[] queryres =  Btree.query(falserecord);
+                        BTreeLeafNode node = (BTreeLeafNode) server.index_buffer.getNode(queryres[0], current_database.getDatabaseName(), innerTable.getTableName(), BindexAttrs);
+                        if(queryres[1] == node.key_number) continue;
+                        if(node.compare2key(node.keys.get(queryres[1]), node.record2key(record)) == Util.E){
+                            for(DataPointer pointer:node.getPointer(queryres[1])){
+                                Record innerrecord = server.data_buffer.getNode(current_database.getDatabaseName(), innerTable.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
+                                Field[] target = new Field[record.getFields().length+innerrecord.getFields().length];
+                                System.arraycopy(record.getFields(), 0, target, 0, target.length);
+                                System.arraycopy(innerrecord.getFields(), 0, target, record.getFields().length, target.length);
+                                Record joinrecord = new Record(target, joinSchema);
+                                if(query == null){
+                                    try{
+                                        writeOneResult(joinrecord, attributes);
+                                    }
+                                    catch (IOException e){
+                                        System.out.println(e.getMessage());
+                                    }
+                                }
+                                else {
+                                    //TODO
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        int[] queryres =  Atree.query(record);
+                        BTreeLeafNode node = (BTreeLeafNode) server.index_buffer.getNode(queryres[0], current_database.getDatabaseName(), innerTable.getTableName(), AindexAttrs);
+                        if(queryres[1] == node.key_number) continue;
+                        if(node.compare2key(node.keys.get(queryres[1]), node.record2key(record)) == Util.E){
+                            for(DataPointer pointer:node.getPointer(queryres[1])){
+                                Record innerrecord = server.data_buffer.getNode(current_database.getDatabaseName(), innerTable.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
+                                Field[] target = new Field[record.getFields().length+innerrecord.getFields().length];
+                                System.arraycopy(innerrecord.getFields(), 0, target, 0, target.length);
+                                System.arraycopy(record.getFields(), 0, target, innerrecord.getFields().length, target.length);
+                                Record joinrecord = new Record(target, joinSchema);
+                                if(query == null){
+                                    try{
+                                        writeOneResult(joinrecord, attributes);
+                                    }
+                                    catch (IOException e){
+                                        System.out.println(e.getMessage());
+                                    }
+                                }
+                                else {
+                                    //TODO
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object visitTwo_attributes(LowSQLParser.Two_attributesContext ctx) {
+        ArrayList<String> arrays = new ArrayList<>();
+        for(ParseTree node : ctx.children){
+            if(node instanceof LowSQLParser.NameContext){
+                arrays.add((String)visit(node));
+            }
+        }
+        return arrays;
     }
 }
 

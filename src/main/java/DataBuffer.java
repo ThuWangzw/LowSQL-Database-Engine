@@ -204,4 +204,12 @@ public class DataBuffer {
         }
     }
 
+    public int getDataStorageRecordNum(String DB_name,String table_name){
+        int recordNum=0;
+        for(int i=0; i<getDataStorage(DB_name, table_name).block_number; i++){
+            recordNum += getNode(DB_name, table_name, i).getRecordNumber();
+        }
+        return recordNum;
+    }
+
 }
