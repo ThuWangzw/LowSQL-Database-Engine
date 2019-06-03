@@ -1,1 +1,1 @@
-delete from person where ID > 500
+delete from person where ID > 500;

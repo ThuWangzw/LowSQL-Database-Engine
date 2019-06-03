@@ -26,10 +26,6 @@ sql_stmt
     | update_stmt
     )
  ;
-
-//| delete_stmt
-//    | select_stmt
-//    | update_stmt
 create_table_stmt
  : K_CREATE K_TABLE name ( '(' column_def ( ',' column_def )* ( ',' table_constraint )* ')')
  ;

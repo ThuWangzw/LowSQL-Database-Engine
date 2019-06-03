@@ -203,4 +203,8 @@ public class Field {
         }
         return 1;
     }
+
+    public void setValue(Object value) {
+        this.value = value;
+    }
 }
