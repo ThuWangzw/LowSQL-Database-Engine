@@ -74,7 +74,7 @@ public class DataBuffer {
             DataBlock temp = new DataBlock(DB_name,table_name,data,node_id,st.schema);
             raf.close();
             //simplest strategy
-            data_buffer[node_id] = temp;
+            data_buffer[node_id % DATA_BUFFER_BLOCK_NUNMBER] = temp;
             return temp;
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +92,7 @@ public class DataBuffer {
             return loadDataBlockFromFile(DB_name,table_name,node_id);
         if (!data_buffer[buffer_index].DB_name.equals(DB_name)
                 || !data_buffer[buffer_index].table_name.equals(table_name)){
-            WriteDataBlock(node_id);
+            WriteDataBlock(buffer_index);
             data_buffer[buffer_index] = null;
             return loadDataBlockFromFile(DB_name,table_name,node_id);
         }
@@ -101,9 +101,12 @@ public class DataBuffer {
 
 
     public void WriteDataBlock(int node_id){
+        int buffer_index = node_id % DATA_BUFFER_BLOCK_NUNMBER;
+        DataBlock blk = data_buffer[buffer_index];
+        if(!blk.is_revised)
+            return;
+        DataStorage ds = getDataStorage(blk.DB_name,blk.table_name);
         try{
-            DataBlock blk = data_buffer[node_id];
-            DataStorage ds = getDataStorage(blk.DB_name,blk.table_name);
             RandomAccessFile raf = new RandomAccessFile(Util.DataStorageDir + blk.DB_name + "_" + blk.table_name + ".bin","rw");
             if (blk.getPageId() >= ds.block_number){
                 throw new IndexOutOfBoundsException("data block id is out of boundary");
@@ -112,6 +115,7 @@ public class DataBuffer {
             raf.seek(blk.getPageId() * Util.DiskBlockSize);
             raf.write(blk.getData(),0,Util.DiskBlockSize);
             raf.close();
+            blk.is_revised = false;
         }catch(Exception e){
             e.printStackTrace();
         }

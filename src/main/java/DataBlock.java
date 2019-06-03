@@ -20,7 +20,7 @@ public class DataBlock {
     public DataBlock(String d_name,String t_name,int p_id,TableSchema sa){
         DB_name = d_name;
         table_name = t_name;
-        is_revised = false;
+        is_revised = true;
         schema = sa;
         data = new byte[Util.DiskBlockSize];
         record_number = 0;

@@ -15,7 +15,6 @@ public class BTree {
     String DB_name;
     String table_name;
     int root_id;
-    BTreeNode root_node;
     TableSchema index_schema;
     ArrayList<Short> empty_blocks;
     IndexBuffer buffer;
@@ -35,7 +34,7 @@ public class BTree {
 
 
         root_id = 1;
-        root_node = new BTreeLeafNode(M,root_id,0,0,0,0,0,0,0,buffer,index_schema.getAttrubutes(),DB_name,table_name);
+        BTreeNode root_node = new BTreeLeafNode(M,root_id,0,0,0,0,0,0,0,buffer,index_schema.getAttrubutes(),DB_name,table_name);
         buffer.addNewNode(root_node);
 
         node_block_number = 1;
@@ -85,9 +84,6 @@ public class BTree {
             attr_names.add(temp);
         }
         index_schema = buffer.db.getOneTable(table_name).createIndexSchema(attr_names);
-
-
-        root_node = buffer.loadIndexBlockFromFile(DB_name,table_name,index_schema,root_id,M);
 
         //empty id
         empty_blocks = new ArrayList();
@@ -153,41 +149,42 @@ public class BTree {
     }
 
     public void insert(byte[] key,int page_id,int record_id){
-        root_node.insert(key,page_id,record_id);
+        buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).insert(key,page_id,record_id);
     }
 
     public void insert(Record rcd,int page_id,int record_id){
-        root_node.insert(record2key(rcd),page_id,record_id);
+        buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).insert(record2key(rcd),page_id,record_id);
     }
 
     //return [node_id index]
     public int[] query(Record rcd){
-        return root_node.query(record2key(rcd));
+        return buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).query(record2key(rcd));
     }
 
     public int[] query(byte[] key){
-        return root_node.query(key);
+        return buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).query(key);
     }
 
     public void delete(byte[] key){
-        root_node.delete(key);
+        buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).delete(key);
     }
 
     public void delete(byte[] key, DataPointer pt){
-        root_node.delete(key,pt);
+        buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).delete(key,pt);
     }
 
     public void delete(Record rcd, DataPointer pt){
-        root_node.delete(record2key(rcd),pt);
+        buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).delete(record2key(rcd),pt);
     }
 
     public void delete(Record rcd){
-        root_node.delete(record2key(rcd));
+        buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes()).delete(record2key(rcd));
     }
 
     public byte[] record2key(Record record){
-        if(root_node != null){
-            return root_node.record2key(record);
+        BTreeNode node = buffer.getNode(root_id,DB_name,table_name,index_schema.getAttrubutes());
+        if(node != null){
+            return node.record2key(record);
         }
         throw new NullPointerException("The Index Tree is not initialized!");
     }
