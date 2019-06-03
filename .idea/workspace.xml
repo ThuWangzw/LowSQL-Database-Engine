@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09dc7a4a-e0f1-4acf-8ad5-b06b973d6712" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/complex_select.sql" beforeDir="false" afterPath="$PROJECT_DIR$/complex_select.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/test_person.bin" beforeDir="false" afterPath="$PROJECT_DIR$/data/test_person.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visitor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,34 +19,151 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="380" lean-forward="true" selection-start-line="380" selection-end-line="380" />
+            <state relative-caret-position="390">
+              <caret line="1068" column="41" selection-start-line="1068" selection-start-column="41" selection-end-line="1068" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#visitName#0;class#Visitor#0" />
-                <element signature="method#visitColumn_def#0;class#Visitor#0" />
-                <element signature="method#visitType_name#0;class#Visitor#0" />
-                <element signature="method#visitTable_constraint#0;class#Visitor#0" />
-                <element signature="method#visitDrop_table_stmt#0;class#Visitor#0" />
-                <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
-                <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
-                <element signature="method#visitTable_schema#0;class#Visitor#0" />
-                <element signature="method#visitInsert_one_data#0;class#Visitor#0" />
-                <element signature="method#visitLiteral_value#0;class#Visitor#0" />
-                <element signature="method#writeOneResult#0;class#Visitor#0" />
-                <element signature="method#writeOneResult#1;class#Visitor#0" />
-                <element signature="method#visitSimple_select_stmt#0;class#Visitor#0" />
-                <element signature="e#16127#19353#1" />
-                <element signature="e#17367#19339#1" />
-                <element signature="e#20526#20934#1" />
-                <element signature="e#21062#21477#1" />
-                <element signature="e#21599#22014#1" />
-                <element signature="e#22668#22725#1" />
+                <element signature="e#8281#8282#0" expanded="true" />
+                <element signature="e#8330#8331#0" expanded="true" />
+                <element signature="e#8425#8426#0" expanded="true" />
+                <element signature="e#8474#8475#0" expanded="true" />
                 <element signature="method#writeListResult#0;class#Visitor#0" />
+                <element signature="method#getDeleteList#0;class#Visitor#0" />
                 <element signature="method#visitAttributes#0;class#Visitor#0" />
                 <element signature="method#visitCompare_stmt#0;class#Visitor#0" />
                 <element signature="method#visitCompare_symbol#0;class#Visitor#0" />
+                <element signature="method#visitDelete_stmt#0;class#Visitor#0" />
+                <element signature="method#visitComplex_select_stmt#0;class#Visitor#0" />
+                <element signature="e#36391#37266#1" />
+                <element signature="e#36467#36672#1" />
+                <element signature="e#36917#37167#1" />
+                <element signature="e#37876#38126#1" />
+                <element signature="e#38285#38355#1" />
+                <element signature="e#43311#45046#1" />
+                <element signature="e#45078#46818#1" />
                 <element signature="class#_Query#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
+              <folding>
+                <element signature="method#Record#0;class#Record#0" />
+                <element signature="method#Record#1;class#Record#0" />
+                <element signature="method#toBytes#0;class#Record#0" />
+                <element signature="method#getValue#0;class#Record#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="17" column="54" selection-start-line="17" selection-start-column="54" selection-end-line="17" selection-end-column="54" />
+              <folding>
+                <element signature="method#TableManager#0;class#TableManager#0" />
+                <element signature="method#TableManager#1;class#TableManager#0" />
+                <element signature="method#toMetaByte#0;class#TableManager#0" />
+                <element signature="method#createIndexSchema#0;class#TableManager#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="137">
+              <caret line="181" selection-start-line="181" selection-end-line="181" />
+              <folding>
+                <element signature="method#IndexBuffer#0;class#IndexBuffer#0" />
+                <element signature="method#reload#0;class#IndexBuffer#0" />
+                <element signature="method#createIndex#0;class#IndexBuffer#0" />
+                <element signature="method#deleteIndex#0;class#IndexBuffer#0" />
+                <element signature="method#deleteIndex#1;class#IndexBuffer#0" />
+                <element signature="method#deleteIndex#2;class#IndexBuffer#0" />
+                <element signature="method#deleteIndex#3;class#IndexBuffer#0" />
+                <element signature="method#loadIndexMetaData#0;class#IndexBuffer#0" />
+                <element signature="method#saveIndexMetaData#0;class#IndexBuffer#0" />
+                <element signature="method#saveIndexMetaData#1;class#IndexBuffer#0" />
+                <element signature="method#getBTrees#0;class#IndexBuffer#0" />
+                <element signature="method#getBTrees#1;class#IndexBuffer#0" />
+                <element signature="method#loadIndexBlockFromFile#0;class#IndexBuffer#0" />
+                <element signature="method#writeIndexBlock#0;class#IndexBuffer#0" />
+                <element signature="method#addNewNode#0;class#IndexBuffer#0" />
+                <element signature="method#deleteNode#0;class#IndexBuffer#0" />
+                <element signature="method#newRootNode#0;class#IndexBuffer#0" />
+                <element signature="method#getFreeId#0;class#IndexBuffer#0" />
+                <element signature="method#saveAll#0;class#IndexBuffer#0" />
+                <element signature="method#clearBuffer#0;class#IndexBuffer#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BTree.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="164" selection-start-line="164" selection-end-line="164" />
+              <folding>
+                <element signature="method#BTree#1;class#BTree#0" />
+                <element signature="method#toByte#0;class#BTree#0" />
+                <element signature="method#getOneFreeBlockID#0;class#BTree#0" />
+                <element signature="method#addFreeBlockID#0;class#BTree#0" />
+                <element signature="e#5864#5865#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="267" selection-start-line="267" selection-end-line="267" />
+              <folding>
+                <element signature="e#1166#2796#0" />
+                <element signature="e#2802#3196#0" />
+                <element signature="e#3202#3363#0" />
+                <element signature="e#3298#3357#1" />
+                <element signature="e#3370#4300#0" />
+                <element signature="e#3450#3577#1" />
+                <element signature="e#3596#4294#1" />
+                <element signature="e#3694#4108#1" />
+                <element signature="e#3728#4066#1" />
+                <element signature="e#3928#4048#1" />
+                <element signature="e#4306#5102#0" />
+                <element signature="e#5109#5934#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/TableSchema.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="949">
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-459">
+              <caret line="40" selection-start-line="40" selection-end-line="40" />
+              <folding>
+                <element signature="method#toValue#0;class#Field#0" />
+                <element signature="method#isValid#0;class#Field#0" />
               </folding>
             </state>
           </provider>
@@ -53,8 +172,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="58" column="5" lean-forward="true" selection-start-line="58" selection-start-column="5" selection-end-line="58" selection-end-column="5" />
+            <state relative-caret-position="532">
+              <caret line="118" selection-start-line="118" selection-end-line="118" />
               <folding>
                 <element signature="method#DataStorage#0;class#DataStorage#0" />
                 <element signature="method#insert#0;class#DataStorage#0" />
@@ -69,189 +188,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="260" column="23" selection-start-line="260" selection-start-column="23" selection-end-line="260" selection-end-column="23" />
-              <folding>
-                <element signature="method#IndexBuffer#0;class#IndexBuffer#0" />
-                <element signature="method#reload#0;class#IndexBuffer#0" />
-                <element signature="method#createIndex#0;class#IndexBuffer#0" />
-                <element signature="method#deleteIndex#0;class#IndexBuffer#0" />
-                <element signature="e#1744#2184#1" />
-                <element signature="e#1785#2174#1" />
-                <element signature="e#2097#2160#1" />
-                <element signature="method#deleteIndex#1;class#IndexBuffer#0" />
-                <element signature="e#2716#3165#1" />
-                <element signature="e#2757#3155#1" />
-                <element signature="e#3078#3141#1" />
-                <element signature="method#deleteIndex#2;class#IndexBuffer#0" />
-                <element signature="e#3324#3363#1" />
-                <element signature="method#deleteIndex#3;class#IndexBuffer#0" />
-                <element signature="e#3493#3532#1" />
-                <element signature="method#loadIndexMetaData#0;class#IndexBuffer#0" />
-                <element signature="e#3590#4495#0" />
-                <element signature="e#3795#4485#1" />
-                <element signature="e#3904#4471#1" />
-                <element signature="e#4516#4560#0" />
-                <element signature="method#saveIndexMetaData#0;class#IndexBuffer#0" />
-                <element signature="e#4781#5239#1" />
-                <element signature="e#4798#5159#0" />
-                <element signature="e#5177#5229#0" />
-                <element signature="method#saveIndexMetaData#1;class#IndexBuffer#0" />
-                <element signature="e#5317#5790#1" />
-                <element signature="e#5334#5710#0" />
-                <element signature="e#5728#5780#0" />
-                <element signature="method#getBTrees#0;class#IndexBuffer#0" />
-                <element signature="e#5949#6084#1" />
-                <element signature="e#6028#6074#1" />
-                <element signature="method#getBTrees#1;class#IndexBuffer#0" />
-                <element signature="e#6251#6354#1" />
-                <element signature="e#6298#6344#1" />
-                <element signature="method#getBTree#0;class#IndexBuffer#0" />
-                <element signature="e#6496#6667#1" />
-                <element signature="e#6614#6657#1" />
-                <element signature="method#loadIndexBlockFromFile#0;class#IndexBuffer#0" />
-                <element signature="e#6829#7597#0" />
-                <element signature="e#7205#7334#1" />
-                <element signature="e#7338#7463#1" />
-                <element signature="e#7618#7662#0" />
-                <element signature="method#writeIndexBlock#0;class#IndexBuffer#0" />
-                <element signature="e#7982#8744#0" />
-                <element signature="e#8254#8591#1" />
-                <element signature="e#8493#8577#1" />
-                <element signature="e#8765#8809#0" />
-                <element signature="method#addNewNode#0;class#IndexBuffer#0" />
-                <element signature="method#deleteNode#0;class#IndexBuffer#0" />
-                <element signature="method#newRootNode#0;class#IndexBuffer#0" />
-                <element signature="method#getFreeId#0;class#IndexBuffer#0" />
-                <element signature="method#saveAll#0;class#IndexBuffer#0" />
-                <element signature="method#clearBuffer#0;class#IndexBuffer#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2">
-              <caret line="420" column="5" lean-forward="true" selection-start-line="420" selection-start-column="5" selection-end-line="420" selection-end-column="5" />
-              <folding>
-                <element signature="e#1166#2796#0" />
-                <element signature="e#2802#3196#0" />
-                <element signature="e#3202#3363#0" />
-                <element signature="e#3298#3357#1" />
-                <element signature="e#3370#4300#0" />
-                <element signature="e#3450#3577#1" />
-                <element signature="e#3596#4294#1" />
-                <element signature="e#3694#4108#1" />
-                <element signature="e#3728#4066#1" />
-                <element signature="e#3928#4048#1" />
-                <element signature="e#4306#5130#0" />
-                <element signature="e#4564#4956#1" />
-                <element signature="e#4598#4918#1" />
-                <element signature="e#4798#4900#1" />
-                <element signature="e#5137#5990#0" />
-                <element signature="e#5207#5316#1" />
-                <element signature="e#5320#5984#1" />
-                <element signature="e#5418#5813#1" />
-                <element signature="e#5452#5775#1" />
-                <element signature="e#5652#5757#1" />
-                <element signature="e#5997#7160#0" />
-                <element signature="e#6037#6064#0" />
-                <element signature="e#6275#6852#1" />
-                <element signature="e#6305#6579#1" />
-                <element signature="e#6497#6565#1" />
-                <element signature="e#6606#6797#1" />
-                <element signature="e#6875#6931#1" />
-                <element signature="e#6950#7125#1" />
-                <element signature="e#7167#9752#0" />
-                <element signature="e#7338#9723#1" />
-                <element signature="e#7407#7777#1" />
-                <element signature="e#7806#8188#1" />
-                <element signature="e#8216#8597#1" />
-                <element signature="e#8624#9002#1" />
-                <element signature="e#9029#9389#1" />
-                <element signature="e#9394#9713#1" />
-                <element signature="e#9758#10279#0" />
-                <element signature="e#10069#10104#1" />
-                <element signature="e#10130#10200#1" />
-                <element signature="e#10204#10273#1" />
-                <element signature="e#10285#10860#0" />
-                <element signature="e#10867#12031#0" />
-                <element signature="e#10988#12025#1" />
-                <element signature="e#11203#11594#1" />
-                <element signature="e#11275#11580#1" />
-                <element signature="e#11624#12015#1" />
-                <element signature="e#11695#12001#1" />
-                <element signature="e#12037#12278#0" />
-                <element signature="e#12116#12272#1" />
-                <element signature="e#12284#12532#0" />
-                <element signature="e#12367#12526#1" />
-                <element signature="e#12538#13028#0" />
-                <element signature="e#12622#13022#1" />
-                <element signature="e#12799#12990#1" />
-                <element signature="e#13034#13527#0" />
-                <element signature="e#13118#13521#1" />
-                <element signature="e#13298#13488#1" />
-                <element signature="e#13533#14620#0" />
-                <element signature="e#13634#14614#1" />
-                <element signature="e#13813#14192#1" />
-                <element signature="e#13884#14178#1" />
-                <element signature="e#14223#14604#1" />
-                <element signature="e#14295#14590#1" />
-                <element signature="e#14626#15726#0" />
-                <element signature="e#14731#15720#1" />
-                <element signature="e#14913#15295#1" />
-                <element signature="e#14984#15281#1" />
-                <element signature="e#15326#15710#1" />
-                <element signature="e#15398#15696#1" />
-                <element signature="e#15732#16826#0" />
-                <element signature="e#15834#16820#1" />
-                <element signature="e#16015#16396#1" />
-                <element signature="e#16086#16382#1" />
-                <element signature="e#16427#16810#1" />
-                <element signature="e#16499#16796#1" />
-                <element signature="e#16833#17036#0" />
-                <element signature="e#16922#17009#1" />
-                <element signature="e#17042#17243#0" />
-                <element signature="e#17130#17216#1" />
-                <element signature="e#17249#17521#0" />
-                <element signature="e#17332#17470#1" />
-                <element signature="e#17367#17460#1" />
-                <element signature="e#17527#18755#0" />
-                <element signature="e#18809#19959#0" />
-                <element signature="e#18877#19365#1" />
-                <element signature="e#19404#19635#1" />
-                <element signature="e#19672#19901#1" />
-                <element signature="e#19965#21215#0" />
-                <element signature="e#20045#20338#1" />
-                <element signature="e#20384#20530#1" />
-                <element signature="e#20577#20725#1" />
-                <element signature="e#20789#20945#1" />
-                <element signature="e#21000#21157#1" />
-                <element signature="e#21221#21930#0" />
-                <element signature="e#21378#21437#1" />
-                <element signature="e#21558#21904#1" />
-                <element signature="e#21591#21849#1" />
-                <element signature="e#21679#21835#1" />
-                <element signature="e#21936#22060#0" />
-                <element signature="e#22066#22191#0" />
-                <element signature="e#22197#22461#0" />
-                <element signature="e#22467#22731#0" />
-                <element signature="e#22738#22911#0" />
-                <element signature="e#22829#22877#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+            <state relative-caret-position="284">
+              <caret line="54" column="35" selection-start-line="54" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
               <folding>
                 <element signature="method#DataBuffer#0;class#DataBuffer#0" />
                 <element signature="method#reload#0;class#DataBuffer#0" />
@@ -263,37 +203,11 @@
                 <element signature="method#WriteDataBlock#0;class#DataBuffer#0" />
                 <element signature="method#appendDataBlock#0;class#DataBuffer#0" />
                 <element signature="method#appendDataBlock#1;class#DataBuffer#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DataBlock.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="130" column="5" lean-forward="true" selection-start-line="130" selection-start-column="5" selection-end-line="130" selection-end-column="5" />
-              <folding>
-                <element signature="method#DataBlock#0;class#DataBlock#0" />
-                <element signature="method#DataBlock#1;class#DataBlock#0" />
-                <element signature="method#insertOneRecord#0;class#DataBlock#0" />
-                <element signature="method#extractOneRecord#0;class#DataBlock#0" />
-                <element signature="method#extractAllRecords#0;class#DataBlock#0" />
-                <element signature="method#extractOneRecordHeader#0;class#DataBlock#0" />
-                <element signature="method#deleteOneRecord#0;class#DataBlock#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
-              <folding>
-                <element signature="method#toValue#0;class#Field#0" />
-                <element signature="method#isValid#0;class#Field#0" />
+                <element signature="method#saveAll#0;class#DataBuffer#0" />
+                <element signature="method#deleteDataFile#0;class#DataBuffer#0" />
+                <element signature="method#deleteDataFile#1;class#DataBuffer#0" />
+                <element signature="method#deleteDataFile#2;class#DataBuffer#0" />
+                <element signature="method#clearBuffer#0;class#DataBuffer#0" />
               </folding>
             </state>
           </provider>
@@ -346,19 +260,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
               <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
@@ -382,6 +289,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -424,7 +333,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33907000" />
+    <option name="totallyTimeSpent" value="38344000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -439,7 +348,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16950959" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17110874" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -449,7 +358,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.29392624" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3177874" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.26030368" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3557484" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -477,18 +386,6 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>52</line>
-          <properties />
-          <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>56</line>
-          <properties />
-          <option name="timeStamp" value="81" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
           <line>624</line>
           <properties />
           <option name="timeStamp" value="85" />
@@ -499,14 +396,38 @@
           <properties />
           <option name="timeStamp" value="100" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>64</line>
+          <properties />
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>68</line>
+          <properties />
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>1007</line>
+          <properties />
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>58</line>
+          <properties />
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>426</line>
+          <properties />
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="node.keys.get(keyidx)" language="JAVA" />
-        <watch expression="node.record2key(target)" language="JAVA" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
@@ -565,8 +486,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="168">
+          <caret line="17" column="54" selection-start-line="17" selection-start-column="54" selection-end-line="17" selection-end-column="54" />
+          <folding>
+            <element signature="method#TableManager#0;class#TableManager#0" />
+            <element signature="method#TableManager#1;class#TableManager#0" />
+            <element signature="method#toMetaByte#0;class#TableManager#0" />
+            <element signature="method#createIndexSchema#0;class#TableManager#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -715,8 +642,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/TableSchema.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
+        <state relative-caret-position="949">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
         </state>
       </provider>
     </entry>
@@ -845,14 +772,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="164" column="5" lean-forward="true" selection-start-line="164" selection-start-column="5" selection-end-line="164" selection-end-column="5" />
+        <state relative-caret-position="182">
+          <caret line="164" selection-start-line="164" selection-end-line="164" />
           <folding>
             <element signature="method#BTree#1;class#BTree#0" />
             <element signature="method#toByte#0;class#BTree#0" />
             <element signature="method#getOneFreeBlockID#0;class#BTree#0" />
             <element signature="method#addFreeBlockID#0;class#BTree#0" />
-            <element signature="e#5809#5810#0" expanded="true" />
             <element signature="e#5864#5865#0" expanded="true" />
           </folding>
         </state>
@@ -860,8 +786,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="172" lean-forward="true" selection-start-line="172" selection-end-line="172" />
+        <state relative-caret-position="-459">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
           <folding>
             <element signature="method#toValue#0;class#Field#0" />
             <element signature="method#isValid#0;class#Field#0" />
@@ -869,72 +795,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="260" column="23" selection-start-line="260" selection-start-column="23" selection-end-line="260" selection-end-column="23" />
-          <folding>
-            <element signature="method#IndexBuffer#0;class#IndexBuffer#0" />
-            <element signature="method#reload#0;class#IndexBuffer#0" />
-            <element signature="method#createIndex#0;class#IndexBuffer#0" />
-            <element signature="method#deleteIndex#0;class#IndexBuffer#0" />
-            <element signature="e#1744#2184#1" />
-            <element signature="e#1785#2174#1" />
-            <element signature="e#2097#2160#1" />
-            <element signature="method#deleteIndex#1;class#IndexBuffer#0" />
-            <element signature="e#2716#3165#1" />
-            <element signature="e#2757#3155#1" />
-            <element signature="e#3078#3141#1" />
-            <element signature="method#deleteIndex#2;class#IndexBuffer#0" />
-            <element signature="e#3324#3363#1" />
-            <element signature="method#deleteIndex#3;class#IndexBuffer#0" />
-            <element signature="e#3493#3532#1" />
-            <element signature="method#loadIndexMetaData#0;class#IndexBuffer#0" />
-            <element signature="e#3590#4495#0" />
-            <element signature="e#3795#4485#1" />
-            <element signature="e#3904#4471#1" />
-            <element signature="e#4516#4560#0" />
-            <element signature="method#saveIndexMetaData#0;class#IndexBuffer#0" />
-            <element signature="e#4781#5239#1" />
-            <element signature="e#4798#5159#0" />
-            <element signature="e#5177#5229#0" />
-            <element signature="method#saveIndexMetaData#1;class#IndexBuffer#0" />
-            <element signature="e#5317#5790#1" />
-            <element signature="e#5334#5710#0" />
-            <element signature="e#5728#5780#0" />
-            <element signature="method#getBTrees#0;class#IndexBuffer#0" />
-            <element signature="e#5949#6084#1" />
-            <element signature="e#6028#6074#1" />
-            <element signature="method#getBTrees#1;class#IndexBuffer#0" />
-            <element signature="e#6251#6354#1" />
-            <element signature="e#6298#6344#1" />
-            <element signature="method#getBTree#0;class#IndexBuffer#0" />
-            <element signature="e#6496#6667#1" />
-            <element signature="e#6614#6657#1" />
-            <element signature="method#loadIndexBlockFromFile#0;class#IndexBuffer#0" />
-            <element signature="e#6829#7597#0" />
-            <element signature="e#7205#7334#1" />
-            <element signature="e#7338#7463#1" />
-            <element signature="e#7618#7662#0" />
-            <element signature="method#writeIndexBlock#0;class#IndexBuffer#0" />
-            <element signature="e#7982#8744#0" />
-            <element signature="e#8254#8591#1" />
-            <element signature="e#8493#8577#1" />
-            <element signature="e#8765#8809#0" />
-            <element signature="method#addNewNode#0;class#IndexBuffer#0" />
-            <element signature="method#deleteNode#0;class#IndexBuffer#0" />
-            <element signature="method#newRootNode#0;class#IndexBuffer#0" />
-            <element signature="method#getFreeId#0;class#IndexBuffer#0" />
-            <element signature="method#saveAll#0;class#IndexBuffer#0" />
-            <element signature="method#clearBuffer#0;class#IndexBuffer#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2">
-          <caret line="420" column="5" lean-forward="true" selection-start-line="420" selection-start-column="5" selection-end-line="420" selection-end-column="5" />
+        <state relative-caret-position="182">
+          <caret line="267" selection-start-line="267" selection-end-line="267" />
           <folding>
             <element signature="e#1166#2796#0" />
             <element signature="e#2802#3196#0" />
@@ -946,108 +810,16 @@
             <element signature="e#3694#4108#1" />
             <element signature="e#3728#4066#1" />
             <element signature="e#3928#4048#1" />
-            <element signature="e#4306#5130#0" />
-            <element signature="e#4564#4956#1" />
-            <element signature="e#4598#4918#1" />
-            <element signature="e#4798#4900#1" />
-            <element signature="e#5137#5990#0" />
-            <element signature="e#5207#5316#1" />
-            <element signature="e#5320#5984#1" />
-            <element signature="e#5418#5813#1" />
-            <element signature="e#5452#5775#1" />
-            <element signature="e#5652#5757#1" />
-            <element signature="e#5997#7160#0" />
-            <element signature="e#6037#6064#0" />
-            <element signature="e#6275#6852#1" />
-            <element signature="e#6305#6579#1" />
-            <element signature="e#6497#6565#1" />
-            <element signature="e#6606#6797#1" />
-            <element signature="e#6875#6931#1" />
-            <element signature="e#6950#7125#1" />
-            <element signature="e#7167#9752#0" />
-            <element signature="e#7338#9723#1" />
-            <element signature="e#7407#7777#1" />
-            <element signature="e#7806#8188#1" />
-            <element signature="e#8216#8597#1" />
-            <element signature="e#8624#9002#1" />
-            <element signature="e#9029#9389#1" />
-            <element signature="e#9394#9713#1" />
-            <element signature="e#9758#10279#0" />
-            <element signature="e#10069#10104#1" />
-            <element signature="e#10130#10200#1" />
-            <element signature="e#10204#10273#1" />
-            <element signature="e#10285#10860#0" />
-            <element signature="e#10867#12031#0" />
-            <element signature="e#10988#12025#1" />
-            <element signature="e#11203#11594#1" />
-            <element signature="e#11275#11580#1" />
-            <element signature="e#11624#12015#1" />
-            <element signature="e#11695#12001#1" />
-            <element signature="e#12037#12278#0" />
-            <element signature="e#12116#12272#1" />
-            <element signature="e#12284#12532#0" />
-            <element signature="e#12367#12526#1" />
-            <element signature="e#12538#13028#0" />
-            <element signature="e#12622#13022#1" />
-            <element signature="e#12799#12990#1" />
-            <element signature="e#13034#13527#0" />
-            <element signature="e#13118#13521#1" />
-            <element signature="e#13298#13488#1" />
-            <element signature="e#13533#14620#0" />
-            <element signature="e#13634#14614#1" />
-            <element signature="e#13813#14192#1" />
-            <element signature="e#13884#14178#1" />
-            <element signature="e#14223#14604#1" />
-            <element signature="e#14295#14590#1" />
-            <element signature="e#14626#15726#0" />
-            <element signature="e#14731#15720#1" />
-            <element signature="e#14913#15295#1" />
-            <element signature="e#14984#15281#1" />
-            <element signature="e#15326#15710#1" />
-            <element signature="e#15398#15696#1" />
-            <element signature="e#15732#16826#0" />
-            <element signature="e#15834#16820#1" />
-            <element signature="e#16015#16396#1" />
-            <element signature="e#16086#16382#1" />
-            <element signature="e#16427#16810#1" />
-            <element signature="e#16499#16796#1" />
-            <element signature="e#16833#17036#0" />
-            <element signature="e#16922#17009#1" />
-            <element signature="e#17042#17243#0" />
-            <element signature="e#17130#17216#1" />
-            <element signature="e#17249#17521#0" />
-            <element signature="e#17332#17470#1" />
-            <element signature="e#17367#17460#1" />
-            <element signature="e#17527#18755#0" />
-            <element signature="e#18809#19959#0" />
-            <element signature="e#18877#19365#1" />
-            <element signature="e#19404#19635#1" />
-            <element signature="e#19672#19901#1" />
-            <element signature="e#19965#21215#0" />
-            <element signature="e#20045#20338#1" />
-            <element signature="e#20384#20530#1" />
-            <element signature="e#20577#20725#1" />
-            <element signature="e#20789#20945#1" />
-            <element signature="e#21000#21157#1" />
-            <element signature="e#21221#21930#0" />
-            <element signature="e#21378#21437#1" />
-            <element signature="e#21558#21904#1" />
-            <element signature="e#21591#21849#1" />
-            <element signature="e#21679#21835#1" />
-            <element signature="e#21936#22060#0" />
-            <element signature="e#22066#22191#0" />
-            <element signature="e#22197#22461#0" />
-            <element signature="e#22467#22731#0" />
-            <element signature="e#22738#22911#0" />
-            <element signature="e#22829#22877#0" />
+            <element signature="e#4306#5102#0" />
+            <element signature="e#5109#5934#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+        <state relative-caret-position="284">
+          <caret line="54" column="35" selection-start-line="54" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
           <folding>
             <element signature="method#DataBuffer#0;class#DataBuffer#0" />
             <element signature="method#reload#0;class#DataBuffer#0" />
@@ -1059,6 +831,11 @@
             <element signature="method#WriteDataBlock#0;class#DataBuffer#0" />
             <element signature="method#appendDataBlock#0;class#DataBuffer#0" />
             <element signature="method#appendDataBlock#1;class#DataBuffer#0" />
+            <element signature="method#saveAll#0;class#DataBuffer#0" />
+            <element signature="method#deleteDataFile#0;class#DataBuffer#0" />
+            <element signature="method#deleteDataFile#1;class#DataBuffer#0" />
+            <element signature="method#deleteDataFile#2;class#DataBuffer#0" />
+            <element signature="method#clearBuffer#0;class#DataBuffer#0" />
           </folding>
         </state>
       </provider>
@@ -1081,10 +858,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="43" column="32" lean-forward="true" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
+        <state relative-caret-position="171">
+          <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
           <folding>
             <element signature="method#Record#0;class#Record#0" />
+            <element signature="method#Record#1;class#Record#0" />
             <element signature="method#toBytes#0;class#Record#0" />
             <element signature="method#getValue#0;class#Record#0" />
           </folding>
@@ -1093,8 +871,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="58" column="5" lean-forward="true" selection-start-line="58" selection-start-column="5" selection-end-line="58" selection-end-column="5" />
+        <state relative-caret-position="532">
+          <caret line="118" selection-start-line="118" selection-end-line="118" />
           <folding>
             <element signature="method#DataStorage#0;class#DataStorage#0" />
             <element signature="method#insert#0;class#DataStorage#0" />
@@ -1107,35 +885,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="181" selection-start-line="181" selection-end-line="181" />
+          <folding>
+            <element signature="method#IndexBuffer#0;class#IndexBuffer#0" />
+            <element signature="method#reload#0;class#IndexBuffer#0" />
+            <element signature="method#createIndex#0;class#IndexBuffer#0" />
+            <element signature="method#deleteIndex#0;class#IndexBuffer#0" />
+            <element signature="method#deleteIndex#1;class#IndexBuffer#0" />
+            <element signature="method#deleteIndex#2;class#IndexBuffer#0" />
+            <element signature="method#deleteIndex#3;class#IndexBuffer#0" />
+            <element signature="method#loadIndexMetaData#0;class#IndexBuffer#0" />
+            <element signature="method#saveIndexMetaData#0;class#IndexBuffer#0" />
+            <element signature="method#saveIndexMetaData#1;class#IndexBuffer#0" />
+            <element signature="method#getBTrees#0;class#IndexBuffer#0" />
+            <element signature="method#getBTrees#1;class#IndexBuffer#0" />
+            <element signature="method#loadIndexBlockFromFile#0;class#IndexBuffer#0" />
+            <element signature="method#writeIndexBlock#0;class#IndexBuffer#0" />
+            <element signature="method#addNewNode#0;class#IndexBuffer#0" />
+            <element signature="method#deleteNode#0;class#IndexBuffer#0" />
+            <element signature="method#newRootNode#0;class#IndexBuffer#0" />
+            <element signature="method#getFreeId#0;class#IndexBuffer#0" />
+            <element signature="method#saveAll#0;class#IndexBuffer#0" />
+            <element signature="method#clearBuffer#0;class#IndexBuffer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="380" lean-forward="true" selection-start-line="380" selection-end-line="380" />
+        <state relative-caret-position="390">
+          <caret line="1068" column="41" selection-start-line="1068" selection-start-column="41" selection-end-line="1068" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#visitName#0;class#Visitor#0" />
-            <element signature="method#visitColumn_def#0;class#Visitor#0" />
-            <element signature="method#visitType_name#0;class#Visitor#0" />
-            <element signature="method#visitTable_constraint#0;class#Visitor#0" />
-            <element signature="method#visitDrop_table_stmt#0;class#Visitor#0" />
-            <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
-            <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
-            <element signature="method#visitTable_schema#0;class#Visitor#0" />
-            <element signature="method#visitInsert_one_data#0;class#Visitor#0" />
-            <element signature="method#visitLiteral_value#0;class#Visitor#0" />
-            <element signature="method#writeOneResult#0;class#Visitor#0" />
-            <element signature="method#writeOneResult#1;class#Visitor#0" />
-            <element signature="method#visitSimple_select_stmt#0;class#Visitor#0" />
-            <element signature="e#16127#19353#1" />
-            <element signature="e#17367#19339#1" />
-            <element signature="e#20526#20934#1" />
-            <element signature="e#21062#21477#1" />
-            <element signature="e#21599#22014#1" />
-            <element signature="e#22668#22725#1" />
+            <element signature="e#8281#8282#0" expanded="true" />
+            <element signature="e#8330#8331#0" expanded="true" />
+            <element signature="e#8425#8426#0" expanded="true" />
+            <element signature="e#8474#8475#0" expanded="true" />
             <element signature="method#writeListResult#0;class#Visitor#0" />
+            <element signature="method#getDeleteList#0;class#Visitor#0" />
             <element signature="method#visitAttributes#0;class#Visitor#0" />
             <element signature="method#visitCompare_stmt#0;class#Visitor#0" />
             <element signature="method#visitCompare_symbol#0;class#Visitor#0" />
+            <element signature="method#visitDelete_stmt#0;class#Visitor#0" />
+            <element signature="method#visitComplex_select_stmt#0;class#Visitor#0" />
+            <element signature="e#36391#37266#1" />
+            <element signature="e#36467#36672#1" />
+            <element signature="e#36917#37167#1" />
+            <element signature="e#37876#38126#1" />
+            <element signature="e#38285#38355#1" />
+            <element signature="e#43311#45046#1" />
+            <element signature="e#45078#46818#1" />
             <element signature="class#_Query#0" />
           </folding>
         </state>

@@ -1053,6 +1053,9 @@ public class Visitor extends LowSQLBaseVisitor {
                         }
                     }
                 }
+                else {
+//                    common-nested-loop
+                }
 
             }
         }
