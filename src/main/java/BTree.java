@@ -134,6 +134,7 @@ public class BTree {
         short temp;
         if(empty_blocks.size() != 0){
             temp = empty_blocks.get(0);
+            empty_blocks.remove(0);
         }else{
             node_block_number += 1;
             temp = (short)node_block_number;

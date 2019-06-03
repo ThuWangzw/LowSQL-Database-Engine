@@ -493,7 +493,7 @@ public class BTreeLeafNode extends BTreeNode{
         if (parent_id == 0){
             BTreeInternalNode root_node = new BTreeInternalNode(M,buffer.getFreeId(DB_name,table_name,index_attrs),0,0,0,0,0,0,0,buffer,index_attrs,DB_name,table_name);
             updateParent(root_node.node_id);
-            root_node.insertOneKeyPointer(getBiggestKey(),node_id);
+            root_node.insertOneKeyPointer(getBiggestKey(),getHeadNode().node_id);
             buffer.addNewNode(root_node);
             buffer.newRootNode(root_node.node_id,DB_name,table_name,index_attrs);
         }

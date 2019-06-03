@@ -468,16 +468,16 @@ abstract public class BTreeNode {
 
     public BTreeNode getHeadNode(){
         BTreeNode temp = this;
-        if (prior_id != 0){
-            temp = buffer.getNode(prior_id,DB_name,table_name,index_attrs);
+        while (temp.prior_id != 0){
+            temp = buffer.getNode(temp.prior_id,DB_name,table_name,index_attrs);
         }
         return temp;
     }
 
     public BTreeNode getTailNode(){
         BTreeNode temp = this;
-        if (next_id != 0){
-            temp = buffer.getNode(next_id,DB_name,table_name,index_attrs);
+        while (temp.next_id != 0){
+            temp = buffer.getNode(temp.next_id,DB_name,table_name,index_attrs);
         }
         return temp;
     }
@@ -528,20 +528,20 @@ abstract public class BTreeNode {
     public void deleteNode(){
         if (prior_id != 0 && next_id != 0){
             BTreeNode prior_node = buffer.getNode(prior_id,DB_name,table_name,index_attrs),next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
-            prior_node.next_id = next_node.node_id;
-            next_node.prior_id = prior_node.node_id;
+            prior_node.updateNextBro(next_node.node_id);
+            next_node.updatePriorBro(prior_node.node_id);
             prior_node.updateNextKeyNumber(next_key_number);
             prior_node.updateNumberToLeft();
             next_node.updatePriorKeyNumber(prior_key_number);
             next_node.updateNumberToRight();
         }else if (prior_id != 0 && next_id == 0){
             BTreeNode prior_node = buffer.getNode(prior_id,DB_name,table_name,index_attrs);
-            prior_node.next_id = 0;
+            prior_node.updateNextBro(0);
             prior_node.updateNextKeyNumber(0);
             prior_node.updateNumberToLeft();
         }else if(prior_id == 0 && next_id !=0){
             BTreeNode next_node = buffer.getNode(next_id,DB_name,table_name,index_attrs);
-            next_node.prior_id = 0;
+            next_node.updatePriorBro(0);
             next_node.updatePriorKeyNumber(0);
             next_node.updateNumberToRight();
         }

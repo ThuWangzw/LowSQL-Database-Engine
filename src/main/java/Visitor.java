@@ -816,7 +816,6 @@ public class Visitor extends LowSQLBaseVisitor {
             for(BTree btree : server.index_buffer.getBTrees(current_database.getDatabaseName(), current_table.getTableName())){
                 btree.delete(record,pointer);
             }
-
             //delete data
             server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
         }

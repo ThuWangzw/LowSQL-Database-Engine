@@ -67,13 +67,6 @@ public class DataBlock {
         if(!isFreeSpaceEnough(record))
             throw new IllegalArgumentException("No enough space to insert");
 
-        if(record.getFields()[1].getValue() instanceof Integer){
-            int tp = (int )record.getFields()[1].getValue();
-            if(tp == 666) {
-                int a= 0;
-
-            }
-        }
         int insert_id = record_number;
         if(actual_number < record_number){
             for(int i = 0; i < record_number; i++){
