@@ -180,6 +180,7 @@ public class Server {
             catch (IOException e){
                 System.out.println(e.getMessage());
             }
+            server.WriteMetaData();
             server.data_buffer.saveAll();
             server.index_buffer.saveAll();
         }

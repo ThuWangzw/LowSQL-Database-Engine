@@ -8,7 +8,7 @@ import java.io.RandomAccessFile;
 
 
 public class IndexBuffer {
-    static int INDEX_BUFFER_BLOCK_NUNMBER = 3;
+    static int INDEX_BUFFER_BLOCK_NUNMBER = 20000;
     DatabaseManager db;
     ArrayList<BTree> btrees;
     LRUCache<String,BTreeNode> buffer;
@@ -21,7 +21,7 @@ public class IndexBuffer {
         float load_factor = (float)0.75;
         int capacity = (int) Math.ceil(INDEX_BUFFER_BLOCK_NUNMBER / load_factor) + 1;
         buffer = new LRUCache<>(capacity,load_factor,true,INDEX_BUFFER_BLOCK_NUNMBER);
-        //preload();
+        preload();
     }
 
     public void reload(DatabaseManager new_db){

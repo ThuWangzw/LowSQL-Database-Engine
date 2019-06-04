@@ -858,7 +858,7 @@ public class Visitor extends LowSQLBaseVisitor {
         TableAttribute[] joinAttributes = new TableAttribute[tableA.getSchema().getAttrubutes().length+tableB.getSchema().getAttrubutes().length];
         String table1name = (String)visit(nodes.get(7));
         String table1join = (String)visit(nodes.get(9));
-        Integer type = (Integer)visit(nodes.get(10));
+        Integer jointype = (Integer)visit(nodes.get(10));
         String table2name = (String)visit(nodes.get(11));
         String table2join = (String)visit(nodes.get(13));
         int tableAJoinIdx = -1;
@@ -886,6 +886,10 @@ public class Visitor extends LowSQLBaseVisitor {
             }
         }
         else if(table1name.equals(tableBname)){
+            if(jointype == Util.L) jointype = Util.G;
+            else if (jointype == Util.G) jointype = Util.L;
+            else if (jointype == Util.LE) jointype = Util.GE;
+            else if (jointype == Util.GE) jointype = Util.LE;
             for(int i=0; i<tableB.getSchema().getAttrubutes().length; i++){
                 TableAttribute attribute = tableB.getSchema().getAttrubutes()[i];
                 if(attribute.getAttributeName().equals(table1join)){
@@ -938,7 +942,7 @@ public class Visitor extends LowSQLBaseVisitor {
 
         try{
             for(Integer atttibute : attributes){
-                writer.write((joinAttributes[atttibute]+",").getBytes());
+                writer.write((joinAttributes[atttibute].getAttributeName()+",").getBytes());
             }
             writer.write("\r\n".getBytes());
         }
@@ -996,17 +1000,46 @@ public class Visitor extends LowSQLBaseVisitor {
                                 System.arraycopy(record.getFields(), 0, target, 0, record.getFields().length);
                                 System.arraycopy(innerrecord.getFields(), 0, target, record.getFields().length, innerrecord.getFields().length);
                                 Record joinrecord = new Record(target, joinSchema);
-                                if(query == null){
-                                    try{
-                                        writeOneResult(joinrecord, attributes);
+                                if(jointype == Util.E){
+                                    if(query == null){
+                                        try{
+                                            writeOneResult(joinrecord, attributes);
+                                        }
+                                        catch (IOException e){
+                                            System.out.println(e.getMessage());
+                                        }
                                     }
-                                    catch (IOException e){
-                                        System.out.println(e.getMessage());
+                                    else {
+                                        int compareRes = joinrecord.getFields()[whereIdx].compareTo(new Field(query.value, joinAttributes[whereIdx]));
+                                        if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                            try{
+                                                writeOneResult(joinrecord, attributes);
+                                            }
+                                            catch (IOException e){
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if((compareRes==0)&&((query.type==Util.E)||(query.type==Util.LE)||(query.type==Util.GE))){
+                                            try{
+                                                writeOneResult(joinrecord, attributes);
+                                            }
+                                            catch (IOException e){
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                            try{
+                                                writeOneResult(joinrecord, attributes);
+                                            }
+                                            catch (IOException e){
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
                                     }
                                 }
                                 else {
-                                    int compareRes = joinrecord.getFields()[whereIdx].compareTo(new Field(query.value, joinAttributes[whereIdx]));
-                                    if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                    int compareRes = record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]);
+                                    if((compareRes<0)&&((jointype==Util.L)||(jointype==Util.LE)||(jointype==Util.NE))){
                                         try{
                                             writeOneResult(joinrecord, attributes);
                                         }
@@ -1014,7 +1047,7 @@ public class Visitor extends LowSQLBaseVisitor {
                                             System.out.println(e.getMessage());
                                         }
                                     }
-                                    if((compareRes==0)&&((query.type==Util.E)||(query.type==Util.LE)||(query.type==Util.GE))){
+                                    if((compareRes==0)&&((jointype==Util.E)||(jointype==Util.LE)||(jointype==Util.GE))){
                                         try{
                                             writeOneResult(joinrecord, attributes);
                                         }
@@ -1022,7 +1055,7 @@ public class Visitor extends LowSQLBaseVisitor {
                                             System.out.println(e.getMessage());
                                         }
                                     }
-                                    if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                    if((compareRes>0)&&((jointype==Util.G)||(jointype==Util.GE)||(jointype==Util.NE))){
                                         try{
                                             writeOneResult(joinrecord, attributes);
                                         }
@@ -1049,6 +1082,87 @@ public class Visitor extends LowSQLBaseVisitor {
                                 System.arraycopy(innerrecord.getFields(), 0, target, 0, innerrecord.getFields().length);
                                 System.arraycopy(record.getFields(), 0, target, innerrecord.getFields().length, record.getFields().length);
                                 Record joinrecord = new Record(target, joinSchema);
+                                if(jointype == Util.E){
+                                    if(query == null){
+                                        try{
+                                            writeOneResult(joinrecord, attributes);
+                                        }
+                                        catch (IOException e){
+                                            System.out.println(e.getMessage());
+                                        }
+                                    }
+                                    else {
+                                        int compareRes = joinrecord.getFields()[whereIdx].compareTo(new Field(query.value, joinAttributes[whereIdx]));
+                                        if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                            try{
+                                                writeOneResult(joinrecord, attributes);
+                                            }
+                                            catch (IOException e){
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if((compareRes==0)&&((query.type==Util.E)||(query.type==Util.LE)||(query.type==Util.GE))){
+                                            try{
+                                                writeOneResult(joinrecord, attributes);
+                                            }
+                                            catch (IOException e){
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                        if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                            try{
+                                                writeOneResult(joinrecord, attributes);
+                                            }
+                                            catch (IOException e){
+                                                System.out.println(e.getMessage());
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    int compareRes = innerrecord.getFields()[tableAJoinIdx].compareTo(record.getFields()[tableBJoinIdx]);
+                                    if((compareRes<0)&&((jointype==Util.L)||(jointype==Util.LE)||(jointype==Util.NE))){
+                                        try{
+                                            writeOneResult(joinrecord, attributes);
+                                        }
+                                        catch (IOException e){
+                                            System.out.println(e.getMessage());
+                                        }
+                                    }
+                                    if((compareRes==0)&&((jointype==Util.E)||(jointype==Util.LE)||(jointype==Util.GE))){
+                                        try{
+                                            writeOneResult(joinrecord, attributes);
+                                        }
+                                        catch (IOException e){
+                                            System.out.println(e.getMessage());
+                                        }
+                                    }
+                                    if((compareRes>0)&&((jointype==Util.G)||(jointype==Util.GE)||(jointype==Util.NE))){
+                                        try{
+                                            writeOneResult(joinrecord, attributes);
+                                        }
+                                        catch (IOException e){
+                                            System.out.println(e.getMessage());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+//                    common-nested-loop
+                    for(int j=0; j<server.data_buffer.getDataStorage(current_database.getDatabaseName(), innerTable.getTableName()).block_number; j++){
+                        for(Record innerrecord : server.data_buffer.getNode(current_database.getDatabaseName(), innerTable.getTableName(), j).extractAllRecords()){
+                            if(!isAouter){
+                                throw new RuntimeException("Internal error.");
+                            }
+                            if(record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]) != 0) continue;
+                            Field[] target = new Field[record.getFields().length+innerrecord.getFields().length];
+                            System.arraycopy(record.getFields(), 0, target, 0, record.getFields().length);
+                            System.arraycopy(innerrecord.getFields(), 0, target, record.getFields().length, innerrecord.getFields().length);
+                            Record joinrecord = new Record(target, joinSchema);
+                            if(jointype == Util.E){
                                 if(query == null){
                                     try{
                                         writeOneResult(joinrecord, attributes);
@@ -1085,32 +1199,9 @@ public class Visitor extends LowSQLBaseVisitor {
                                     }
                                 }
                             }
-                        }
-                    }
-                }
-                else {
-//                    common-nested-loop
-                    for(int j=0; j<server.data_buffer.getDataStorage(current_database.getDatabaseName(), innerTable.getTableName()).block_number; j++){
-                        for(Record innerrecord : server.data_buffer.getNode(current_database.getDatabaseName(), innerTable.getTableName(), j).extractAllRecords()){
-                            if(!isAouter){
-                                throw new RuntimeException("Internal error.");
-                            }
-                            if(record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]) != 0) continue;
-                            Field[] target = new Field[record.getFields().length+innerrecord.getFields().length];
-                            System.arraycopy(record.getFields(), 0, target, 0, record.getFields().length);
-                            System.arraycopy(innerrecord.getFields(), 0, target, record.getFields().length, innerrecord.getFields().length);
-                            Record joinrecord = new Record(target, joinSchema);
-                            if(query == null){
-                                try{
-                                    writeOneResult(joinrecord, attributes);
-                                }
-                                catch (IOException e){
-                                    System.out.println(e.getMessage());
-                                }
-                            }
                             else {
-                                int compareRes = joinrecord.getFields()[whereIdx].compareTo(new Field(query.value, joinAttributes[whereIdx]));
-                                if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                int compareRes = record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]);
+                                if((compareRes<0)&&((jointype==Util.L)||(jointype==Util.LE)||(jointype==Util.NE))){
                                     try{
                                         writeOneResult(joinrecord, attributes);
                                     }
@@ -1118,7 +1209,7 @@ public class Visitor extends LowSQLBaseVisitor {
                                         System.out.println(e.getMessage());
                                     }
                                 }
-                                if((compareRes==0)&&((query.type==Util.E)||(query.type==Util.LE)||(query.type==Util.GE))){
+                                if((compareRes==0)&&((jointype==Util.E)||(jointype==Util.LE)||(jointype==Util.GE))){
                                     try{
                                         writeOneResult(joinrecord, attributes);
                                     }
@@ -1126,7 +1217,7 @@ public class Visitor extends LowSQLBaseVisitor {
                                         System.out.println(e.getMessage());
                                     }
                                 }
-                                if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                if((compareRes>0)&&((jointype==Util.G)||(jointype==Util.GE)||(jointype==Util.NE))){
                                     try{
                                         writeOneResult(joinrecord, attributes);
                                     }

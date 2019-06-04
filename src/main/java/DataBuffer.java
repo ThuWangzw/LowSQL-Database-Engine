@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 public class DataBuffer {
-    static int DATA_BUFFER_BLOCK_NUNMBER = 3;
+    static int DATA_BUFFER_BLOCK_NUNMBER = 20000;
     LRUCache<String,DataBlock> buffer;
     DatabaseManager db;
     ArrayList<DataStorage> storages;
@@ -27,6 +27,7 @@ public class DataBuffer {
         int capacity = (int) Math.ceil(DATA_BUFFER_BLOCK_NUNMBER / load_factor) + 1;
         buffer = new LRUCache<>(capacity,load_factor,true,DATA_BUFFER_BLOCK_NUNMBER);
         //preload
+        preload();
     }
 
     public void preload(){
