@@ -70,7 +70,7 @@ update_stmt
  ;
 
 complex_select_stmt
- : K_SELECT two_attributes K_FROM name K_JOIN name K_ON name'.'name '=' name'.'name ( K_WHERE compare_stmt )?
+ : K_SELECT two_attributes K_FROM name K_JOIN name K_ON name'.'name compare_symbol name'.'name ( K_WHERE compare_stmt )?
  ;
 attributes
  : '*'

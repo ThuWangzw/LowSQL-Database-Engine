@@ -1,19 +1,23 @@
-import javafx.scene.control.Tab;
-import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import javax.print.DocFlavor;
 import java.io.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.*;
 public class Visitor extends LowSQLBaseVisitor {
     private Server server;
     private DatabaseManager current_database;
     OutputStream writer;
+
+    public static void main(String[] args) {
+        Hashtable<Integer, Integer> hashtable = new Hashtable<>();
+        for(int i=0; i<10; i++){
+            hashtable.put(new Integer(i), new Integer(i));
+        }
+        for(int i=0; i<10; i++){
+            hashtable.put(new Integer(i), new Integer(i+10));
+        }
+        System.out.println(hashtable.get(5));
+    }
     public Visitor(){
 
     }
@@ -25,58 +29,6 @@ public class Visitor extends LowSQLBaseVisitor {
     }
 
     private TableManager current_table;
-    public static void main(String[] args) throws Exception {
-//        writer = new OutputStreamWriter(System.out);
-//        try {
-//            Visitor visitor = new Visitor();
-//            File file = new File("select.sql");
-//            FileInputStream fileInputStream = new FileInputStream(file);
-//            ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
-//            LowSQLLexer lexer = new LowSQLLexer(input);
-//            CommonTokenStream tokens = new CommonTokenStream(lexer);
-//            LowSQLParser parser = new LowSQLParser(tokens);
-//            ParseTree tree = parser.parse();
-//            long start = System.currentTimeMillis();
-//            visitor.visit(tree);
-//            writer.flush();
-////            FileOutputStream fileOutputStream = new FileOutputStream(file);
-////            String drop1String = new String("drop table if exists teacher;\r\n");
-////            String create1String = new String("CREATE TABLE teacher (name String(256), TEACH_ID Int not null, PRIMARY KEY(TEACH_ID));\r\n");
-////            String drop2String = new String("drop table if exists student;\r\n");
-////            String create2String = new String("CREATE TABLE student (name String(256), STUDY_ID Int not null, PRIMARY KEY(STUDY_ID));\r\n");
-////            fileOutputStream.write(drop1String.getBytes());
-////            fileOutputStream.write(create1String.getBytes());
-////            fileOutputStream.write(drop2String.getBytes());
-////            fileOutputStream.write(create2String.getBytes());
-////
-////            for(int i=0; i<1000; i++){
-////                String record = new String("insert into teacher values ('Alice");
-////                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
-////                fileOutputStream.write(record.getBytes());
-////            }
-////            for(int i=900; i<1900; i++){
-////                String record = new String("insert into student values ('Alice");
-////                record += String.valueOf(i)+"', "+String.valueOf(i)+");\r\n";
-////                fileOutputStream.write(record.getBytes());
-////            }
-////            String selectString = new String("select teacher.name, student.name from teacher join student on teacher.name = student.name where name > 'Alice400'");
-////            fileOutputStream.write(selectString.getBytes());
-//            long end = System.currentTimeMillis();
-//            if(server != null){
-//                server.data_buffer.saveAll();
-//                server.index_buffer.saveAll();
-//            }
-//            System.out.println((float) (end-start)/1000);
-//        }
-//        catch (RuntimeException e){
-//            writer.write(e.getMessage());
-//            writer.flush();
-//        }
-//        catch (IOException e){
-//            writer.write(e.getMessage());
-//            writer.flush();
-//        }
-    }
 
     @Override
     public Object visitCreate_table_stmt(LowSQLParser.Create_table_stmtContext ctx) {
@@ -906,6 +858,7 @@ public class Visitor extends LowSQLBaseVisitor {
         TableAttribute[] joinAttributes = new TableAttribute[tableA.getSchema().getAttrubutes().length+tableB.getSchema().getAttrubutes().length];
         String table1name = (String)visit(nodes.get(7));
         String table1join = (String)visit(nodes.get(9));
+        Integer type = (Integer)visit(nodes.get(10));
         String table2name = (String)visit(nodes.get(11));
         String table2join = (String)visit(nodes.get(13));
         int tableAJoinIdx = -1;
@@ -992,7 +945,7 @@ public class Visitor extends LowSQLBaseVisitor {
         catch (IOException e){
             System.out.println(e.getMessage());
         }
-//        rested-loop
+//        where
         boolean find = false;
         int whereIdx = -1;
         if(query != null){
@@ -1009,9 +962,11 @@ public class Visitor extends LowSQLBaseVisitor {
             }
         }
 
+        // which method
 
-        boolean isAouter = true;
+
         //nested-loop join
+        boolean isAouter = true;
         TableAttribute[] AindexAttrs = new TableAttribute[1];
         AindexAttrs[0] = new TableAttribute(tableA.getTableName(), table1name.equals(tableA.getTableName())?table1join:table2join, -1, -1, false, false);
         TableSchema Aindex_schema = new TableSchema(tableA.getTableName(), AindexAttrs);
@@ -1034,7 +989,7 @@ public class Visitor extends LowSQLBaseVisitor {
                         int[] queryres =  Btree.query(falserecord);
                         BTreeLeafNode node = (BTreeLeafNode) server.index_buffer.getNode(queryres[0], current_database.getDatabaseName(), innerTable.getTableName(), BindexAttrs);
                         if(queryres[1] == node.key_number) continue;
-                        if(node.compare2key(node.keys.get(queryres[1]), node.record2key(falserecord)) == Util.E){
+                        if((node.compare2key(node.keys.get(queryres[1]), node.record2key(falserecord)) == Util.E)){
                             for(DataPointer pointer:node.getPointer(queryres[1])){
                                 Record innerrecord = server.data_buffer.getNode(current_database.getDatabaseName(), innerTable.getTableName(), pointer.page_id).extractOneRecord(pointer.record_id);
                                 Field[] target = new Field[record.getFields().length+innerrecord.getFields().length];
@@ -1186,6 +1141,14 @@ public class Visitor extends LowSQLBaseVisitor {
 
             }
         }
+
+        // hash-join
+//        HashMap<byte[], Record> hashMap = new HashMap<>();
+//        for(int i=0; i<server.data_buffer.getDataStorage(current_database.getDatabaseName(), tableA.getTableName()).block_number; i++){
+//            for(Record record:server.data_buffer.getNode(current_database.getDatabaseName(), tableA.getTableName(), i).extractAllRecords()){
+//
+//            }
+//        }
 
         return null;
     }

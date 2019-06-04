@@ -1090,7 +1090,9 @@ public class LowSQLParser extends Parser {
 		}
 		public TerminalNode K_JOIN() { return getToken(LowSQLParser.K_JOIN, 0); }
 		public TerminalNode K_ON() { return getToken(LowSQLParser.K_ON, 0); }
-		public TerminalNode EQ() { return getToken(LowSQLParser.EQ, 0); }
+		public Compare_symbolContext compare_symbol() {
+			return getRuleContext(Compare_symbolContext.class,0);
+		}
 		public TerminalNode K_WHERE() { return getToken(LowSQLParser.K_WHERE, 0); }
 		public Compare_stmtContext compare_stmt() {
 			return getRuleContext(Compare_stmtContext.class,0);
@@ -1142,7 +1144,7 @@ public class LowSQLParser extends Parser {
 			setState(181);
 			name();
 			setState(182);
-			match(EQ);
+			compare_symbol();
 			setState(183);
 			name();
 			setState(184);
@@ -2352,7 +2354,7 @@ public class LowSQLParser extends Parser {
 		"\u00ad\33\3\2\2\2\u00ae\u00af\7\31\2\2\u00af\u00b0\5 \21\2\u00b0\u00b1"+
 		"\7\32\2\2\u00b1\u00b2\5*\26\2\u00b2\u00b3\7\37\2\2\u00b3\u00b4\5*\26\2"+
 		"\u00b4\u00b5\7 \2\2\u00b5\u00b6\5*\26\2\u00b6\u00b7\7\7\2\2\u00b7\u00b8"+
-		"\5*\26\2\u00b8\u00b9\7\'\2\2\u00b9\u00ba\5*\26\2\u00ba\u00bb\7\7\2\2\u00bb"+
+		"\5*\26\2\u00b8\u00b9\5$\23\2\u00b9\u00ba\5*\26\2\u00ba\u00bb\7\7\2\2\u00bb"+
 		"\u00be\5*\26\2\u00bc\u00bd\7\33\2\2\u00bd\u00bf\5\"\22\2\u00be\u00bc\3"+
 		"\2\2\2\u00be\u00bf\3\2\2\2\u00bf\35\3\2\2\2\u00c0\u00ca\7\b\2\2\u00c1"+
 		"\u00c6\5*\26\2\u00c2\u00c3\7\5\2\2\u00c3\u00c5\5*\26\2\u00c4\u00c2\3\2"+
