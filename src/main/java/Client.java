@@ -9,13 +9,14 @@ public class Client {
         try {
             String importStmt = "import(\\s+)(\\S+)";
             Pattern importPtn = Pattern.compile(importStmt);
+            String sqlStmt = "sql\\b";
+            Pattern sqlPtn = Pattern.compile(sqlStmt);
             String exitStmt = "exit\\b";
             Pattern exitPtn = Pattern.compile(exitStmt);
-
+            Socket socket = new Socket("127.0.0.1", 10086);
             while (true){
-                Socket socket = new Socket("127.0.0.1", 10086);
                 Scanner in = new Scanner(System.in);
-                System.out.println("import/exit...");
+                System.out.println("import/sql/exit...");
                 String mode = in.nextLine();
                 if(importPtn.matcher(mode).find()){
                     Matcher matcher = importPtn.matcher(mode);
@@ -29,14 +30,35 @@ public class Client {
                     bufferedWriter.flush();
 //                    socket.getOutputStream().close();
 
-                    InputStream input = socket.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     StringBuffer content= new StringBuffer();
                     int ch;
-                    while ((ch = bufferedReader.read()) != -1) {
+                    while ((ch = bufferedReader.read()) < 65500) {
                         content.append((char) ch);
                     }
                     System.out.println(content.toString());
+                }
+                else if(sqlPtn.matcher(mode).find()){
+                    while (true){
+                        System.out.print('>');
+                        String stmt = in.nextLine();
+                        if(stmt.equals("exit")){
+                            break;
+                        }
+                        byte[] bytes = stmt.getBytes();
+                        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                        for(byte i : bytes) bufferedWriter.write(i);
+                        bufferedWriter.write(-1);
+                        bufferedWriter.flush();
+
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        StringBuffer content= new StringBuffer();
+                        int ch;
+                        while ((ch = bufferedReader.read()) < 65500) {
+                            content.append((char) ch);
+                        }
+                        System.out.println(content.toString());
+                    }
                 }
                 else if(exitPtn.matcher(mode).find()){
                     System.out.println("Bye~");

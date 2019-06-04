@@ -145,12 +145,11 @@ public class Server {
                 server.writer = socket.getOutputStream();
                 Visitor visitor = new Visitor();
                 visitor.setServer(server);
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
                 while (true){
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
                     StringBuffer content= new StringBuffer();
                     int ch;
                     while ((ch = bufferedReader.read()) != 65535) {
-                        System.out.println(ch);
                         content.append((char) ch);
                     }
 
@@ -163,9 +162,8 @@ public class Server {
                     visitor.visit(tree);
                     long end = System.currentTimeMillis();
                     visitor.writer.write(("running time: "+String.valueOf((float) (end-start)/1000)+"s\r\n").getBytes());
+                    visitor.writer.write(-1);
                     visitor.writer.flush();
-                    socket.getOutputStream().close();
-                    break;
                 }
             }
             catch (IOException e){
