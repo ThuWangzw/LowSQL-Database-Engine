@@ -3,24 +3,36 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 
 
 public class DataBuffer {
-    static int DATA_BUFFER_BLOCK_NUNMBER = 20000;
-    DataBlock[] data_buffer;
+    static int DATA_BUFFER_BLOCK_NUNMBER = 3;
+    LRUCache<String,DataBlock> buffer;
     DatabaseManager db;
     ArrayList<DataStorage> storages;
 
 
     DataBuffer(DatabaseManager current_db){
-        data_buffer = new DataBlock[DATA_BUFFER_BLOCK_NUNMBER];
         storages = new ArrayList<>();
         db = current_db;
         ArrayList<TableManager> tables = db.getTables();
         for (TableManager cur : tables){
             storages.add(new DataStorage(cur.getDBName(),cur.getTableName(),cur.getSchema(),this));
+        }
+        //LRU buffer
+        float load_factor = (float)0.75;
+        int capacity = (int) Math.ceil(DATA_BUFFER_BLOCK_NUNMBER / load_factor) + 1;
+        buffer = new LRUCache<>(capacity,load_factor,true,DATA_BUFFER_BLOCK_NUNMBER);
+        //preload
+    }
+
+    public void preload(){
+        for(DataStorage d: storages){
+            for(int i = 0; i < d.block_number;i++)
+                getNode(d.DB_name,d.table_name,i);
         }
     }
 
@@ -73,8 +85,7 @@ public class DataBuffer {
             raf.read(data,0,Util.DiskBlockSize);
             DataBlock temp = new DataBlock(DB_name,table_name,data,node_id,st.schema);
             raf.close();
-            //simplest strategy
-            data_buffer[node_id % DATA_BUFFER_BLOCK_NUNMBER] = temp;
+            add(name2key(node_id,DB_name,table_name),temp);
             return temp;
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,38 +98,10 @@ public class DataBuffer {
         DataStorage st = getDataStorage(DB_name,table_name);
         if(st == null)
             throw new NullPointerException("Table not exists in current database");
-        int buffer_index = node_id % DATA_BUFFER_BLOCK_NUNMBER;
-        if(data_buffer[buffer_index] == null)
+        DataBlock search_block = buffer.get(name2key(node_id,DB_name,table_name));
+        if(search_block == null)
             return loadDataBlockFromFile(DB_name,table_name,node_id);
-        if (!data_buffer[buffer_index].DB_name.equals(DB_name)
-                || !data_buffer[buffer_index].table_name.equals(table_name)){
-            WriteDataBlock(buffer_index);
-            data_buffer[buffer_index] = null;
-            return loadDataBlockFromFile(DB_name,table_name,node_id);
-        }
-        return data_buffer[buffer_index];
-    }
-
-
-    public void WriteDataBlock(int node_id){
-        int buffer_index = node_id % DATA_BUFFER_BLOCK_NUNMBER;
-        DataBlock blk = data_buffer[buffer_index];
-        if(!blk.is_revised)
-            return;
-        DataStorage ds = getDataStorage(blk.DB_name,blk.table_name);
-        try{
-            RandomAccessFile raf = new RandomAccessFile(Util.DataStorageDir + blk.DB_name + "_" + blk.table_name + ".bin","rw");
-            if (blk.getPageId() >= ds.block_number){
-                throw new IndexOutOfBoundsException("data block id is out of boundary");
-            }
-            //block_number = raf.length() / Util.DiskBlockSize;
-            raf.seek(blk.getPageId() * Util.DiskBlockSize);
-            raf.write(blk.getData(),0,Util.DiskBlockSize);
-            raf.close();
-            blk.is_revised = false;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        return search_block;
     }
 
     public void appendDataBlock(String DB_name,String table_name){
@@ -151,10 +134,10 @@ public class DataBuffer {
     }
 
     public void saveAll(){
-        for (int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
-            if (data_buffer[i] != null && data_buffer[i].is_revised){
-                WriteDataBlock(i);
-            }
+        Iterator<Map.Entry<String,DataBlock>> iterator= buffer.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String,DataBlock> next = iterator.next();
+            next.getValue().WriteDataBlock();
         }
     }
 
@@ -169,11 +152,14 @@ public class DataBuffer {
 
         if(!db_name.equals(db.getDatabaseName()))
             return;
-        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
-            if(data_buffer[i] != null){
-                if (data_buffer[i].DB_name.equals(db_name) && data_buffer[i].table_name.equals(table_name)){
-                    data_buffer[i] = null;
-                }
+
+        DataBlock cur;
+        Iterator<Map.Entry<String,DataBlock>> iterator= buffer.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String,DataBlock> next = iterator.next();
+            cur = next.getValue();
+            if (cur.DB_name.equals(db_name) && cur.table_name.equals(table_name)){
+                buffer.remove(next.getKey());
             }
         }
     }
@@ -186,11 +172,14 @@ public class DataBuffer {
 
         if(!ds.DB_name.equals(db.getDatabaseName()))
             return;
-        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
-            if(data_buffer[i] != null){
-                if (data_buffer[i].DB_name.equals(ds.DB_name) && data_buffer[i].table_name.equals(ds.table_name)){
-                    data_buffer[i] = null;
-                }
+
+        DataBlock cur;
+        Iterator<Map.Entry<String,DataBlock>> iterator= buffer.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String,DataBlock> next = iterator.next();
+            cur = next.getValue();
+            if (cur.DB_name.equals(ds.DB_name) && cur.table_name.equals(ds.table_name)){
+                buffer.remove(next.getKey());
             }
         }
     }
@@ -203,17 +192,26 @@ public class DataBuffer {
     }
 
     public void clearBuffer(){
-        for(int i = 0; i < DATA_BUFFER_BLOCK_NUNMBER; i++){
-            data_buffer[i] = null;
-        }
+        buffer.clear();
     }
 
     public int getDataStorageRecordNum(String DB_name,String table_name){
         int recordNum=0;
-        for(int i=0; i<getDataStorage(DB_name, table_name).block_number; i++){
+        long blk_number = getDataStorage(DB_name, table_name).block_number;
+        for(int i=0; i< blk_number; i++){
             recordNum += getNode(DB_name, table_name, i).getRecordNumber();
         }
         return recordNum;
     }
 
+    public void add(String key, DataBlock value){
+        if(buffer.removeOldest()){
+            buffer.getOldest().WriteDataBlock();
+        }
+        buffer.put(key,value);
+    }
+
+    public String name2key(int node_id,String DB_name,String table_name){
+        return DB_name + table_name + String.valueOf(node_id);
+    }
 }

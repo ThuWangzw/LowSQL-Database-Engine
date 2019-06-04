@@ -1,20 +1,26 @@
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.io.File;
+import java.util.Map;
+import java.util.LinkedHashMap;
+import java.util.Iterator;
 import java.io.RandomAccessFile;
 
 
 public class IndexBuffer {
-    static int INDEX_BUFFER_BLOCK_NUNMBER = 20000;
-    BTreeNode[] index_buffer;
+    static int INDEX_BUFFER_BLOCK_NUNMBER = 3;
     DatabaseManager db;
     ArrayList<BTree> btrees;
+    LRUCache<String,BTreeNode> buffer;
 
     public IndexBuffer(DatabaseManager current_databse){
         db = current_databse;
         btrees = new ArrayList<>();
-        index_buffer = new BTreeNode[INDEX_BUFFER_BLOCK_NUNMBER];
         loadIndexMetaData();
+        //LRU Buffer
+        float load_factor = (float)0.75;
+        int capacity = (int) Math.ceil(INDEX_BUFFER_BLOCK_NUNMBER / load_factor) + 1;
+        buffer = new LRUCache<>(capacity,load_factor,true,INDEX_BUFFER_BLOCK_NUNMBER);
         //preload();
     }
 
@@ -47,14 +53,14 @@ public class IndexBuffer {
         if(!db_name.equals(db.getDatabaseName()))
             return;
         TableSchema temp;
-        for(int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
-            if(index_buffer[i] != null){
-                temp = new TableSchema(index_buffer[i].table_name,index_buffer[i].index_attrs);
-                if (index_buffer[i].DB_name.equals(db_name)
-                        && index_buffer[i].table_name.equals(table_name)
-                        && temp.concatNames().equals(index_schema.concatNames())){
-                    index_buffer[i] = null;
-                }
+        BTreeNode cur;
+        Iterator<Map.Entry<String,BTreeNode>> iterator= buffer.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String,BTreeNode> next = iterator.next();
+            cur = next.getValue();
+            temp = new TableSchema(cur.table_name,cur.index_attrs);
+            if (cur.DB_name.equals(db_name) && cur.table_name.equals(table_name) && temp.concatNames().equals(index_schema.concatNames())){
+                buffer.remove(next.getKey());
             }
         }
     }
@@ -68,14 +74,14 @@ public class IndexBuffer {
         if(!bt.DB_name.equals(db.getDatabaseName()))
             return;
         TableSchema temp;
-        for(int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
-            if(index_buffer[i] != null){
-                temp = new TableSchema(index_buffer[i].table_name,index_buffer[i].index_attrs);
-                if (index_buffer[i].DB_name.equals(bt.DB_name)
-                        && index_buffer[i].table_name.equals(bt.table_name)
-                        && temp.concatNames().equals(bt.index_schema.concatNames())){
-                    index_buffer[i] = null;
-                }
+        BTreeNode cur;
+        Iterator<Map.Entry<String,BTreeNode>> iterator= buffer.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String,BTreeNode> next = iterator.next();
+            cur = next.getValue();
+            temp = new TableSchema(cur.table_name,cur.index_attrs);
+            if (cur.DB_name.equals(bt.DB_name) && cur.table_name.equals(bt.table_name) && temp.concatNames().equals(bt.index_schema.concatNames())){
+                buffer.remove(next.getKey());
             }
         }
     }
@@ -202,41 +208,13 @@ public class IndexBuffer {
                 temp = new BTreeLeafNode(M,node_id,data,this,index_attrs.getAttrubutes(),DB_name,table_name);
             }
             raf.close();
-            //simplest strategy
-            index_buffer[node_id%INDEX_BUFFER_BLOCK_NUNMBER] = temp;
+
+            add(name2key(node_id,DB_name,table_name,index_attrs),temp);
             return temp;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void writeIndexBlock(int node_id){
-        int buffer_index = node_id%INDEX_BUFFER_BLOCK_NUNMBER;
-        if(index_buffer[buffer_index] == null)
-            return;
-        BTreeNode temp= index_buffer[buffer_index];
-        TableSchema t = new TableSchema(temp.table_name,temp.index_attrs);
-        if(!temp.is_changed)
-            return;
-        try {
-            RandomAccessFile raf = new RandomAccessFile(Util.IndexStorageDir + "/" + temp.DB_name + "_" + temp.table_name + "_" + t.concatNames()+".bin","rw");
-            long block_number = raf.length()/Util.DiskBlockSize;
-            if (temp.node_id >= block_number){
-                long new_block_number = temp.node_id - block_number + 1;
-                raf.seek(raf.length());
-                byte[] empty_block = new byte[Util.DiskBlockSize];
-                for(int i = 0; i < new_block_number; i++){
-                    raf.write(empty_block,0,Util.DiskBlockSize);
-                }
-            }
-            raf.seek(temp.node_id * Util.DiskBlockSize);
-            raf.write(temp.index_data,0,Util.DiskBlockSize);
-            raf.close();
-            temp.is_changed = false;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -245,36 +223,23 @@ public class IndexBuffer {
         BTree bt = getBTree(DB_name,table_name,temp);
         if(bt == null)
             return null;
-        int buffer_index = node_id % INDEX_BUFFER_BLOCK_NUNMBER;
-        if(index_buffer[buffer_index] == null)
+        BTreeNode search_node = (BTreeNode) buffer.get(name2key(node_id,DB_name,table_name,temp));
+        if(search_node == null)
             return loadIndexBlockFromFile(DB_name,table_name,temp,node_id,bt.M);
-        TableSchema temp2 = new TableSchema(index_buffer[buffer_index].table_name,index_buffer[buffer_index].index_attrs);
-        if (!index_buffer[buffer_index].DB_name.equals(DB_name)
-                || !index_buffer[buffer_index].table_name.equals(table_name)
-                || !temp2.concatNames().equals(temp.concatNames())){
-            writeIndexBlock(buffer_index);
-            index_buffer[buffer_index] = null;
-            return loadIndexBlockFromFile(DB_name,table_name,temp,node_id,bt.M);
-        }
-        return index_buffer[buffer_index];
+        return search_node;
     }
 
 
     public void addNewNode(BTreeNode node){
-        int buffer_index = node.node_id % INDEX_BUFFER_BLOCK_NUNMBER;
-        if(index_buffer[buffer_index ] != null){
-            writeIndexBlock(node.node_id);
-            index_buffer[buffer_index] = null;
-        }
-        index_buffer[buffer_index] = node;
-        writeIndexBlock(node.node_id);
+        TableSchema temp = new TableSchema(node.table_name,node.index_attrs);
+        add(name2key(node.node_id,node.DB_name,node.table_name,temp),node);
     }
 
     public void deleteNode(BTreeNode node){
-        TableSchema temp = new TableSchema(index_buffer[node.node_id].table_name,index_buffer[node.node_id].index_attrs);
+        TableSchema temp = new TableSchema(node.table_name,node.index_attrs);
+        buffer.remove(name2key(node.node_id,node.DB_name,node.table_name,temp),node);
         BTree bt = getBTree(node.DB_name,node.table_name,temp);
         bt.addFreeBlockID((short)node.node_id);
-        index_buffer[node.node_id % INDEX_BUFFER_BLOCK_NUNMBER] = null;
     }
 
     public void newRootNode(int new_root_id,String DB_name,String table_name,TableAttribute[] attrs){
@@ -282,7 +247,11 @@ public class IndexBuffer {
         BTree bt = getBTree(DB_name,table_name,temp);
         bt.root_id = new_root_id;
         saveIndexMetaData(bt);
-        writeIndexBlock(new_root_id);
+        BTreeNode root_node = (BTreeNode) getNode(new_root_id,DB_name,table_name,attrs);
+        if(root_node == null){
+            throw new IllegalArgumentException("root node does not exist!");
+        }
+        root_node.WriteIndexBlock();
     }
 
     public int getFreeId(String DB_name,String table_name,TableAttribute[] attrs){
@@ -296,18 +265,26 @@ public class IndexBuffer {
         for (BTree cur : btrees){
             saveIndexMetaData(cur);
         }
-
-        for (int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
-            if (index_buffer[i] != null && index_buffer[i].is_changed){
-                writeIndexBlock(i);
-            }
+        Iterator<Map.Entry<String,BTreeNode>> iterator= buffer.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String,BTreeNode> next = iterator.next();
+            next.getValue().WriteIndexBlock();
         }
     }
 
     public void clearBuffer(){
-        for (int i = 0; i < INDEX_BUFFER_BLOCK_NUNMBER; i++){
-            index_buffer[i] = null;
+        buffer.clear();
+    }
+
+    public void add(String key,BTreeNode value){
+        if(buffer.removeOldest()){
+            buffer.getOldest().WriteIndexBlock();
         }
+        buffer.put(key,value);
+    }
+
+    public String name2key(int node_id,String DB_name,String table_name,TableSchema attrs){
+        return DB_name + table_name + attrs.concatNames() + String.valueOf(node_id);
     }
 
 }

@@ -1,3 +1,4 @@
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 /* B Tree block header
@@ -624,6 +625,30 @@ abstract public class BTreeNode {
         if (left_bro_id != 0)
             return buffer.getNode(left_bro_id,DB_name,table_name,index_attrs);
         return null;
+    }
+
+    public void WriteIndexBlock(){
+        if(!is_changed)
+            return;
+        TableSchema temp = new TableSchema(table_name,index_attrs);
+        try {
+            RandomAccessFile raf = new RandomAccessFile(Util.IndexStorageDir + "/" + DB_name + "_" + table_name + "_" + temp.concatNames()+".bin","rw");
+            long block_number = raf.length()/Util.DiskBlockSize;
+            if (node_id >= block_number){
+                long new_block_number = node_id - block_number + 1;
+                raf.seek(raf.length());
+                byte[] empty_block = new byte[Util.DiskBlockSize];
+                for(int i = 0; i < new_block_number; i++){
+                    raf.write(empty_block,0,Util.DiskBlockSize);
+                }
+            }
+            raf.seek(node_id * Util.DiskBlockSize);
+            raf.write(index_data,0,Util.DiskBlockSize);
+            raf.close();
+            is_changed = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
