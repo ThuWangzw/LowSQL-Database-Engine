@@ -33,6 +33,7 @@ public class IndexBuffer {
         db = new_db;
         btrees = new ArrayList<>();
         loadIndexMetaData();
+        preload();
     }
 
     public void createIndex(String db_name,String table_name,TableSchema index_schema,int m) {

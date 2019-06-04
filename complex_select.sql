@@ -1,1 +1,1 @@
-select teacher.name, student.STUDY_ID from teacher join student on teacher.TEACH_ID = student.STUDY_ID where STUDY_ID > 950;
+select teacher.name, student.STUDY_ID from teacher join student on teacher.TEACH_ID > student.STUDY_ID where TEACH_ID > 905;

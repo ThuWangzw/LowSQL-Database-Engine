@@ -149,7 +149,7 @@ public class Server {
                 while (true){
                     StringBuffer content= new StringBuffer();
                     int ch;
-                    while ((ch = bufferedReader.read()) != 65535) {
+                    while (((ch = bufferedReader.read()) < 65500)&&(ch > 0)) {
                         content.append((char) ch);
                     }
 
@@ -170,7 +170,6 @@ public class Server {
                 System.out.println("Connection failed");
             }
             catch (RuntimeException e){
-
                 System.out.println(e.getMessage());
             }
             try {

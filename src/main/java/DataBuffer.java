@@ -50,6 +50,7 @@ public class DataBuffer {
         for (TableManager cur : tables){
             storages.add(new DataStorage(cur.getDBName(),cur.getTableName(),cur.getSchema(),this));
         }
+        preload();
     }
 
     public void addDataStorage(TableManager table){

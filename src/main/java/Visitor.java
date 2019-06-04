@@ -74,7 +74,7 @@ public class Visitor extends LowSQLBaseVisitor {
 //        add index
         if(primary_keys.size()>0){
             TableSchema primary_schema = tableManager.createIndexSchema(primary_keys);
-            server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 666);
+            server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, primary_schema, 1000);
             server.index_buffer.saveAll();
         }
         try {
@@ -979,6 +979,9 @@ public class Visitor extends LowSQLBaseVisitor {
         TableSchema Bindex_schema = new TableSchema(tableB.getTableName(), BindexAttrs);
         BTree Atree = server.index_buffer.getBTree(current_database.getDatabaseName(), tableAname, Aindex_schema);
         BTree Btree = server.index_buffer.getBTree(current_database.getDatabaseName(), tableBname, Bindex_schema);
+        if(jointype != Util.E){
+            Atree = Btree = null;
+        }
         if((Atree!=null)&&(Btree==null)) isAouter = false;
         TableManager outerTable = isAouter?tableA:tableB;
         TableManager innerTable = isAouter?tableB:tableA;
@@ -1038,6 +1041,23 @@ public class Visitor extends LowSQLBaseVisitor {
                                     }
                                 }
                                 else {
+                                    boolean right = true;
+                                    if(query!=null) {
+                                        int compareRes = joinrecord.getFields()[whereIdx].compareTo(new Field(query.value, joinAttributes[whereIdx]));
+                                        if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                            right = true;
+                                        }
+                                        else if((compareRes==0)&&((query.type==Util.E)||(query.type==Util.LE)||(query.type==Util.GE))){
+                                            right = true;
+                                        }
+                                        else if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                            right = true;
+                                        }
+                                        else {
+                                            right = false;
+                                        }
+                                    }
+                                    if(!right) continue;
                                     int compareRes = record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]);
                                     if((compareRes<0)&&((jointype==Util.L)||(jointype==Util.LE)||(jointype==Util.NE))){
                                         try{
@@ -1120,6 +1140,23 @@ public class Visitor extends LowSQLBaseVisitor {
                                     }
                                 }
                                 else {
+                                    boolean right = true;
+                                    if(query!=null) {
+                                        int compareRes = joinrecord.getFields()[whereIdx].compareTo(new Field(query.value, joinAttributes[whereIdx]));
+                                        if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                            right = true;
+                                        }
+                                        else if((compareRes==0)&&((query.type==Util.E)||(query.type==Util.LE)||(query.type==Util.GE))){
+                                            right = true;
+                                        }
+                                        else if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                            right = true;
+                                        }
+                                        else {
+                                            right = false;
+                                        }
+                                    }
+                                    if(!right) continue;
                                     int compareRes = innerrecord.getFields()[tableAJoinIdx].compareTo(record.getFields()[tableBJoinIdx]);
                                     if((compareRes<0)&&((jointype==Util.L)||(jointype==Util.LE)||(jointype==Util.NE))){
                                         try{
@@ -1157,12 +1194,11 @@ public class Visitor extends LowSQLBaseVisitor {
                             if(!isAouter){
                                 throw new RuntimeException("Internal error.");
                             }
-                            if(record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]) != 0) continue;
                             Field[] target = new Field[record.getFields().length+innerrecord.getFields().length];
                             System.arraycopy(record.getFields(), 0, target, 0, record.getFields().length);
                             System.arraycopy(innerrecord.getFields(), 0, target, record.getFields().length, innerrecord.getFields().length);
                             Record joinrecord = new Record(target, joinSchema);
-                            if(jointype == Util.E){
+                            if((jointype == Util.E)&&(record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]) != 0)){
                                 if(query == null){
                                     try{
                                         writeOneResult(joinrecord, attributes);
@@ -1199,7 +1235,24 @@ public class Visitor extends LowSQLBaseVisitor {
                                     }
                                 }
                             }
-                            else {
+                            else if(jointype != Util.E){
+                                boolean right = true;
+                                if(query!=null) {
+                                    int compareRes = joinrecord.getFields()[whereIdx].compareTo(new Field(query.value, joinAttributes[whereIdx]));
+                                    if((compareRes<0)&&((query.type==Util.L)||(query.type==Util.LE)||(query.type==Util.NE))){
+                                        right = true;
+                                    }
+                                    else if((compareRes==0)&&((query.type==Util.E)||(query.type==Util.LE)||(query.type==Util.GE))){
+                                        right = true;
+                                    }
+                                    else if((compareRes>0)&&((query.type==Util.G)||(query.type==Util.GE)||(query.type==Util.NE))){
+                                        right = true;
+                                    }
+                                    else {
+                                        right = false;
+                                    }
+                                }
+                                if(!right) continue;
                                 int compareRes = record.getFields()[tableAJoinIdx].compareTo(innerrecord.getFields()[tableBJoinIdx]);
                                 if((compareRes<0)&&((jointype==Util.L)||(jointype==Util.LE)||(jointype==Util.NE))){
                                     try{
@@ -1420,7 +1473,7 @@ public class Visitor extends LowSQLBaseVisitor {
     public Object visitUse_database_stmt(LowSQLParser.Use_database_stmtContext ctx) {
         String name = (String)visit(ctx.children.get(2));
         server.setCurrentDatabase(name);
-        current_database = server.getOneDatabase(name);
+        current_database = server.getCurrentDatabase();
         return null;
     }
 

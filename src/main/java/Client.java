@@ -62,6 +62,9 @@ public class Client {
                 }
                 else if(exitPtn.matcher(mode).find()){
                     System.out.println("Bye~");
+                    socket.getInputStream().close();
+                    socket.getOutputStream().close();
+                    socket.close();
                     break;
                 }
                 else {
