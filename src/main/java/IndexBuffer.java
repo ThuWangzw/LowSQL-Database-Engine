@@ -61,7 +61,7 @@ public class IndexBuffer {
             cur = next.getValue();
             temp = new TableSchema(cur.table_name,cur.index_attrs);
             if (cur.DB_name.equals(db_name) && cur.table_name.equals(table_name) && temp.concatNames().equals(index_schema.concatNames())){
-                buffer.remove(next.getKey());
+                iterator.remove();
             }
         }
     }
@@ -82,7 +82,7 @@ public class IndexBuffer {
             cur = next.getValue();
             temp = new TableSchema(cur.table_name,cur.index_attrs);
             if (cur.DB_name.equals(bt.DB_name) && cur.table_name.equals(bt.table_name) && temp.concatNames().equals(bt.index_schema.concatNames())){
-                buffer.remove(next.getKey());
+                iterator.remove();
             }
         }
     }
@@ -238,7 +238,13 @@ public class IndexBuffer {
 
     public void deleteNode(BTreeNode node){
         TableSchema temp = new TableSchema(node.table_name,node.index_attrs);
-        buffer.remove(name2key(node.node_id,node.DB_name,node.table_name,temp),node);
+        Iterator<Map.Entry<String,BTreeNode>> iterator= buffer.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String,BTreeNode> next = iterator.next();
+            if(next.getKey().equals(name2key(node.node_id,node.DB_name,node.table_name,temp))){
+                iterator.remove();
+            }
+        }
         BTree bt = getBTree(node.DB_name,node.table_name,temp);
         bt.addFreeBlockID((short)node.node_id);
     }

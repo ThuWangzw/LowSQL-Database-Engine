@@ -161,7 +161,7 @@ public class DataBuffer {
             Map.Entry<String,DataBlock> next = iterator.next();
             cur = next.getValue();
             if (cur.DB_name.equals(db_name) && cur.table_name.equals(table_name)){
-                buffer.remove(next.getKey());
+                iterator.remove();
             }
         }
     }
@@ -181,7 +181,7 @@ public class DataBuffer {
             Map.Entry<String,DataBlock> next = iterator.next();
             cur = next.getValue();
             if (cur.DB_name.equals(ds.DB_name) && cur.table_name.equals(ds.table_name)){
-                buffer.remove(next.getKey());
+                iterator.remove();
             }
         }
     }
