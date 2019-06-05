@@ -1,4 +1,4 @@
-
+import java.io.RandomAccessFile;
 
 //  number of records  - 4| End of free space - 4| actual number - 4|
 public class DataBlock {
@@ -188,6 +188,27 @@ public class DataBlock {
 
     public int getEndOfFreeSpace(){return end_of_free_space;}
     public int getRecordNumber(){return record_number;}
+
+    public void WriteDataBlock(){
+        if(!is_revised)
+            return;
+        try{
+            RandomAccessFile raf = new RandomAccessFile(Util.DataStorageDir + DB_name + "_" + table_name + ".bin","rw");
+            long block_number = raf.length() / Util.DiskBlockSize;
+            if (page_id >= block_number){
+                throw new IndexOutOfBoundsException("data block id is out of boundary");
+            }
+            //block_number = raf.length() / Util.DiskBlockSize;
+            raf.seek(page_id * Util.DiskBlockSize);
+            raf.write(data,0,Util.DiskBlockSize);
+            raf.close();
+            is_revised = false;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 
     public static void main(String[] args){
         System.out.println("-- DataBlock --");

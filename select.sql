@@ -1,1 +1,1 @@
-select * from person where ID >900;
+select * from teacher;

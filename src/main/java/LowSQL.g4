@@ -70,7 +70,7 @@ update_stmt
  ;
 
 complex_select_stmt
- : K_SELECT two_attributes K_FROM name K_JOIN name K_ON name'.'name '=' name'.'name ( K_WHERE compare_stmt )?
+ : K_SELECT two_attributes K_FROM name K_JOIN name K_ON name'.'name compare_symbol name'.'name ( K_WHERE compare_stmt )?
  ;
 attributes
  : '*'
@@ -83,7 +83,7 @@ two_attributes
  ;
 
 compare_stmt
-: name compare_symbol literal_value
+: (name|(name '.' name)) compare_symbol literal_value
 ;
 
 compare_symbol
@@ -199,11 +199,11 @@ STRING_LITERAL
  ;
 
 INTEGER_LITERAL
-:DIGIT+
+:'-'? DIGIT+
 ;
 
 NUMERIC_LITERAL
- : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
+ : '-'? DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
  | '.' DIGIT+ ( E [-+]? DIGIT+ )?
  ;
 

@@ -37,6 +37,9 @@ public class DataStorage{
         current_free_block_id = getPossibleBlock();
     }
 
+    public long getBlock_number() {
+        return block_number;
+    }
 
     public DataPointer insert(Record record){
         int record_id;
