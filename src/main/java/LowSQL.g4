@@ -199,11 +199,11 @@ STRING_LITERAL
  ;
 
 INTEGER_LITERAL
-:DIGIT+
+:'-'? DIGIT+
 ;
 
 NUMERIC_LITERAL
- : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
+ : '-'? DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
  | '.' DIGIT+ ( E [-+]? DIGIT+ )?
  ;
 
