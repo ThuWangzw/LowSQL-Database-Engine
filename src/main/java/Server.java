@@ -130,6 +130,7 @@ public class Server {
 //            wait for client
             ServerSocket serverSocket;
             Socket socket;
+            Visitor visitor = new Visitor();
             try {
                 serverSocket = new ServerSocket(10086);
                 System.out.println("Waiting for client...");
@@ -143,34 +144,43 @@ public class Server {
             try {
                 InputStream in = socket.getInputStream();
                 server.writer = socket.getOutputStream();
-                Visitor visitor = new Visitor();
                 visitor.setServer(server);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
                 while (true){
-                    StringBuffer content= new StringBuffer();
-                    int ch;
-                    while (((ch = bufferedReader.read()) < 65500)&&(ch > 0)) {
-                        content.append((char) ch);
-                    }
+                    try{
+                        StringBuffer content= new StringBuffer();
+                        int ch;
+                        while (((ch = bufferedReader.read()) < 65500)&&(ch > 0)) {
+                            content.append((char) ch);
+                        }
 
-                    ANTLRInputStream input = new ANTLRInputStream(content.toString());
-                    LowSQLLexer lexer = new LowSQLLexer(input);
-                    CommonTokenStream tokens = new CommonTokenStream(lexer);
-                    LowSQLParser parser = new LowSQLParser(tokens);
-                    long start = System.currentTimeMillis();
-                    ParseTree tree = parser.parse();
-                    visitor.visit(tree);
-                    long end = System.currentTimeMillis();
-                    visitor.writer.write(("running time: "+String.valueOf((float) (end-start)/1000)+"s\r\n").getBytes());
-                    visitor.writer.write(-1);
-                    visitor.writer.flush();
+                        ANTLRInputStream input = new ANTLRInputStream(content.toString());
+                        LowSQLLexer lexer = new LowSQLLexer(input);
+                        CommonTokenStream tokens = new CommonTokenStream(lexer);
+                        LowSQLParser parser = new LowSQLParser(tokens);
+                        long start = System.currentTimeMillis();
+                        ParseTree tree = parser.parse();
+                        visitor.visit(tree);
+                        long end = System.currentTimeMillis();
+                        visitor.writer.write(("running time: "+String.valueOf((float) (end-start)/1000)+"s\r\n").getBytes());
+                        visitor.writer.write(-1);
+                        visitor.writer.flush();
+                    }
+                    catch (RuntimeException e){
+                        System.out.println(e.getMessage());
+                        try{
+                            visitor.writer.write(e.getMessage().getBytes());
+                            visitor.writer.write(-1);
+                            visitor.writer.flush();
+                        }
+                        catch (IOException e2){
+                            System.out.println(e2.getMessage());
+                        }
+                    }
                 }
             }
             catch (IOException e){
                 System.out.println("Connection failed");
-            }
-            catch (RuntimeException e){
-                System.out.println(e.getMessage());
             }
             try {
                 socket.close();
