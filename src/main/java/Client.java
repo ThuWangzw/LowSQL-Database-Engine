@@ -1,11 +1,50 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Random;
 
 public class Client {
     public static void main(String[] args) {
+//        try{
+//            Random random = new Random();
+////            create
+//            FileOutputStream createStream = new FileOutputStream(new File("test_create.sql"));
+//            String createStr = new String("create table avengers\n" +
+//                    "\t(id\t\t\tint not null, \n" +
+//                    "\t name\t\t\tstring(32) not null, \n" +
+//                    "\t power\tint not null,\n" +
+//                    "\t weight     float,\n" +
+//                    "\t height     double,\n" +
+//                    "\t primary key (ID)\n" +
+//                    "\t);");
+//            createStream.write(createStr.getBytes());
+//            createStream.close();
+////            drop
+//            FileOutputStream dropStream = new FileOutputStream(new File("test_drop.sql"));
+//            String dropStr = new String("drop table avengers;");
+//            dropStream.write(dropStr.getBytes());
+//            dropStream.close();
+////           insert
+//            FileOutputStream insertStream = new FileOutputStream(new File("test_insert.sql"));
+//            for(int i=0; i<10000; i++){
+//                String str = new String("INSERT INTO avengers VALUES ("+String.valueOf(i)+", 'NAME"+i+"',"+random.nextInt()+","+random.nextFloat()+", "+random.nextDouble()+");\r\n");
+//                insertStream.write(str.getBytes());
+//            }
+//            insertStream.close();
+////            select
+//            FileOutputStream selectStream = new FileOutputStream(new File("test_select.sql"));
+//            String selectStr = new String("DELETE FROM avengers;");
+//            selectStream.write(selectStr.getBytes());
+//            selectStream.close();
+//        }
+//        catch (IOException e){
+//            System.out.println(e.getMessage());;
+//        }
+
+
         try {
             String importStmt = "import(\\s+)(\\S+)";
             Pattern importPtn = Pattern.compile(importStmt);

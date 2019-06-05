@@ -635,6 +635,12 @@ public class Visitor extends LowSQLBaseVisitor {
     @Override
     public Object visitCompare_stmt(LowSQLParser.Compare_stmtContext ctx) {
         List<ParseTree> nodes = ctx.children;
+        if(nodes.size() > 3){
+            String attributeName = (String)visit(nodes.get(2));
+            Integer type = (Integer)visit(nodes.get(3));
+            Object value = visit(nodes.get(4));
+            return new _Query(attributeName, (int)type, value);
+        }
         String attributeName = (String)visit(nodes.get(0));
         Integer type = (Integer)visit(nodes.get(1));
         Object value = visit(nodes.get(2));

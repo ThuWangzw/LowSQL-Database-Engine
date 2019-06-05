@@ -83,7 +83,7 @@ two_attributes
  ;
 
 compare_stmt
-: name compare_symbol literal_value
+: (name|(name '.' name)) compare_symbol literal_value
 ;
 
 compare_symbol
