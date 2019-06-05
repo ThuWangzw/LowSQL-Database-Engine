@@ -90,7 +90,7 @@ public class Visitor extends LowSQLBaseVisitor {
     @Override
     public Object visitName(LowSQLParser.NameContext ctx) {
         List<ParseTree> nodes = ctx.children;
-        return nodes.get(0).getText();
+        return nodes.get(0).getText().toUpperCase();
     }
 
     @Override
