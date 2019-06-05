@@ -298,12 +298,15 @@ public class Visitor extends LowSQLBaseVisitor {
                 if(fieldIdx==fields.length){
                     throw new RuntimeException("Redundant attributes.");
                 }
-                fields[fieldIdx] = new Field(visit(node), attributess[fieldIdx]);
+                Object val = visit(node);
+                if((val instanceof Double)&&(attributess[fieldIdx].getType() == Util.FLOAT)){
+                    val = new Float((Double)val);
+                }
+                fields[fieldIdx] = new Field(val, attributess[fieldIdx]);
                 fieldIdx++;
             }
         }
         if(fieldIdx < attributess.length){
-            //TODO: add is_null
 
             for(int i=fieldIdx; i<attributess.length; i++){
                 if(attributess[i].getNotNull()){
