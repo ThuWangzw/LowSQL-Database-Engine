@@ -562,8 +562,8 @@ abstract public class BTreeNode {
             }
         }
         if(parent_id == 0 && prior_id == 0 && next_id == 0){
-            WriteIndexBlock();
             buffer.saveIndexMetaData(buffer.getBTree(DB_name,table_name,new TableSchema(table_name,index_attrs)));
+            WriteIndexBlock();
         }else{
             type = -1;
             buffer.deleteNode(this);

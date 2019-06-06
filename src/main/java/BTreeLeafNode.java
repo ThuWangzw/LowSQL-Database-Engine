@@ -23,7 +23,12 @@ public class BTreeLeafNode extends BTreeNode{
     public void deleteAllKeyPointer(int index){
         if(index == key_number - 1 && parent_id != 0 && next_id == 0){
             BTreeInternalNode parent_node = (BTreeInternalNode) buffer.getNode(parent_id,DB_name,table_name,index_attrs);
-            parent_node.updateKeyPointer(keys.get(index),keys.get(index - 1),getHeadNode().node_id);
+            if(index == 0){
+                BTreeNode prior_node = buffer.getNode(prior_id,DB_name,table_name,index_attrs);
+                parent_node.updateKeyPointer(keys.get(index),prior_node.getBiggestKey(),getHeadNode().node_id);
+            }else{
+                parent_node.updateKeyPointer(keys.get(index),keys.get(index - 1),getHeadNode().node_id);
+            }
         }
 
         short[] l_n = getLocationAndNumber(index);
