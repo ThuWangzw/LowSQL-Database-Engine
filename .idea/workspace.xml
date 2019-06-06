@@ -1,77 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b5051d19-4efb-4dfe-836d-f6b98e971c8f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LowDB.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LowSQL-Database-Engine.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQL.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQL.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BTree.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BTreeInternalNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BTreeLeafNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/BTreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Client.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DataBlock.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DataBuffer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DataPointer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DataStorage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DatabaseManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Field.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/HashTable$RecordList.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/HashTable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/IndexBuffer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LRUCache.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLBaseListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLBaseVisitor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLLexer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLListener.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$AttributesContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Column_constraintContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Column_defContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Compare_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Compare_symbolContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Complex_select_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Create_database_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Create_table_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Delete_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Drop_database_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Drop_table_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$ErrorContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Indexed_columnContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Insert_one_dataContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Insert_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Literal_valueContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$NameContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$ParseContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Show_databasesContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Show_table_in_databaseContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Show_table_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Signed_numberContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Simple_select_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Sql_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Sql_stmt_listContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Table_constraintContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Table_schemaContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Two_attributesContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Type_nameContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Update_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser$Use_database_stmtContext.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LowSQLVisitor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Record.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Server.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TableAttribute.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TableManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TableSchema.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Util.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Visitor$_Query.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Visitor.class" beforeDir="false" />
-    </list>
+    <list default="true" id="b5051d19-4efb-4dfe-836d-f6b98e971c8f" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -104,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="308" column="62" selection-start-line="308" selection-start-column="62" selection-end-line="308" selection-end-column="62" />
+            <state relative-caret-position="254">
+              <caret line="308" column="64" lean-forward="true" selection-start-line="308" selection-start-column="64" selection-end-line="308" selection-end-column="64" />
               <folding>
                 <element signature="method#main#0;class#Visitor#0" />
                 <element signature="e#421#491#1" />
@@ -515,11 +445,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="874">
-              <caret line="52" selection-start-line="52" selection-start-column="2" selection-end-line="120" selection-end-column="11" />
+            <state relative-caret-position="406">
+              <caret line="115" column="9" lean-forward="true" selection-start-line="47" selection-end-line="115" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -588,6 +518,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="C:/javalib" />
@@ -642,12 +573,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559813780992</updated>
-      <workItem from="1559813784350" duration="979000" />
+      <workItem from="1559813784350" duration="1701000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="979000" />
+    <option name="totallyTimeSpent" value="1701000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -664,14 +595,14 @@
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Tool Output" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Messages" weight="0.329718" />
       <window_info anchor="bottom" id="Database Changes" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="ANTLR Preview" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -690,20 +621,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="29" lean-forward="true" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/lang/Double.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
@@ -715,10 +632,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="29" lean-forward="true" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="115" column="9" lean-forward="true" selection-start-line="47" selection-end-line="115" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="308" column="62" selection-start-line="308" selection-start-column="62" selection-end-line="308" selection-end-column="62" />
+        <state relative-caret-position="254">
+          <caret line="308" column="64" lean-forward="true" selection-start-line="308" selection-start-column="64" selection-end-line="308" selection-end-column="64" />
           <folding>
             <element signature="method#main#0;class#Visitor#0" />
             <element signature="e#421#491#1" />
@@ -1121,13 +1059,6 @@
             <element signature="class#_Query#0;class#Visitor#0" />
             <element signature="method#_Query#0;class#_Query#0;class#Visitor#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="52" selection-start-line="52" selection-start-column="2" selection-end-line="120" selection-end-column="11" />
         </state>
       </provider>
     </entry>
