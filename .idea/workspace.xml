@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="09dc7a4a-e0f1-4acf-8ad5-b06b973d6712" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="f0fd1022-5418-4f5e-9b4b-64ef6067294e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BTreeInternalNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BTreeInternalNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BTreeLeafNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BTreeLeafNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/IndexBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/IndexBuffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_select.sql" beforeDir="false" afterPath="$PROJECT_DIR$/test_select.sql" afterDir="false" />
+    </list>
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,67 +29,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="342">
               <caret line="320" selection-start-line="320" selection-end-line="320" />
+=======
+            <state relative-caret-position="289">
+              <caret line="403" selection-start-line="403" selection-end-line="403" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
               <folding>
-                <element signature="method#main#0;class#Visitor#0" />
-                <element signature="e#421#491#1" />
-                <element signature="e#523#596#1" />
-                <element signature="method#Visitor#0;class#Visitor#0" />
-                <element signature="method#setServer#0;class#Visitor#0" />
-                <element signature="method#visitCreate_table_stmt#0;class#Visitor#0" />
-                <element signature="e#1268#1725#1" />
-                <element signature="e#1375#1563#1" />
-                <element signature="e#1632#1715#1" />
-                <element signature="e#1765#2197#1" />
-                <element signature="e#1855#2065#1" />
-                <element signature="e#1917#2051#1" />
-                <element signature="e#2087#2187#1" />
-                <element signature="e#2383#2457#1" />
-                <element signature="e#2828#3083#1" />
-                <element signature="e#3096#3201#0" />
-                <element signature="e#3231#3290#0" />
-                <element signature="method#visitColumn_def#0;class#Visitor#0" />
-                <element signature="e#3814#3877#1" />
-                <element signature="method#visitType_name#0;class#Visitor#0" />
-                <element signature="e#4329#4424#1" />
-                <element signature="e#4536#4604#1" />
-                <element signature="e#4661#4731#1" />
-                <element signature="e#4789#4860#1" />
-                <element signature="e#4916#4985#1" />
-                <element signature="e#4999#5082#1" />
-                <element signature="method#visitTable_constraint#0;class#Visitor#0" />
-                <element signature="e#5342#5483#1" />
-                <element signature="e#5410#5473#1" />
-                <element signature="method#visitSigned_number#0;class#Visitor#0" />
                 <element signature="method#visitDrop_table_stmt#0;class#Visitor#0" />
-                <element signature="e#6155#6237#1" />
-                <element signature="e#6242#6354#1" />
-                <element signature="e#6544#6672#1" />
-                <element signature="e#6595#6662#1" />
-                <element signature="e#6689#7219#1" />
-                <element signature="e#6968#7083#0" />
-                <element signature="e#7117#7184#0" />
-                <element signature="e#7241#7510#1" />
-                <element signature="e#7259#7374#0" />
-                <element signature="e#7408#7475#0" />
-                <element signature="e#7524#7599#1" />
                 <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
-                <element signature="e#7993#8127#1" />
-                <element signature="e#8044#8117#1" />
-                <element signature="e#8156#8553#1" />
-                <element signature="e#8280#8347#1" />
-                <element signature="e#8363#8422#0" />
-                <element signature="e#8455#8520#0" />
-                <element signature="e#8566#8639#1" />
-                <element signature="method#visitInsert_stmt#0;class#Visitor#0" />
-                <element signature="e#8881#9466#1" />
-                <element signature="e#8993#9456#1" />
-                <element signature="e#9337#9442#1" />
                 <element signature="method#visitTable_schema#0;class#Visitor#0" />
+<<<<<<< HEAD
                 <element signature="e#9813#9884#1" />
                 <element signature="e#9957#10386#1" />
                 <element signature="e#10059#10376#1" />
@@ -407,6 +375,8 @@
                 <element signature="e#77601#77660#0" />
                 <element signature="class#_Query#0;class#Visitor#0" />
                 <element signature="method#_Query#0;class#_Query#0;class#Visitor#0" />
+=======
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
               </folding>
             </state>
           </provider>
@@ -415,6 +385,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLParser.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="238">
               <caret line="1380" column="24" selection-start-line="1380" selection-start-column="24" selection-end-line="1380" selection-end-column="24" />
               <folding>
@@ -510,24 +481,38 @@
                 <element signature="method#WriteMetaData#0;class#Server#0" />
                 <element signature="method#getOneDatabase#0;class#Server#0" />
               </folding>
+=======
+            <state relative-caret-position="133">
+              <caret line="1199" selection-start-line="1199" selection-end-line="1199" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
+        <entry file="jar:///usr/local/lib/antlr-4.7.1-complete.jar!/org/antlr/v4/runtime/tree/AbstractParseTreeVisitor.class">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="342">
               <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+=======
+            <state relative-caret-position="280">
+              <caret line="19" column="62" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="62" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="1140">
               <caret line="63" column="65" selection-start-line="63" selection-start-column="65" selection-end-line="63" selection-end-column="65" />
+=======
+            <state relative-caret-position="-464">
+              <caret line="528" column="26" selection-start-line="528" selection-start-column="16" selection-end-line="528" selection-end-column="26" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -536,40 +521,60 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
+=======
+        <entry file="file://$PROJECT_DIR$/test_create.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="35" selection-start-line="35" selection-end-line="35" />
-              <folding>
-                <element signature="method#Record#0;class#Record#0" />
-                <element signature="method#Record#1;class#Record#0" />
-                <element signature="method#toBytes#0;class#Record#0" />
-                <element signature="method#getValue#0;class#Record#0" />
-                <element signature="method#isValid#0;class#Record#0" />
-              </folding>
+            <state relative-caret-position="90">
+              <caret line="6" column="20" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java">
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="116">
+              <caret line="187" column="24" selection-start-line="187" selection-start-column="18" selection-end-line="187" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
+=======
+        <entry file="file://$PROJECT_DIR$/src/main/java/BTreeInternalNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="49" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="187">
+              <caret line="196" selection-start-line="196" selection-end-line="196" />
               <folding>
-                <element signature="method#DataStorage#0;class#DataStorage#0" />
-                <element signature="method#updateFreeBlock#0;class#DataStorage#0" />
-                <element signature="method#getPossibleBlock#0;class#DataStorage#0" />
-                <element signature="method#cancelFreeBlock#0;class#DataStorage#0" />
-                <element signature="method#freshFreeBlock#0;class#DataStorage#0" />
+                <element signature="method#insertOneKeyPointer#0;class#BTreeInternalNode#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="116">
+              <caret line="255" column="12" selection-start-line="255" selection-start-column="8" selection-end-line="255" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#getBTree#0;class#IndexBuffer#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
+          <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="323">
               <caret line="135" column="5" selection-start-line="135" selection-start-column="5" selection-end-line="135" selection-end-column="5" />
               <folding>
@@ -580,6 +585,10 @@
                 <element signature="e#6900#6901#0" expanded="true" />
                 <element signature="e#6934#6935#0" expanded="true" />
               </folding>
+=======
+            <state relative-caret-position="15">
+              <caret line="9" column="39" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="39" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
             </state>
           </provider>
         </entry>
@@ -595,17 +604,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>LT</find>
-      <find>LT2</find>
-      <find>sele</find>
-      <find>compare</find>
-      <find>prior</find>
-      <find>binary</find>
-      <find>updateKeyNumber</find>
-      <find>DataPointer</find>
-      <find>updateKeyPointer</find>
+      <find>insertOneKeyPointer</find>
       <find>splitAt</find>
-      <find>TODO</find>
+      <find>deleteOneK</find>
+      <find>updateKeyPointer</find>
+      <find>parent_node</find>
+      <find>updateNext</find>
+      <find>updateNextBro</find>
+      <find>preload</find>
+      <find>createindex</find>
+      <find>is_revised</find>
+      <find>insert_st</find>
+      <find>free_space</find>
+      <find>BTree</find>
+      <find>update</find>
+      <find>database</find>
+      <find>protected</find>
+      <find>public</find>
+      <find>buffer.put</find>
+      <find>insert_stm</find>
+      <find>insert</find>
+      <find>loadIndex</find>
+      <find>borr</find>
+      <find>delete_stm</find>
+      <find>select_stm</find>
+      <find>delete_st</find>
+      <find>delete</find>
+      <find>save</find>
+      <find>deleteOne</find>
+      <find>deleteNodeLi</find>
+      <find>deleteNode</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -614,12 +642,27 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/main/java/LowSQL.g4" />
+        <option value="$PROJECT_DIR$/insert.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/DataStorage.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/complex_select_insert.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/Server.java" />
+        <option value="$PROJECT_DIR$/delete.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/IndexCache.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DataBlock.java" />
+        <option value="$PROJECT_DIR$/src/main/java/select.sql" />
+        <option value="$PROJECT_DIR$/complex_select.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/LRUCache.java" />
+        <option value="$PROJECT_DIR$/src/main/java/DataBuffer.java" />
+        <option value="$PROJECT_DIR$/select.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/Visitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/Util.java" />
         <option value="$PROJECT_DIR$/src/main/java/BTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/BTreeLeafNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/BTreeInternalNode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Field.java" />
         <option value="$PROJECT_DIR$/src/main/java/IndexBuffer.java" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/main/java/DataBuffer.java" />
         <option value="$PROJECT_DIR$/src/main/java/Server.java" />
         <option value="$PROJECT_DIR$/src/main/java/DataStorage.java" />
@@ -627,42 +670,44 @@
         <option value="$PROJECT_DIR$/src/main/java/LowSQL.g4" />
         <option value="$PROJECT_DIR$/src/main/java/Client.java" />
         <option value="$PROJECT_DIR$/src/main/java/Visitor.java" />
+=======
+        <option value="$PROJECT_DIR$/test_select.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/BTreeNode.java" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="75" />
-    <option name="y" value="15" />
-    <option name="width" value="1400" />
-    <option name="height" value="901" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
+              <item name="LowDB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LowDB" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
+              <item name="LowDB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LowDB" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
+              <item name="LowDB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LowDB" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="LowSQL-Database-Engine" type="b2602c69:ProjectViewProjectNode" />
-              <item name="LowSQL-Database-Engine" type="462c0819:PsiDirectoryNode" />
+              <item name="LowDB" type="b2602c69:ProjectViewProjectNode" />
+              <item name="LowDB" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
@@ -671,7 +716,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -679,9 +724,14 @@
     <property name="$PROJECT_DIR$/src/main/java/LowSQL.g4::/gen-listener" value="true" />
     <property name="$PROJECT_DIR$/src/main/java/LowSQL.g4::/gen-visitor" value="true" />
     <property name="$PROJECT_DIR$/src/main/java/LowSQL.g4::/output-dir" value="D:\learn\LowSQL-Database-Engine\src\main\java" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -695,24 +745,38 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.Server">
+    <configuration name="BTree" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BTree" />
+      <module name="LowDB" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BTreeNode" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="BTreeNode" />
+      <module name="LowDB" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Client" />
-      <module name="LowSQL-Database-Engine" />
+      <module name="LowDB" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Server" />
-      <module name="LowSQL-Database-Engine" />
+      <module name="LowDB" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Visitor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Visitor" />
-      <module name="LowSQL-Database-Engine" />
+      <module name="LowDB" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -721,6 +785,8 @@
       <list>
         <item itemvalue="Application.Client" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.BTree" />
+        <item itemvalue="Application.BTreeNode" />
         <item itemvalue="Application.Visitor" />
       </list>
     </recent_temporary>
@@ -730,17 +796,30 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="09dc7a4a-e0f1-4acf-8ad5-b06b973d6712" name="Default Changelist" comment="" />
-      <created>1559738474308</created>
+      <changelist id="f0fd1022-5418-4f5e-9b4b-64ef6067294e" name="Default Changelist" comment="" />
+      <created>1559367451521</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< HEAD
       <updated>1559738474308</updated>
       <workItem from="1559738481230" duration="9695000" />
+=======
+      <updated>1559367451521</updated>
+      <workItem from="1559367454706" duration="6014000" />
+      <workItem from="1559401638526" duration="3536000" />
+      <workItem from="1559441209478" duration="26170000" />
+      <workItem from="1559471837251" duration="57000" />
+      <workItem from="1559607183050" duration="12844000" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="87784000" />
+=======
+    <option name="totallyTimeSpent" value="100574000" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -752,10 +831,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
+=======
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17270789" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30533117" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -764,19 +847,30 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.29392624" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Run" order="2" weight="0.3177874" />
       <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.31744313" />
+=======
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31643835" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.4178082" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32846716" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.329927" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Tool Output" order="9" />
+      <window_info anchor="bottom" id="Tool Output" order="9" weight="0.329927" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
+<<<<<<< HEAD
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.329718" />
       <window_info anchor="bottom" id="ANTLR Preview" order="13" weight="0.22668113" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.35357916" />
+=======
+      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="bottom" id="ANTLR Preview" order="13" weight="0.3654391" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.4671233" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -787,39 +881,6 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17110874" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.29392624" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3177874" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3383948" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Tool Output" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
-      <window_info anchor="bottom" id="ANTLR Preview" order="13" weight="0.36442515" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.35357916" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" />
-      <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -828,87 +889,211 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Server.java</url>
-          <line>182</line>
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>619</line>
           <properties />
-          <option name="timeStamp" value="222" />
+          <option name="timeStamp" value="84" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Server.java</url>
-          <line>169</line>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>419</line>
           <properties />
-          <option name="timeStamp" value="224" />
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeInternalNode.java</url>
+          <line>214</line>
+          <properties />
+          <option name="timeStamp" value="179" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>319</line>
+          <properties />
+          <option name="timeStamp" value="237" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>362</line>
+          <properties />
+          <option name="timeStamp" value="238" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>405</line>
+          <properties />
+          <option name="timeStamp" value="239" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>522</line>
+          <properties />
+          <option name="timeStamp" value="240" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>223</line>
+          <properties />
+          <option name="timeStamp" value="243" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>198</line>
+          <properties />
+          <option name="timeStamp" value="244" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>462</line>
+          <properties />
+          <option name="timeStamp" value="247" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/DataBlock.java</url>
-          <line>64</line>
+          <line>118</line>
           <properties />
-          <option name="timeStamp" value="227" />
+          <option name="timeStamp" value="288" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>669</line>
+          <line>599</line>
           <properties />
-          <option name="timeStamp" value="228" />
+          <option name="timeStamp" value="296" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Client.java</url>
-          <line>43</line>
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>452</line>
           <properties />
-          <option name="timeStamp" value="235" />
+          <option name="timeStamp" value="299" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="i==87" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java</url>
+          <line>205</line>
+          <properties />
+          <option name="timeStamp" value="331" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="node_id == 6 &amp;&amp; next == 6" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeNode.java</url>
+          <line>322</line>
+          <properties />
+          <option name="timeStamp" value="342" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="node_id == 6 &amp;&amp; prior == 6" language="JAVA" />
+          <url>file://$PROJECT_DIR$/src/main/java/BTreeNode.java</url>
+          <line>330</line>
+          <properties />
+          <option name="timeStamp" value="343" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>576</line>
+          <properties />
+          <option name="timeStamp" value="344" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>440</line>
+          <properties />
+          <option name="timeStamp" value="348" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>847</line>
+          <properties />
+          <option name="timeStamp" value="360" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>907</line>
+          <properties />
+          <option name="timeStamp" value="362" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/BTree.java</url>
+          <line>201</line>
+          <properties />
+          <option name="timeStamp" value="389" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>424</line>
+          <properties />
+          <option name="timeStamp" value="420" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>403</line>
+          <properties />
+          <option name="timeStamp" value="421" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
+          <line>798</line>
+          <properties />
+          <option name="timeStamp" value="422" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="next_node" />
+        <watch expression="buffer.index_buffer" />
+        <watch expression="((BTreeInternalNode)node.buffer.index_buffer[2]).index_data[24]" custom="BTreeInternalNode" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
-    <expressions id="watch">
+    <expressions id="breakpointCondition">
       <expression>
-        <expression-string>node.record2key(falserecord)</expression-string>
+        <expression-string>node_id == 6 &amp;&amp; prior == 6</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>node.keys.get(queryres[1])</expression-string>
+        <expression-string>node_id == 6 &amp;&amp; next == 6</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>new String(bytes)</expression-string>
+        <expression-string>i==87</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bytes.toString()</expression-string>
+        <expression-string>i==84</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>matcher.find()</expression-string>
+        <expression-string>(int)record.fields[1].getValue() == 830</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>importPtn.matcher(mode).find()</expression-string>
+        <expression-string>pointer_id == 3</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>node.record2key(target)</expression-string>
+        <expression-string>page_id == 3 &amp;&amp; record_id == 1</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>node.keys.get(keyidx)</expression-string>
+        <expression-string>record.fields[i].value.toString() == 665</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>node.keys.get(keyidx)node.keys.get(keyidx)</expression-string>
+        <expression-string>record == null</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>innerrecord.getFields()[tableBJoinIdx]</expression-string>
+        <expression-string>record.fields[1].value == (Object) 600</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -917,35 +1102,64 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/SQLite.g4" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/io/Writer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="156" selection-start-line="156" selection-end-line="156" />
+        <state relative-caret-position="60">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/metadata.bin">
-      <provider selected="true" editor-type-id="org.exbin.bined" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/io/Writer.java" />
+    <entry file="jar://C:/javalib/antlr-4.7.1-complete.jar!/org/antlr/v4/runtime/tree/AbstractParseTreeVisitor.class" />
+    <entry file="file://$PROJECT_DIR$/system/metadata.bin" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="17" column="54" selection-start-line="17" selection-start-column="54" selection-end-line="17" selection-end-column="54" />
+        <state relative-caret-position="116">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-26">
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
           <folding>
-            <element signature="method#TableManager#0;class#TableManager#0" />
-            <element signature="method#TableManager#1;class#TableManager#0" />
-            <element signature="method#toMetaByte#0;class#TableManager#0" />
-            <element signature="method#createIndexSchema#0;class#TableManager#0" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TableSchema.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/TableAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="949">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
+        <state relative-caret-position="1140">
+          <caret line="80" column="5" selection-start-line="80" selection-start-column="5" selection-end-line="80" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TableManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLBaseVisitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="39" column="72" selection-start-line="39" selection-start-column="72" selection-end-line="39" selection-end-column="72" />
         </state>
       </provider>
     </entry>
@@ -956,232 +1170,147 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeInternalNode.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="458" column="21" lean-forward="true" selection-start-line="458" selection-start-column="21" selection-end-line="458" selection-end-column="21" />
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/lang/System.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/lib/src.zip!/java.base/java/io/Writer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="492" column="30" selection-start-line="492" selection-start-column="30" selection-end-line="492" selection-end-column="30" />
+        <state relative-caret-position="2040">
+          <caret line="161" selection-start-line="161" selection-end-line="161" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/util/ArrayList.java">
+    <entry file="file://$PROJECT_DIR$/delete.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="432" selection-start-line="432" selection-end-line="432" />
+        <state>
+          <caret column="19" selection-start-column="12" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/lib/src.zip!/java.base/java/util/LinkedHashMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="105" selection-start-line="105" selection-end-line="105" />
-          <folding>
-            <element signature="method#deleteAllKeyPointer#0;class#BTreeLeafNode#0" />
-            <element signature="e#1259#1493#1" />
-            <element signature="e#1662#1898#1" />
-            <element signature="e#1738#1888#1" />
-            <element signature="method#deleteOneKeyPointer#0;class#BTreeLeafNode#0" />
-            <element signature="e#2910#3135#1" />
-            <element signature="e#2986#3125#1" />
-            <element signature="e#4241#4549#1" />
-            <element signature="e#4447#4539#1" />
-            <element signature="e#4715#4746#1" />
-            <element signature="e#5069#5268#1" />
-            <element signature="e#5174#5258#1" />
-            <element signature="method#borrowFromRightBrother#0;class#BTreeLeafNode#0" />
-            <element signature="e#5714#5815#1" />
-            <element signature="method#borrowFromLeftBrother#0;class#BTreeLeafNode#0" />
-            <element signature="e#6400#6504#1" />
-            <element signature="method#mergeWithRightNode#0;class#BTreeLeafNode#0" />
-            <element signature="e#6786#7284#1" />
-            <element signature="e#7288#7486#1" />
-            <element signature="e#7562#7785#1" />
-            <element signature="e#7668#7775#1" />
-            <element signature="e#7821#8317#1" />
-            <element signature="e#7878#8284#1" />
-            <element signature="e#8027#8270#1" />
-            <element signature="e#8139#8252#1" />
-            <element signature="method#mergeWithLeftNode#0;class#BTreeLeafNode#0" />
-            <element signature="e#8785#9006#1" />
-            <element signature="e#8890#8996#1" />
-            <element signature="e#9041#9540#1" />
-            <element signature="e#9097#9507#1" />
-            <element signature="e#9246#9493#1" />
-            <element signature="e#9360#9475#1" />
-            <element signature="method#deleteOneKey#0;class#BTreeLeafNode#0" />
-            <element signature="e#9772#10043#1" />
-            <element signature="e#9949#10033#1" />
-            <element signature="e#10070#10371#1" />
-            <element signature="e#10276#10361#1" />
-            <element signature="e#10537#10568#1" />
-            <element signature="e#10687#11645#1" />
-            <element signature="e#10724#11183#1" />
-            <element signature="e#10980#11050#1" />
-            <element signature="e#11056#11169#1" />
-            <element signature="e#11189#11635#1" />
-            <element signature="e#11437#11506#1" />
-            <element signature="e#11510#11621#1" />
-            <element signature="e#11649#11700#1" />
-            <element signature="e#12943#12989#0" />
-            <element signature="e#13085#13185#1" />
-            <element signature="method#insertPointerWithExistedKey#0;class#BTreeLeafNode#0" />
-            <element signature="method#getLocationAndNumber#0;class#BTreeLeafNode#0" />
-          </folding>
+        <state relative-caret-position="-1344">
+          <caret line="162" column="13" selection-start-line="162" selection-start-column="13" selection-end-line="162" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DatabaseManager.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/select.sql" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/LRUCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="59" column="38" selection-start-line="59" selection-start-column="38" selection-end-line="59" selection-end-column="38" />
-          <folding>
-            <element signature="method#DatabaseManager#0;class#DatabaseManager#0" />
-            <element signature="method#toMetaByte#0;class#DatabaseManager#0" />
-            <element signature="method#addTable#0;class#DatabaseManager#0" />
-            <element signature="method#deleteTable#0;class#DatabaseManager#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/net/DualStackPlainSocketImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="282" column="22" selection-start-line="282" selection-start-column="22" selection-end-line="282" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3111">
-          <caret line="186" column="43" lean-forward="true" selection-start-line="186" selection-start-column="43" selection-end-line="186" selection-end-column="43" />
-          <folding>
-            <element signature="e#5329#5330#0" expanded="true" />
-            <element signature="e#5420#5421#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/net/SocketInputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="140" selection-start-line="140" selection-end-line="140" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="549" column="43" lean-forward="true" selection-start-line="549" selection-start-column="43" selection-end-line="549" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/io/FileOutputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="301" column="24" selection-start-line="301" selection-start-column="24" selection-end-line="301" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-          <folding>
-            <element signature="method#newRootNode#0;class#IndexBuffer#0" />
-            <element signature="method#getFreeId#0;class#IndexBuffer#0" />
-            <element signature="method#saveAll#0;class#IndexBuffer#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
-          <folding>
-            <element signature="e#7123#7124#0" expanded="true" />
-            <element signature="e#7153#7154#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="75" column="22" selection-start-line="75" selection-start-column="22" selection-end-line="75" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TableAttribute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1045">
-          <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
-          <folding>
-            <element signature="e#1580#1581#0" expanded="true" />
-            <element signature="e#1624#1625#0" expanded="true" />
-            <element signature="e#1725#1726#0" expanded="true" />
-            <element signature="e#1777#1778#0" expanded="true" />
-            <element signature="method#toMetaByte#0;class#TableAttribute#0" />
-            <element signature="method#toString#0;class#TableAttribute#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11210">
-          <caret line="591" column="39" selection-start-line="591" selection-start-column="39" selection-end-line="591" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HashTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="167">
+          <caret line="24" column="20" lean-forward="true" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#record2key#0;class#HashTable#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/DataBlock.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="64" selection-start-line="64" selection-end-line="64" />
+        <state relative-caret-position="192">
+          <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/complex_select_insert.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1539">
+          <caret line="1005" column="43" selection-start-line="1005" selection-start-column="40" selection-end-line="1005" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/insert.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-101">
+          <caret line="668" column="33" selection-start-line="668" selection-end-line="669" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/DataStorage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
-          <folding>
-            <element signature="method#DataStorage#0;class#DataStorage#0" />
-            <element signature="method#updateFreeBlock#0;class#DataStorage#0" />
-            <element signature="method#getPossibleBlock#0;class#DataStorage#0" />
-            <element signature="method#cancelFreeBlock#0;class#DataStorage#0" />
-            <element signature="method#freshFreeBlock#0;class#DataStorage#0" />
-          </folding>
+        <state relative-caret-position="222">
+          <caret line="49" column="37" lean-forward="true" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/javalib/antlr-4.7.1-complete.jar!/org/antlr/v4/runtime/tree/AbstractParseTreeVisitor.class">
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        <state relative-caret-position="116">
+          <caret line="80" column="35" lean-forward="true" selection-start-line="80" selection-start-column="32" selection-end-line="80" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/complex_select.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="11" lean-forward="true" selection-start-column="11" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/select.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="22" selection-start-column="22" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TableSchema.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="123" column="29" lean-forward="true" selection-start-line="123" selection-end-line="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Util.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/DataBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1489">
+          <caret line="207" selection-start-line="207" selection-end-line="207" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="177" selection-start-line="177" selection-end-line="177" />
           <folding>
-            <element signature="e#347#348#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test_create.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/Record.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -1222,90 +1351,16 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLParser.java">
+=======
+    <entry file="file://$PROJECT_DIR$/test_select.sql">
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="1380" column="24" selection-start-line="1380" selection-start-column="24" selection-end-line="1380" selection-end-column="24" />
-          <folding>
-            <element signature="e#40386#40387#0" expanded="true" />
-            <element signature="e#40447#40448#0" expanded="true" />
-            <element signature="e#40495#40496#0" expanded="true" />
-            <element signature="e#40555#40556#0" expanded="true" />
-            <element signature="e#40591#40592#0" expanded="true" />
-            <element signature="e#40641#40642#0" expanded="true" />
-            <element signature="e#40676#40677#0" expanded="true" />
-            <element signature="e#40727#40728#0" expanded="true" />
-            <element signature="e#40803#40804#0" expanded="true" />
-            <element signature="e#40840#40841#0" expanded="true" />
-            <element signature="e#42891#42892#0" expanded="true" />
-            <element signature="e#42928#42929#0" expanded="true" />
-            <element signature="e#44647#44648#0" expanded="true" />
-            <element signature="e#44698#44699#0" expanded="true" />
-            <element signature="e#44929#44930#0" expanded="true" />
-            <element signature="e#44966#44967#0" expanded="true" />
-            <element signature="e#46666#46667#0" expanded="true" />
-            <element signature="e#46726#46727#0" expanded="true" />
-            <element signature="e#46781#46782#0" expanded="true" />
-            <element signature="e#46842#46843#0" expanded="true" />
-            <element signature="e#46922#46923#0" expanded="true" />
-            <element signature="e#46959#46960#0" expanded="true" />
-            <element signature="e#48815#48816#0" expanded="true" />
-            <element signature="e#48866#48867#0" expanded="true" />
-            <element signature="e#48934#48935#0" expanded="true" />
-            <element signature="e#48971#48972#0" expanded="true" />
-            <element signature="e#50599#50600#0" expanded="true" />
-            <element signature="e#50650#50651#0" expanded="true" />
-            <element signature="e#50728#50729#0" expanded="true" />
-            <element signature="e#50765#50766#0" expanded="true" />
-            <element signature="e#52002#52003#0" expanded="true" />
-            <element signature="e#52053#52054#0" expanded="true" />
-            <element signature="e#52093#52094#0" expanded="true" />
-            <element signature="e#52149#52150#0" expanded="true" />
-            <element signature="e#52211#52212#0" expanded="true" />
-            <element signature="e#52274#52275#0" expanded="true" />
-            <element signature="e#52335#52336#0" expanded="true" />
-            <element signature="e#52399#52400#0" expanded="true" />
-            <element signature="e#52473#52474#0" expanded="true" />
-            <element signature="e#52510#52511#0" expanded="true" />
-            <element signature="e#54197#54198#0" expanded="true" />
-            <element signature="e#54248#54249#0" expanded="true" />
-            <element signature="e#54296#54297#0" expanded="true" />
-            <element signature="e#54356#54357#0" expanded="true" />
-            <element signature="e#54429#54430#0" expanded="true" />
-            <element signature="e#54466#54467#0" expanded="true" />
-            <element signature="e#56031#56032#0" expanded="true" />
-            <element signature="e#56068#56069#0" expanded="true" />
-            <element signature="e#57899#57900#0" expanded="true" />
-            <element signature="e#57936#57937#0" expanded="true" />
-            <element signature="e#59401#59402#0" expanded="true" />
-            <element signature="e#59452#59453#0" expanded="true" />
-            <element signature="e#59531#59532#0" expanded="true" />
-            <element signature="e#59568#59569#0" expanded="true" />
-            <element signature="e#61060#61061#0" expanded="true" />
-            <element signature="e#61119#61120#0" expanded="true" />
-            <element signature="e#61257#61258#0" expanded="true" />
-            <element signature="e#61318#61319#0" expanded="true" />
-            <element signature="e#61375#61376#0" expanded="true" />
-            <element signature="e#61437#61438#0" expanded="true" />
-            <element signature="e#61512#61513#0" expanded="true" />
-            <element signature="e#61549#61550#0" expanded="true" />
-            <element signature="e#63357#63358#0" expanded="true" />
-            <element signature="e#63407#63408#0" expanded="true" />
-            <element signature="e#63442#63443#0" expanded="true" />
-            <element signature="e#63493#63494#0" expanded="true" />
-            <element signature="e#63569#63570#0" expanded="true" />
-            <element signature="e#63606#63607#0" expanded="true" />
-            <element signature="e#65348#65349#0" expanded="true" />
-            <element signature="e#65407#65408#0" expanded="true" />
-            <element signature="e#65460#65461#0" expanded="true" />
-            <element signature="e#65520#65521#0" expanded="true" />
-            <element signature="e#65599#65600#0" expanded="true" />
-            <element signature="e#65636#65637#0" expanded="true" />
-            <element signature="e#67575#67576#0" expanded="true" />
-            <element signature="e#67612#67613#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="38" lean-forward="true" selection-start-column="38" selection-end-column="38" />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -1320,11 +1375,18 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQLParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="1199" selection-start-line="1199" selection-end-line="1199" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
+    <entry file="jar:///usr/local/lib/antlr-4.7.1-complete.jar!/org/antlr/v4/runtime/tree/AbstractParseTreeVisitor.class">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="342">
           <caret line="320" selection-start-line="320" selection-end-line="320" />
           <folding>
@@ -1722,14 +1784,149 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="182" selection-start-line="182" selection-end-line="182" />
+=======
+        <state relative-caret-position="280">
+          <caret line="19" column="62" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_delete.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_insert.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeInternalNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="196" selection-start-line="196" selection-end-line="196" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Server#0;class#Server#0" />
-            <element signature="method#WriteMetaData#0;class#Server#0" />
-            <element signature="method#getOneDatabase#0;class#Server#0" />
+            <element signature="method#insertOneKeyPointer#0;class#BTreeInternalNode#0" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/IndexBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="255" column="12" selection-start-line="255" selection-start-column="8" selection-end-line="255" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getBTree#0;class#IndexBuffer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="9" column="39" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeLeafNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="187" column="24" selection-start-line="187" selection-start-column="18" selection-end-line="187" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/BTreeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-464">
+          <caret line="528" column="26" selection-start-line="528" selection-start-column="16" selection-end-line="528" selection-end-column="26" />
+>>>>>>> ead7d151130fd738a2230178582241170d3c4ef1
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="403" selection-start-line="403" selection-end-line="403" />
+          <folding>
+            <element signature="method#visitDrop_table_stmt#0;class#Visitor#0" />
+            <element signature="method#visitShow_table_stmt#0;class#Visitor#0" />
+            <element signature="method#visitTable_schema#0;class#Visitor#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>LowDB</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

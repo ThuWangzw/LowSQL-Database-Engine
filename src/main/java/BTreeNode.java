@@ -545,9 +545,29 @@ abstract public class BTreeNode {
             next_node.updatePriorBro(0);
             next_node.updatePriorKeyNumber(0);
             next_node.updateNumberToRight();
+            if(parent_id != 0){
+                BTreeInternalNode parent_node = (BTreeInternalNode)buffer.getNode(parent_id,DB_name,table_name,index_attrs);
+                parent_node.updateKeyPointer(getBiggestKey(),null,next_node.node_id);
+            }else{
+                buffer.newRootNode(next_node.node_id,DB_name,table_name,index_attrs);
+            }
+
+            if(left_bro_id != 0){
+                BTreeNode left_bro = buffer.getNode(left_bro_id,DB_name,table_name,index_attrs);
+                left_bro.updateRightBro(next_node.node_id);
+            }
+            if(right_bro_id != 0){
+                BTreeNode right_bro = buffer.getNode(right_bro_id,DB_name,table_name,index_attrs);
+                right_bro.updateLeftBro(next_node.node_id);
+            }
         }
-        type = -1;
-        buffer.deleteNode(this);
+        if(parent_id == 0 && prior_id == 0 && next_id == 0){
+            WriteIndexBlock();
+            buffer.saveIndexMetaData(buffer.getBTree(DB_name,table_name,new TableSchema(table_name,index_attrs)));
+        }else{
+            type = -1;
+            buffer.deleteNode(this);
+        }
     }
 
     public void deleteNodeList(){
