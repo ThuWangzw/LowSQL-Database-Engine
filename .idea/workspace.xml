@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09dc7a4a-e0f1-4acf-8ad5-b06b973d6712" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_insert.sql" beforeDir="false" afterPath="$PROJECT_DIR$/test_insert.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_select.sql" beforeDir="false" afterPath="$PROJECT_DIR$/test_select.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQL.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQL.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -19,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
-              <caret line="304" selection-start-line="304" selection-end-line="304" />
+            <state relative-caret-position="380">
+              <caret line="322" column="76" selection-start-line="322" selection-start-column="76" selection-end-line="322" selection-end-column="76" />
               <folding>
                 <element signature="method#main#0;class#Visitor#0" />
                 <element signature="e#421#491#1" />
@@ -84,11 +83,9 @@
                 <element signature="e#9957#10386#1" />
                 <element signature="e#10059#10376#1" />
                 <element signature="e#10251#10362#1" />
-                <element signature="e#11047#11139#1" />
                 <element signature="e#11525#11835#1" />
                 <element signature="e#11408#11647#1" />
                 <element signature="e#11457#11572#1" />
-                <element signature="method#visitLiteral_value#0;class#Visitor#0" />
                 <element signature="e#11941#12009#1" />
                 <element signature="e#12078#12135#1" />
                 <element signature="e#12204#12259#1" />
@@ -508,7 +505,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2119">
-              <caret line="182" column="56" lean-forward="true" selection-start-line="182" selection-start-column="56" selection-end-line="182" selection-end-column="56" />
+              <caret line="182" column="56" selection-start-line="182" selection-start-column="56" selection-end-line="182" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#Server#0;class#Server#0" />
@@ -523,16 +520,16 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="342">
-              <caret line="18" column="23" lean-forward="true" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+              <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="31" column="39" lean-forward="true" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
+            <state relative-caret-position="437">
+              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -598,7 +595,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
-              <caret line="135" column="5" lean-forward="true" selection-start-line="135" selection-start-column="5" selection-end-line="135" selection-end-column="5" />
+              <caret line="135" column="5" selection-start-line="135" selection-start-column="5" selection-end-line="135" selection-end-column="5" />
               <folding>
                 <element signature="method#Field#0;class#Field#0" />
                 <element signature="method#toBytes#0;class#Field#0" />
@@ -762,12 +759,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559738474308</updated>
-      <workItem from="1559738481230" duration="8459000" />
+      <workItem from="1559738481230" duration="8758000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86548000" />
+    <option name="totallyTimeSpent" value="86847000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -780,9 +777,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17270789" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17270789" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -792,7 +788,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.29392624" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3177874" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3177874" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3177874" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -1226,7 +1222,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Field.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
-          <caret line="135" column="5" lean-forward="true" selection-start-line="135" selection-start-column="5" selection-end-line="135" selection-end-column="5" />
+          <caret line="135" column="5" selection-start-line="135" selection-start-column="5" selection-end-line="135" selection-end-column="5" />
           <folding>
             <element signature="method#Field#0;class#Field#0" />
             <element signature="method#toBytes#0;class#Field#0" />
@@ -1241,7 +1237,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
-          <caret line="18" column="23" lean-forward="true" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -1333,7 +1329,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2119">
-          <caret line="182" column="56" lean-forward="true" selection-start-line="182" selection-start-column="56" selection-end-line="182" selection-end-column="56" />
+          <caret line="182" column="56" selection-start-line="182" selection-start-column="56" selection-end-line="182" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#Server#0;class#Server#0" />
@@ -1343,10 +1339,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="304" selection-start-line="304" selection-end-line="304" />
+        <state relative-caret-position="380">
+          <caret line="322" column="76" selection-start-line="322" selection-start-column="76" selection-end-line="322" selection-end-column="76" />
           <folding>
             <element signature="method#main#0;class#Visitor#0" />
             <element signature="e#421#491#1" />
@@ -1407,11 +1413,9 @@
             <element signature="e#9957#10386#1" />
             <element signature="e#10059#10376#1" />
             <element signature="e#10251#10362#1" />
-            <element signature="e#11047#11139#1" />
             <element signature="e#11525#11835#1" />
             <element signature="e#11408#11647#1" />
             <element signature="e#11457#11572#1" />
-            <element signature="method#visitLiteral_value#0;class#Visitor#0" />
             <element signature="e#11941#12009#1" />
             <element signature="e#12078#12135#1" />
             <element signature="e#12204#12259#1" />
@@ -1735,16 +1739,6 @@
             <element signature="e#77601#77660#0" />
             <element signature="class#_Query#0;class#Visitor#0" />
             <element signature="method#_Query#0;class#_Query#0;class#Visitor#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="31" column="39" lean-forward="true" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
