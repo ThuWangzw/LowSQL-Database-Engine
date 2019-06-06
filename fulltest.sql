@@ -10025,3 +10025,34 @@ INSERT INTO avengers VALUES (9997, 'NAME9997',9997,10996.7, 10996.7);
 INSERT INTO avengers VALUES (9998, 'NAME9998',9998,10997.8, 10997.8);
 INSERT INTO avengers VALUES (9999, 'NAME9999',9999,10998.9, 10998.9);
 
+
+DELETE FROM avengers WHERE ID > 5000;
+
+UPDATE avengers SET power = 100 WHERE ID > 3000;
+
+create table villain
+	(id			int not null, 
+	 name			string(32) not null, 
+	 power	int not null,
+	 primary key (ID)
+	);
+
+INSERT INTO villain VALUES (76, 'NAME76',76);
+INSERT INTO villain VALUES (77, 'NAME77',77);
+INSERT INTO villain VALUES (78, 'NAME78',78);
+INSERT INTO villain VALUES (79, 'NAME79',79);
+INSERT INTO villain VALUES (80, 'NAME80',80);
+INSERT INTO villain VALUES (81, 'NAME81',81);
+INSERT INTO villain VALUES (82, 'NAME82',82);
+INSERT INTO villain VALUES (83, 'NAME83',83);
+INSERT INTO villain VALUES (84, 'NAME84',84);
+
+show table avengers;
+
+select avengers.name, villain.name, villain.power from avengers join villain on avengers.power = villain.power where villain.power > 40;
+
+select * from villain;
+
+select id, name from avengers where id = 4;
+
+show database movie;

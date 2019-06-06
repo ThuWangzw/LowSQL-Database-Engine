@@ -257,6 +257,12 @@ public class Visitor extends LowSQLBaseVisitor {
                 }
             }
         }
+        try{
+            writer.write("Insert success.\r\n".getBytes());
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
@@ -300,7 +306,7 @@ public class Visitor extends LowSQLBaseVisitor {
                 }
                 Object val = visit(node);
                 if((val instanceof Double)&&(attributess[fieldIdx].getType() == Util.FLOAT)){
-                    val = new Float((Double)val);
+                    val = new Float(((Double)val).floatValue());
                 }
                 fields[fieldIdx] = new Field(val, attributess[fieldIdx]);
                 fieldIdx++;
@@ -795,6 +801,12 @@ public class Visitor extends LowSQLBaseVisitor {
             }
             //delete data
             server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
+        }
+        try{
+            writer.write("Delete success.\r\n".getBytes());
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -1514,7 +1526,7 @@ public class Visitor extends LowSQLBaseVisitor {
             }
         }
         try{
-            writer.write((new String("update ")+String.valueOf(records.size())+new String(" rows.")).getBytes());
+            writer.write((new String("update ")+String.valueOf(records.size())+new String(" rows.\r\n")).getBytes());
         }
         catch (IOException e){
             System.out.println(e.getMessage());

@@ -30,7 +30,7 @@ public class Client {
 ////           insert
 //            FileOutputStream insertStream = new FileOutputStream(new File("test_insert.sql"));
 //            for(int i=0; i<10000; i++){
-//                String str = new String("INSERT INTO avengers VALUES ("+String.valueOf(i)+", 'NAME"+i+"',"+random.nextInt()+","+random.nextFloat()+", "+random.nextDouble()+");\r\n");
+//                String str = new String("INSERT INTO avengers VALUES ("+String.valueOf(i)+", 'NAME"+i+"',"+i+","+String.valueOf((float)Math.round(((float) i*1.1)*100)/100)+", "+String.valueOf((double)Math.round(((double) i*1.1)*100)/100)+");\r\n");
 //                insertStream.write(str.getBytes());
 //            }
 //            insertStream.close();

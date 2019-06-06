@@ -1,1 +1,0 @@
-SELECT * FROM avengers where ID > 500;
