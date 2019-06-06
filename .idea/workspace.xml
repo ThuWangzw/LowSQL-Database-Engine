@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09dc7a4a-e0f1-4acf-8ad5-b06b973d6712" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQL.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQL.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LowSQLLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visitor.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -21,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="322" column="76" selection-start-line="322" selection-start-column="76" selection-end-line="322" selection-end-column="76" />
+            <state relative-caret-position="361">
+              <caret line="304" column="35" selection-start-line="304" selection-start-column="35" selection-end-line="304" selection-end-column="35" />
               <folding>
                 <element signature="method#main#0;class#Visitor#0" />
                 <element signature="e#421#491#1" />
@@ -528,20 +527,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+            <state relative-caret-position="1140">
+              <caret line="63" column="65" lean-forward="true" selection-start-line="63" selection-start-column="65" selection-end-line="63" selection-end-column="65" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/DataBlock.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="64" selection-start-line="64" selection-end-line="64" />
             </state>
           </provider>
         </entry>
@@ -557,19 +547,6 @@
                 <element signature="method#toBytes#0;class#Record#0" />
                 <element signature="method#getValue#0;class#Record#0" />
                 <element signature="method#isValid#0;class#Record#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/HashTable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#record2key#0;class#HashTable#0" />
               </folding>
             </state>
           </provider>
@@ -648,9 +625,9 @@
         <option value="$PROJECT_DIR$/src/main/java/Server.java" />
         <option value="$PROJECT_DIR$/src/main/java/DataStorage.java" />
         <option value="$PROJECT_DIR$/src/main/java/HashTable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Visitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/LowSQL.g4" />
         <option value="$PROJECT_DIR$/src/main/java/Client.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Visitor.java" />
       </list>
     </option>
   </component>
@@ -759,12 +736,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1559738474308</updated>
-      <workItem from="1559738481230" duration="8758000" />
+      <workItem from="1559738481230" duration="9082000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86847000" />
+    <option name="totallyTimeSpent" value="87171000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -777,8 +754,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17270789" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17270789" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -788,7 +766,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.29392624" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3177874" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3177874" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3177874" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -797,7 +775,7 @@
       <window_info anchor="bottom" id="Tool Output" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.329718" />
       <window_info anchor="bottom" id="ANTLR Preview" order="13" weight="0.22668113" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.35357916" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -870,7 +848,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Visitor.java</url>
-          <line>669</line>
+          <line>672</line>
           <properties />
           <option name="timeStamp" value="228" />
         </line-breakpoint>
@@ -1234,10 +1212,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.tokens">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.interp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+        <state relative-caret-position="361">
+          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1326,6 +1307,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/LowSQL.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2119">
@@ -1341,8 +1329,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+        <state relative-caret-position="1140">
+          <caret line="63" column="65" lean-forward="true" selection-start-line="63" selection-start-column="65" selection-end-line="63" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1351,8 +1339,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Visitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="322" column="76" selection-start-line="322" selection-start-column="76" selection-end-line="322" selection-end-column="76" />
+        <state relative-caret-position="361">
+          <caret line="304" column="35" selection-start-line="304" selection-start-column="35" selection-end-line="304" selection-end-column="35" />
           <folding>
             <element signature="method#main#0;class#Visitor#0" />
             <element signature="e#421#491#1" />
