@@ -1,1 +1,1 @@
-SELECT * FROM avengers;
+DELETE FROM avengers;
