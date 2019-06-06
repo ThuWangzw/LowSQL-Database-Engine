@@ -777,8 +777,10 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         else {
             //delete all
-            for(int i=0; i<server.data_buffer.getDataStorage(current_database.getDatabaseName(), current_table.getTableName()).block_number; i++){
-                for(int j=0; j<server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), i).getRecordNumber(); j++){
+            long number = server.data_buffer.getDataStorage(current_database.getDatabaseName(), current_table.getTableName()).block_number,record_number;
+            for(int i=0; i< number; i++){
+                record_number = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), i).getRecordNumber();
+                for(int j=0; j< record_number; j++){
                     Record record = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), i).extractOneRecord(j);
                     if(record != null) pointers.add(new DataPointer(i, j));
                 }

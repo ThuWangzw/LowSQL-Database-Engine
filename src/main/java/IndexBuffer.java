@@ -254,7 +254,7 @@ public class IndexBuffer {
         BTree bt = getBTree(DB_name,table_name,temp);
         bt.root_id = new_root_id;
         saveIndexMetaData(bt);
-        BTreeNode root_node = (BTreeNode) getNode(new_root_id,DB_name,table_name,attrs);
+        BTreeNode root_node = getNode(new_root_id,DB_name,table_name,attrs);
         if(root_node == null){
             throw new IllegalArgumentException("root node does not exist!");
         }

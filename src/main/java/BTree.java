@@ -1,4 +1,5 @@
 import javax.xml.crypto.Data;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,5 +188,36 @@ public class BTree {
             return node.record2key(record);
         }
         throw new NullPointerException("The Index Tree is not initialized!");
+    }
+
+    public static void main(String[] args) {
+        try {
+            File file = new File(Util.IndexStorageDir);
+            if (file.isDirectory()) {
+                String[] filelist = file.list();
+                for (int i = 0; i < filelist.length; i++) {
+                    if(!filelist[i].endsWith(".bin"))
+                        continue;
+                    new File(Util.IndexStorageDir + "/" + filelist[i]).delete();
+                }
+            }
+            file = new File(Util.DataStorageDir);
+            if (file.isDirectory()) {
+                String[] filelist = file.list();
+                for (int i = 0; i < filelist.length; i++) {
+                    if(!filelist[i].endsWith(".bin"))
+                        continue;
+                    new File(Util.DataStorageDir + filelist[i]).delete();
+                }
+            }
+            file = new File(Util.MetaDataFile);
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

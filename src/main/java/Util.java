@@ -44,7 +44,7 @@ public class Util{
     public static double byte2Double(byte[] v){
         long l = 0;
         for (int i = 0; i < 8; i++) {
-            l |= ((long) (v[i] & 0xff)) << (8 * i);
+            l |= ((long) (v[i] & 0xff)) << (8 * (7 - i));
         }
         return Double.longBitsToDouble(l);
     }
@@ -52,7 +52,7 @@ public class Util{
     public static long byte2Long(byte[] v){
         long l = 0;
         for (int i = 0; i < 8; i++) {
-            l |= ((long) (v[i] & 0xff)) << (8 * i);
+            l |= ((long) (v[i] & 0xff)) << (8 * (7 - i));
         }
         return l;
     }

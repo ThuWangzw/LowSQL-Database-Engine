@@ -121,10 +121,10 @@ public class BTreeLeafNode extends BTreeNode{
         DataPointer[] pointers = right_bro.getPointer(0);
         byte[] right_min_key = right_bro.keys.get(0);
         right_bro.deleteAllKeyPointer(0);
-        deleteAllKeyPointer(index);
         for(int i = 0; i < pointers.length; i++){
             insertOneKeyPointer(right_min_key,pointers[i].page_id,pointers[i].record_id);
         }
+        deleteAllKeyPointer(index);
     }
 
     public void borrowFromLeftBrother(int index){
@@ -134,14 +134,22 @@ public class BTreeLeafNode extends BTreeNode{
         DataPointer[] pointers = left_bro_end.getPointer(left_bro_end.key_number - 1);
         byte[] left_biggest_key = left_bro_end.getBiggestKey();
         left_bro_end.deleteAllKeyPointer(left_bro_end.key_number - 1);
-        deleteAllKeyPointer(index);
         for(int i = 0; i < pointers.length; i++){
             insertOneKeyPointer(left_biggest_key,pointers[i].page_id,pointers[i].record_id);
         }
+        deleteAllKeyPointer(index);
     }
 
 
     public void mergeWithRightNode(int index){
+        BTreeLeafNode the_node = this;
+        if(key_number == 1 && index == 0){
+            if(prior_id != 0)
+                the_node = (BTreeLeafNode)buffer.getNode(prior_id,DB_name,table_name,index_attrs);
+            else if(next_id != 0)
+                the_node = (BTreeLeafNode)buffer.getNode(next_id,DB_name,table_name,index_attrs);
+        }
+
         deleteAllKeyPointer(index);
         //already delete the key
         BTreeLeafNode right_bro = (BTreeLeafNode) buffer.getNode(right_bro_id,DB_name,table_name,index_attrs);
@@ -162,7 +170,7 @@ public class BTreeLeafNode extends BTreeNode{
         for (int i = 0; i < right_bro.key_number; i++){
             DataPointer[] pts = right_bro.getPointer(i);
             for(int j = 0; j < pts.length; j++){
-                insertOneKeyPointer(right_bro.keys.get(i),pts[j].page_id,pts[j].record_id);
+                the_node.insertOneKeyPointer(right_bro.keys.get(i),pts[j].page_id,pts[j].record_id);
             }
         }
         if (right_bro.next_id != 0){
@@ -172,7 +180,7 @@ public class BTreeLeafNode extends BTreeNode{
                 for (int i = 0; i < p.key_number; i++){
                    DataPointer[] pts = p.getPointer(i);
                    for(int j = 0; j < pts.length; j++){
-                       insertOneKeyPointer(p.keys.get(i),pts[j].page_id,pts[j].record_id);
+                       the_node.insertOneKeyPointer(p.keys.get(i),pts[j].page_id,pts[j].record_id);
                    }
                 }
             }while (p.next_id != 0);
@@ -181,6 +189,13 @@ public class BTreeLeafNode extends BTreeNode{
     }
 
     public void mergeWithLeftNode(int index){
+        BTreeLeafNode the_node = this;
+        if(key_number == 1 && index == 0){
+            if(prior_id != 0)
+                the_node = (BTreeLeafNode)buffer.getNode(prior_id,DB_name,table_name,index_attrs);
+            else if(next_id != 0)
+                the_node = (BTreeLeafNode)buffer.getNode(next_id,DB_name,table_name,index_attrs);
+        }
         deleteAllKeyPointer(index);
         BTreeLeafNode left_bro = (BTreeLeafNode) buffer.getNode(left_bro_id,DB_name,table_name,index_attrs);
 
@@ -190,7 +205,7 @@ public class BTreeLeafNode extends BTreeNode{
         for (int i = 0; i < left_bro.key_number; i++){
             DataPointer[] pts = left_bro.getPointer(i);
             for(int j = 0; j < pts.length; j++){
-                insertOneKeyPointer(left_bro.keys.get(i),pts[j].page_id,pts[j].record_id);
+                the_node.insertOneKeyPointer(left_bro.keys.get(i),pts[j].page_id,pts[j].record_id);
             }
         }
         if (left_bro.next_id != 0){
@@ -200,7 +215,7 @@ public class BTreeLeafNode extends BTreeNode{
                 for (int i = 0; i < p.key_number; i++){
                     DataPointer[] pts = p.getPointer(i);
                     for(int j = 0; j < pts.length; j++){
-                        insertOneKeyPointer(p.keys.get(i),pts[j].page_id,pts[j].record_id);
+                        the_node.insertOneKeyPointer(p.keys.get(i),pts[j].page_id,pts[j].record_id);
                     }
                 }
             }while (p.next_id != 0);
