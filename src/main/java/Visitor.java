@@ -305,8 +305,17 @@ public class Visitor extends LowSQLBaseVisitor {
                     throw new RuntimeException("Redundant attributes.");
                 }
                 Object val = visit(node);
-                if((val instanceof Double)&&(attributess[fieldIdx].getType() == Util.FLOAT)){
-                    val = new Float(((Double)val).floatValue());
+                if(attributess[fieldIdx].getType() == Util.FLOAT){
+                    val = new Float(((Number)val).floatValue());
+                }
+                else if(attributess[fieldIdx].getType() == Util.DOUBLE){
+                    val = new Double(((Number)val).doubleValue());
+                }
+                else if(attributess[fieldIdx].getType() == Util.INT){
+                    val = new Integer(((Number)val).intValue());
+                }
+                else if(attributess[fieldIdx].getType() == Util.LONG){
+                    val = new Integer(((Number)val).intValue());
                 }
                 fields[fieldIdx] = new Field(val, attributess[fieldIdx]);
                 fieldIdx++;
