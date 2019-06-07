@@ -10053,6 +10053,8 @@ select avengers.name, villain.name, villain.power from avengers join villain on 
 
 select * from villain;
 
+select * from avengers where weight > 50;
+
 select id, name from avengers where id = 4;
 
 show database movie;
