@@ -1335,8 +1335,8 @@ public class Visitor extends LowSQLBaseVisitor {
                     for(Record Arecord : Arecords){
                         if(record.getFields()[tableBJoinIdx].compareTo(Arecord.getFields()[tableAJoinIdx]) == 0){
                             Field[] target = new Field[record.getFields().length+Arecord.getFields().length];
-                            System.arraycopy(record.getFields(), 0, target, 0, record.getFields().length);
-                            System.arraycopy(Arecord.getFields(), 0, target, record.getFields().length, Arecord.getFields().length);
+                            System.arraycopy(Arecord.getFields(), 0, target, 0, Arecord.getFields().length);
+                            System.arraycopy(record.getFields(), 0, target, Arecord.getFields().length, record.getFields().length);
                             Record joinrecord = new Record(target, joinSchema);
                             if(jointype == Util.E){
                                 if(query == null){

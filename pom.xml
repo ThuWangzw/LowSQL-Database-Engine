@@ -7,6 +7,10 @@
     <groupId>lowdb</groupId>
     <artifactId>lowdb</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <properties>
+        <java.version>1.6</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>com.autonavi.App</start-class>
+    </properties>
 
 </project>
