@@ -52,6 +52,12 @@ public interface LowSQLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDrop_database_stmt(LowSQLParser.Drop_database_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link LowSQLParser#create_index_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCreate_index_stmt(LowSQLParser.Create_index_stmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link LowSQLParser#show_databases}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

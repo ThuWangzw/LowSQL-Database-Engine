@@ -88,6 +88,48 @@ public class Visitor extends LowSQLBaseVisitor {
     }
 
     @Override
+    public Object visitCreate_index_stmt(LowSQLParser.Create_index_stmtContext ctx){
+        List<ParseTree> nodes = ctx.children;
+        String tablename = (String)visit(nodes.get(3));
+        TableManager table = current_database.getOneTable(tablename);
+        if(table == null){
+            throw new RuntimeException("No table named "+tablename);
+        }
+        ArrayList<String> indices = new ArrayList<>();
+        for(int i=4; i<nodes.size(); i++){
+            if(nodes.get(i) instanceof LowSQLParser.NameContext){
+                String attrname = (String)visit(nodes.get(i));
+                TableAttribute select = table.getSchema().getOneAttribute(attrname);
+                if(select == null){
+                    throw new RuntimeException("Table not found;");
+                }
+                indices.add(attrname);
+            }
+        }
+        if(indices.size() == 0){
+            throw new RuntimeException("Indexes can not be null");
+        }
+        TableSchema schema = table.createIndexSchema(indices);
+        server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, schema, 1000);
+        BTree tree = server.index_buffer.getBTree(current_database.getDatabaseName(), tablename, schema);
+        for(int i=0; i<server.data_buffer.getDataStorage(current_database.getDatabaseName(), tablename).block_number; i++){
+            Record[] records = server.data_buffer.getNode(current_database.getDatabaseName(), tablename, i).extractAllRecords();
+            for(int j=0; j<records.length; j++){
+                tree.insert(records[j], i, j);
+            }
+        }
+        server.index_buffer.saveAll();
+        try {
+            writer.write("Create index success.\r\n".getBytes());
+            writer.flush();
+        }
+        catch (IOException e){
+            System.out.println("IO exception");
+        }
+        return null;
+    }
+
+    @Override
     public Object visitName(LowSQLParser.NameContext ctx) {
         List<ParseTree> nodes = ctx.children;
         return nodes.get(0).getText().toUpperCase();
