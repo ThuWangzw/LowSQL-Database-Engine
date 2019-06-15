@@ -58,6 +58,7 @@ public class Client {
                 System.out.println("import/sql/exit...");
                 String mode = in.nextLine();
                 if(importPtn.matcher(mode).find()){
+                    long starttime = System.currentTimeMillis();
                     Matcher matcher = importPtn.matcher(mode);
                     matcher.find();
                     FileInputStream instream = new FileInputStream(new File(matcher.group(2)));
@@ -75,7 +76,13 @@ public class Client {
                     while ((ch = bufferedReader.read()) < 65500) {
                         content.append((char) ch);
                     }
-                    System.out.println(content.toString());
+                    String rt = content.toString();
+                    long endtime = System.currentTimeMillis();
+                    rt += "Total running time " + String.valueOf((double)(endtime - starttime) / 1000) + "s \r\n";
+                    System.out.println(rt);
+                    FileOutputStream fos = new FileOutputStream("result.txt");
+                    fos.write(rt.getBytes());
+                    fos.close();
                 }
                 else if(sqlPtn.matcher(mode).find()){
                     while (true){
@@ -84,6 +91,7 @@ public class Client {
                         if(stmt.equals("exit")){
                             break;
                         }
+                        long starttime = System.currentTimeMillis();
                         byte[] bytes = stmt.getBytes();
                         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                         for(byte i : bytes) bufferedWriter.write(i);
@@ -96,7 +104,13 @@ public class Client {
                         while ((ch = bufferedReader.read()) < 65500) {
                             content.append((char) ch);
                         }
-                        System.out.println(content.toString());
+                        String rt = content.toString();
+                        long endtime = System.currentTimeMillis();
+                        rt += "Total running time " + String.valueOf((double)(endtime - starttime) / 1000) + "s \r\n";
+                        System.out.println(rt);
+                        FileOutputStream fos = new FileOutputStream("result.txt");
+                        fos.write(rt.getBytes());
+                        fos.close();
                     }
                 }
                 else if(exitPtn.matcher(mode).find()){
