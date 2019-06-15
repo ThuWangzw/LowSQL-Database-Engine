@@ -162,8 +162,7 @@ public class Server {
                         ParseTree tree = parser.parse();
                         long parse_time = System.currentTimeMillis();
                         visitor.visit(tree);
-                        long end = System.currentTimeMillis();
-                        visitor.writer.write(("running time: "+String.valueOf((float) (end-start)/1000)+"s\r\n" + "parser time: "+String.valueOf((float) (parse_time-start)/1000)+"s\r\n").getBytes());
+                        visitor.writer.write(("Antlr parser time: "+String.valueOf((float) (parse_time-start)/1000)+"s\r\n").getBytes());
                         visitor.writer.write(-1);
                         visitor.writer.flush();
                     }
