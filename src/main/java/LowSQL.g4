@@ -22,6 +22,7 @@ sql_stmt
     | insert_stmt
     | simple_select_stmt
     | complex_select_stmt
+    | create_index_stmt
     | delete_stmt
     | update_stmt
     | create_database_stmt
@@ -42,6 +43,10 @@ show_table_in_database
 drop_database_stmt
  : K_DROP K_DATABASE name
   ;
+
+create_index_stmt
+ : K_CREATE K_INDEX K_ON name ( '(' name ( ',' name )* ')' )
+ ;
 
 show_databases
  : K_SHOW K_DATABASES
@@ -180,6 +185,7 @@ K_JOIN: J O I N;
 K_ON: O N;
 K_DATABASE : D A T A B A S E;
 K_USE : U S E;
+K_INDEX : I N D E X;
 
 LT : '<';
 GT : '>';

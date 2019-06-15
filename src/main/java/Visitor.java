@@ -88,6 +88,48 @@ public class Visitor extends LowSQLBaseVisitor {
     }
 
     @Override
+    public Object visitCreate_index_stmt(LowSQLParser.Create_index_stmtContext ctx){
+        List<ParseTree> nodes = ctx.children;
+        String tablename = (String)visit(nodes.get(3));
+        TableManager table = current_database.getOneTable(tablename);
+        if(table == null){
+            throw new RuntimeException("No table named "+tablename);
+        }
+        ArrayList<String> indices = new ArrayList<>();
+        for(int i=4; i<nodes.size(); i++){
+            if(nodes.get(i) instanceof LowSQLParser.NameContext){
+                String attrname = (String)visit(nodes.get(i));
+                TableAttribute select = table.getSchema().getOneAttribute(attrname);
+                if(select == null){
+                    throw new RuntimeException("Table not found;");
+                }
+                indices.add(attrname);
+            }
+        }
+        if(indices.size() == 0){
+            throw new RuntimeException("Indexes can not be null");
+        }
+        TableSchema schema = table.createIndexSchema(indices);
+        server.index_buffer.createIndex(current_database.getDatabaseName(), tablename, schema, 1000);
+        BTree tree = server.index_buffer.getBTree(current_database.getDatabaseName(), tablename, schema);
+        for(int i=0; i<server.data_buffer.getDataStorage(current_database.getDatabaseName(), tablename).block_number; i++){
+            Record[] records = server.data_buffer.getNode(current_database.getDatabaseName(), tablename, i).extractAllRecords();
+            for(int j=0; j<records.length; j++){
+                tree.insert(records[j], i, j);
+            }
+        }
+        server.index_buffer.saveAll();
+        try {
+            writer.write("Create index success.\r\n".getBytes());
+            writer.flush();
+        }
+        catch (IOException e){
+            System.out.println("IO exception");
+        }
+        return null;
+    }
+
+    @Override
     public Object visitName(LowSQLParser.NameContext ctx) {
         List<ParseTree> nodes = ctx.children;
         return nodes.get(0).getText().toUpperCase();
@@ -121,6 +163,10 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         else if(type_name.toLowerCase().equals("float")){
             type.add(Util.FLOAT);
+            type.add(0);
+        }
+        else if(type_name.toLowerCase().equals("long")){
+            type.add(Util.LONG);
             type.add(0);
         }
         else if(type_name.toLowerCase().equals("double")){
@@ -257,6 +303,12 @@ public class Visitor extends LowSQLBaseVisitor {
                 }
             }
         }
+        try{
+            writer.write("Insert success.\r\n".getBytes());
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
@@ -299,8 +351,17 @@ public class Visitor extends LowSQLBaseVisitor {
                     throw new RuntimeException("Redundant attributes.");
                 }
                 Object val = visit(node);
-                if((val instanceof Double)&&(attributess[fieldIdx].getType() == Util.FLOAT)){
-                    val = new Float((Double)val);
+                if(attributess[fieldIdx].getType() == Util.FLOAT){
+                    val = new Float(((Number)val).floatValue());
+                }
+                else if(attributess[fieldIdx].getType() == Util.DOUBLE){
+                    val = new Double(((Number)val).doubleValue());
+                }
+                else if(attributess[fieldIdx].getType() == Util.INT){
+                    val = new Integer(((Number)val).intValue());
+                }
+                else if(attributess[fieldIdx].getType() == Util.LONG){
+                    val = new Long(((Number)val).intValue());
                 }
                 fields[fieldIdx] = new Field(val, attributess[fieldIdx]);
                 fieldIdx++;
@@ -613,7 +674,7 @@ public class Visitor extends LowSQLBaseVisitor {
         }
 
         TableAttribute[] tableAttributes = current_table.getSchema().getAttrubutes();
-        for(ParseTree node:nodes){
+        for(ParseTree node:nodes) {
             if(node instanceof LowSQLParser.NameContext){
                 String attrName = (String)visit(node);
                 boolean find = false;
@@ -777,8 +838,10 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         else {
             //delete all
-            for(int i=0; i<server.data_buffer.getDataStorage(current_database.getDatabaseName(), current_table.getTableName()).block_number; i++){
-                for(int j=0; j<server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), i).getRecordNumber(); j++){
+            long number = server.data_buffer.getDataStorage(current_database.getDatabaseName(), current_table.getTableName()).block_number,record_number;
+            for(int i=0; i< number; i++){
+                record_number = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), i).getRecordNumber();
+                for(int j=0; j< record_number; j++){
                     Record record = server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), i).extractOneRecord(j);
                     if(record != null) pointers.add(new DataPointer(i, j));
                 }
@@ -793,6 +856,12 @@ public class Visitor extends LowSQLBaseVisitor {
             }
             //delete data
             server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
+        }
+        try{
+            writer.write("Delete success.\r\n".getBytes());
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -828,6 +897,16 @@ public class Visitor extends LowSQLBaseVisitor {
         ArrayList<Integer> BAttributes = new ArrayList<>();
         ArrayList<Integer> attributes = new ArrayList<>();
         ArrayList<String> attributesName = (ArrayList<String>) visit(nodes.get(1));
+        if(attributesName.size() == 0){
+            for(TableAttribute attribute : tableA.getSchema().getAttrubutes()){
+                attributesName.add(tableA.getTableName());
+                attributesName.add(attribute.getAttributeName());
+            }
+            for(TableAttribute attribute : tableB.getSchema().getAttrubutes()){
+                attributesName.add(tableB.getTableName());
+                attributesName.add(attribute.getAttributeName());
+            }
+        }
 
         for(int i=0; i<attributesName.size();){
             String tablename = attributesName.get(i);
@@ -839,6 +918,7 @@ public class Visitor extends LowSQLBaseVisitor {
                     if(attribute.getAttributeName().equals(attrname)){
                         attrfind = true;
                         AAttributes.add(new Integer(j));
+                        attributes.add(new Integer(j));
                     }
                 }
             }
@@ -848,6 +928,7 @@ public class Visitor extends LowSQLBaseVisitor {
                     if(attribute.getAttributeName().equals(attrname)){
                         attrfind = true;
                         BAttributes.add(new Integer(j));
+                        attributes.add(new Integer(j+tableA.getSchema().getAttrubutes().length));
                     }
                 }
             }
@@ -921,22 +1002,22 @@ public class Visitor extends LowSQLBaseVisitor {
         }
         int joinidx = 0;
         for(int i=0; i<tableA.getSchema().getAttrubutes().length; i++){
-            for(Integer j : AAttributes){
-                if(j==i){
-                    attributes.add(joinidx);
-                    break;
-                }
-            }
+//            for(Integer j : AAttributes){
+//                if(j==i){
+//                    attributes.add(joinidx);
+//                    break;
+//                }
+//            }
             TableAttribute attribute = tableA.getSchema().getAttrubutes()[i];
             joinAttributes[joinidx++] = attribute;
         }
         for(int i=0; i<tableB.getSchema().getAttrubutes().length; i++){
-            for(Integer j : BAttributes){
-                if(j==i){
-                    attributes.add(joinidx);
-                    break;
-                }
-            }
+//            for(Integer j : BAttributes){
+//                if(j==i){
+//                    attributes.add(joinidx);
+//                    break;
+//                }
+//            }
             TableAttribute attribute = tableB.getSchema().getAttrubutes()[i];
             joinAttributes[joinidx++] = attribute;
         }
@@ -1312,8 +1393,8 @@ public class Visitor extends LowSQLBaseVisitor {
                     for(Record Arecord : Arecords){
                         if(record.getFields()[tableBJoinIdx].compareTo(Arecord.getFields()[tableAJoinIdx]) == 0){
                             Field[] target = new Field[record.getFields().length+Arecord.getFields().length];
-                            System.arraycopy(record.getFields(), 0, target, 0, record.getFields().length);
-                            System.arraycopy(Arecord.getFields(), 0, target, record.getFields().length, Arecord.getFields().length);
+                            System.arraycopy(Arecord.getFields(), 0, target, 0, Arecord.getFields().length);
+                            System.arraycopy(record.getFields(), 0, target, Arecord.getFields().length, record.getFields().length);
                             Record joinrecord = new Record(target, joinSchema);
                             if(jointype == Util.E){
                                 if(query == null){
@@ -1501,6 +1582,11 @@ public class Visitor extends LowSQLBaseVisitor {
             //delete data
             server.data_buffer.getNode(current_database.getDatabaseName(), current_table.getTableName(), pointer.page_id).deleteOneRecord(pointer.record_id);
             //push new data
+            if(setVal instanceof Double){
+                if(record.getFields()[setIdx].getAttribute().getType() == Util.FLOAT){
+                    setVal = new Float(((Number)setVal).floatValue());
+                }
+            }
             record.getFields()[setIdx].setValue(setVal);
             records.add(record);
         }
@@ -1512,7 +1598,7 @@ public class Visitor extends LowSQLBaseVisitor {
             }
         }
         try{
-            writer.write((new String("update ")+String.valueOf(records.size())+new String(" rows.")).getBytes());
+            writer.write((new String("update ")+String.valueOf(records.size())+new String(" rows.\r\n")).getBytes());
         }
         catch (IOException e){
             System.out.println(e.getMessage());
@@ -1540,6 +1626,12 @@ public class Visitor extends LowSQLBaseVisitor {
         String name = (String)visit(ctx.children.get(2));
         server.setCurrentDatabase(name);
         current_database = server.getCurrentDatabase();
+        try{
+            writer.write(("Now is at database " + current_database.getDatabaseName() + "\r\n").getBytes());
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 

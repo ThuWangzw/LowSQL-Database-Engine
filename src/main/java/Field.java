@@ -196,7 +196,7 @@ public class Field {
                  return res<0?-1:1;
             }
             else if((type == Util.FLOAT) || (type == Util.DOUBLE)){
-                double res = (double)value-(double)ff.value;
+                double res = ((Number)value).doubleValue()-((Number)ff.value).doubleValue();
                 if(res == 0)return 0;
                 return res<0?-1:1;
             }

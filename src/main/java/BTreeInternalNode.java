@@ -35,9 +35,9 @@ public class BTreeInternalNode extends BTreeNode {
         short pt = right_bro.getPointer(0);
         byte[] right_min_key = right_bro.keys.get(0);
         right_bro.deleteKeyPointer(0);
-        deleteKeyPointer(index);
         buffer.getNode(pt,DB_name,table_name,index_attrs).updateParent(getHeadNode().node_id);
         insertOneKeyPointer(right_min_key,pt);
+        deleteKeyPointer(index);
     }
 
 
@@ -48,12 +48,19 @@ public class BTreeInternalNode extends BTreeNode {
         short pt = left_bro_end.getPointer(left_bro_end.key_number - 1);
         byte[] left_biggest_key = left_bro_end.getBiggestKey();
         left_bro_end.deleteKeyPointer(left_bro_end.key_number - 1);
-        deleteKeyPointer(index);
         buffer.getNode(pt,DB_name,table_name,index_attrs).updateParent(getHeadNode().node_id);
         insertOneKeyPointer(left_biggest_key,pt);
+        deleteKeyPointer(index);
     }
 
     public void mergeWithRightNode(int index){
+        BTreeInternalNode the_node = this;
+        if(key_number == 1 && index == 0){
+            if(prior_id != 0)
+                the_node = (BTreeInternalNode)buffer.getNode(prior_id,DB_name,table_name,index_attrs);
+            else if(next_id != 0)
+                the_node = (BTreeInternalNode)buffer.getNode(next_id,DB_name,table_name,index_attrs);
+        }
         deleteKeyPointer(index);
         //already delete the key
         BTreeInternalNode right_bro = (BTreeInternalNode) buffer.getNode(right_bro_id,DB_name,table_name,index_attrs);
@@ -76,14 +83,14 @@ public class BTreeInternalNode extends BTreeNode {
         for (int i = 0; i < right_bro.key_number; i++){
             right_kid = right_bro.getPointer(i);
             buffer.getNode(right_kid,DB_name,table_name,index_attrs).updateParent(getHeadNode().node_id);
-            insertOneKeyPointer(right_bro.keys.get(i),right_kid);
+            the_node.insertOneKeyPointer(right_bro.keys.get(i),right_kid);
         }
         if (right_bro.next_id != 0){
             BTreeInternalNode p = right_bro;
             do{
                 p = (BTreeInternalNode)buffer.getNode(p.next_id,DB_name,table_name,index_attrs);
                 for (int i = 0; i < p.key_number; i++){
-                    insertOneKeyPointer(p.keys.get(i),p.getPointer(i));
+                    the_node.insertOneKeyPointer(p.keys.get(i),p.getPointer(i));
                 }
             }while (p.next_id != 0);
         }
@@ -92,6 +99,13 @@ public class BTreeInternalNode extends BTreeNode {
     }
 
     public void mergeWithLeftNode(int index){
+        BTreeInternalNode the_node = this;
+        if(key_number == 1 && index == 0){
+            if(prior_id != 0)
+                the_node = (BTreeInternalNode)buffer.getNode(prior_id,DB_name,table_name,index_attrs);
+            else if(next_id != 0)
+                the_node = (BTreeInternalNode)buffer.getNode(next_id,DB_name,table_name,index_attrs);
+        }
         deleteKeyPointer(index);
         BTreeInternalNode left_bro = (BTreeInternalNode) buffer.getNode(left_bro_id,DB_name,table_name,index_attrs);
 
@@ -102,14 +116,14 @@ public class BTreeInternalNode extends BTreeNode {
         for (int i = 0; i < left_bro.key_number; i++){
             left_kid = left_bro.getPointer(i);
             buffer.getNode(left_kid,DB_name,table_name,index_attrs).updateParent(getHeadNode().node_id);
-            insertOneKeyPointer(left_bro.keys.get(i),left_bro.getPointer(i));
+            the_node.insertOneKeyPointer(left_bro.keys.get(i),left_bro.getPointer(i));
         }
         if (left_bro.next_id != 0){
             BTreeInternalNode p = left_bro;
             do{
                 p = (BTreeInternalNode)buffer.getNode(p.next_id,DB_name,table_name,index_attrs);
                 for (int i = 0; i < p.key_number; i++){
-                    insertOneKeyPointer(p.keys.get(i),p.getPointer(i));
+                    the_node.insertOneKeyPointer(p.keys.get(i),p.getPointer(i));
                 }
             }while (p.next_id != 0);
         }
